@@ -1,16 +1,4 @@
----
-layout: post
-title: "API Integration in Python - part 1"
-date: 2015-03-03 08:29:35 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals, api]
-
-keywords: "python, REST, API, REST API, RESTful API, Python API"
-description: "In this tutorial, we'll detail how to develop a RESTful API with Python in a fun and easy manner."
-
----
+# API Integration in Python - part 1
 
 The following is a guest post by Aaron Maxwell, author of <a href="http://migrateup.com/python-newsletter/realpython0b/">the Advanced Python Newsletter</a>.
 

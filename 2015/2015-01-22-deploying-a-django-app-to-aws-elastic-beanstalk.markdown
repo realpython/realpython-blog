@@ -1,15 +1,4 @@
----
-layout: post
-title: "Deploying a Django App to AWS Elastic Beanstalk"
-date: 2015-01-22 07:52:35 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, devops, django]
-
-keywords: "python, web development, django, amazon, deployment, aws, elastic beanstalk, amazon aws"
-description: "Let's look at how to deploy a Django App to AWS Elastic Beanstalk."
----
+# Deploying a Django App to AWS Elastic Beanstalk
 
 The following is a soup to nuts walkthrough of how to setup and deploy a Django application to [Amazon Web Services](http://aws.amazon.com) (AWS) all while remaining sane.
 

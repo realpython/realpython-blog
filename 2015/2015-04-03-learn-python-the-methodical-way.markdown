@@ -1,15 +1,4 @@
----
-layout: post
-title: "Learn Python the Methodical Way"
-date: 2015-04-03 07:41:38 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals]
-
-keywords: "python, learn python, learning strategies, learning by doing"
-description: "Let's look at one strategy for learning Python - repetition."
----
+# Learn Python the Methodical Way
 
 This is a guest blog post from **[Zev Averbach](http://twitter.com/zevav)** - a Python enthusiast who is working on a startup related to his current business, [Averbach Transcription](http://avtranscription.com). Say hi to him at PyCon 2015!
 

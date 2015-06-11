@@ -1,15 +1,4 @@
----
-layout: post
-title: "The Ultimate Flask Front-End"
-date: 2015-03-09 08:02:28 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, front-end]
-
-keywords: "python, web development, flask, reactjs, gulp, bower, browserify"
-description: "This post looks at the powerful JavaScript UI library ReactJS in action, as we build a basic Flask web application."
----
+# The Ultimate Flask Front-End
 
 <div class="center-text">
   <img class="no-border" src="/images/ultimate-flask-front-end/main-logo.png" style="max-width: 100%;" alt="main logo">

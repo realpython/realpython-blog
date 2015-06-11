@@ -1,15 +1,4 @@
----
-layout: post
-title: "Flask by Example - Updating the UI"
-date: 2015-02-24 08:50:42 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, front-end]
-
-keywords: "python, web development, flask, angular, angularjs"
-description: "In this part of the Flask by Example series, we'll update the user interface to make it more user friendly."
----
+# Flask by Example - Updating the UI
 
 {% assign openTag = '{%' %}
 

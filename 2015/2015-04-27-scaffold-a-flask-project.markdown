@@ -1,16 +1,4 @@
----
-layout: post
-title: "Scaffold a Flask Project"
-date: 2015-04-27 07:52:16 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, flask, scaffold, prototyping, scaffolding, generator, skeleton"
-description: "This article details how to build a scaffolding tool used to generate a Flask boilerplate."
-
----
+# Scaffold a Flask Project
 
 **Let's build a command-line utility for quickly generating a Flask boilerplate structure.**
 

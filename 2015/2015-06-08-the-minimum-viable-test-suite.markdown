@@ -1,15 +1,4 @@
----
-layout: post
-title: "The Minimum Viable Test Suite"
-date: 2015-06-08 07:58:03 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, testing]
-
-keywords: "python, flask, testing, flask test, unit test, integration test."
-description: "This tutorial introduces Minimum Viable Testing in order to test the high-risk functionality of your application."
----
+# The Minimum Viable Test Suite
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/minimum-viable-testing/minimum-viable-test.png" style="max-width: 100%;" alt="minimum viable testing">

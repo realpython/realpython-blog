@@ -1,15 +1,4 @@
----
-layout: post
-title: "Docker in Action - fitter, happier, more productive"
-date: 2015-02-10 07:28:20 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, devops, docker]
-
-keywords: "python, docker, web development, flask, continuous integration, docker compose, fig"
-description: "Let's look at how to set up your local development environment with Docker as well as continuous integration, step by step."
----
+# Docker in Action - fitter, happier, more productive
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/docker-in-action/docker-in-action.png" style="max-width: 100%;" alt="docker in action">

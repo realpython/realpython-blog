@@ -1,16 +1,4 @@
----
-layout: post
-title: "The Ultimate Flask Front-End - part 2"
-date: 2015-03-25 08:33:17 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, front-end]
-
-keywords: "python, web development, flask, reactjs, gulp, bower, browserify"
-description: "In the second part of our look at the JavaScript UI library ReactJS, we'll build a dynamic search tool."
-
----
+# The Ultimate Flask Front-End - part 2
 
 <div class="center-text">
   <img class="no-border" src="/images/ultimate-flask-front-end/main-logo-part2.png" style="max-width: 100%;" alt="main logo">

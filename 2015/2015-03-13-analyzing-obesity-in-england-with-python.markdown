@@ -1,15 +1,4 @@
----
-layout: post
-title: "Analyzing obesity in England with Python"
-date: 2015-03-13 07:36:19 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, data science]
-
-keywords: "python, pandas, excel, numpy, matplotlib, data science, data analysis, python vs excel"
-description: "Let's look at using Python and Pandas to perform data analysis on obesity in England."
----
+# Analyzing obesity in England with Python
 
 *The following is a guest post by Shantnu Tiwari, who suffered at the hands of C/C++ for several years before he discovered Python.*
 

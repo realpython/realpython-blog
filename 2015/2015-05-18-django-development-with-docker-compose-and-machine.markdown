@@ -1,15 +1,4 @@
----
-layout: post
-title: "Django Development with Docker Compose and Machine"
-date: 2015-05-18 07:48:52 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, devops, docker, django]
-
-keywords: "python, docker, web development, django, docker compose, docker machine"
-description: "Let's look at how to containerize Django, Postgres, and Redis for local Docker development along with delivering the stack to the cloud via Docker Compose and Docker Machine."
----
+# Django Development with Docker Compose and Machine
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/dockerizing-django/django-docker.png" style="max-width: 100%;" alt="django docker">

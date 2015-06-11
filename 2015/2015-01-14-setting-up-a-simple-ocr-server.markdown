@@ -1,15 +1,4 @@
----
-layout: post
-title: "Setting up a Simple OCR Server"
-date: 2015-01-14 08:16:32 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, flask, ocr, optical character recognition, tesseract"
-description: "This tutorial details how to build a simple Flask OCR server with Tesseract."
----
+# Setting up a Simple OCR Server
 
 *The following is a collaboration piece between [Bobby Grayson](http://twitter.com/_devbob), a software developer at [Ahalogy](http://www.ahalogy.com/), and Real Python.*
 

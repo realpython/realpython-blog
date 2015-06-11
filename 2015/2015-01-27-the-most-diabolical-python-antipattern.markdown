@@ -1,16 +1,4 @@
----
-layout: post
-title: "The Most Diabolical Python Antipattern"
-date: 2015-01-27 07:04:09 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals]
-
-keywords: "python, python exception, exception-handling, try-except, python antipattern, anti-pattern"
-description: "There are plenty of ways to write bad code. But in Python, one in particular reigns as king..."
-
----
+# The Most Diabolical Python Antipattern
 
 The following is a guest post by Aaron Maxwell, author of the [Advanced Python Newsletter](http://migrateup.com/python-newsletter/realpython0a/).
 

@@ -1,15 +1,4 @@
----
-layout: post
-title: "Fun with Django's New Postgres Features"
-date: 2015-05-12 07:39:28 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django]
-
-keywords: "python, django, django 1.8, postgres, postgresql"
-description: "Let's look at the new Postgres features introduced in Django 1.8."
----
+# Fun with Django's New Postgres Features
 
 **This blog post covers how to use the new [PostgreSQL-specific ModelFields](https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/) introduced in Django 1.8 - the ArrayField, HStoreField, and Range Fields.**
 

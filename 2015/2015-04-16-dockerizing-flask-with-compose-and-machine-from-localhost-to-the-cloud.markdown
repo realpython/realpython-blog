@@ -1,15 +1,4 @@
----
-layout: post
-title: "Dockerizing Flask with Compose and Machine - from localhost to the cloud"
-date: 2015-04-17 07:30:04 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, devops, docker, flask]
-
-keywords: "python, docker, web development, flask, docker compose, docker machine"
-description: "This articles shows how to containerize Flask and Postgres for local Docker development as well as delivering the stack to the cloud via Docker Compose and Docker Machine."
----
+# Dockerizing Flask with Compose and Machine - from localhost to the cloud
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/flask-docker-compose-machine/flask-docker.png" style="max-width: 100%;" alt="main logo">
