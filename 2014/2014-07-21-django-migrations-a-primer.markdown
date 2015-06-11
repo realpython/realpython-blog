@@ -1,15 +1,4 @@
----
-layout: post
-title: "Django Migrations - A Primer"
-date: 2014-07-21 09:14:29 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django, migrations]
-
-keywords: "python, django, web development, python tutorial, django 1.7, migrations"
-description: "This tutorial takes you through the new migrations system integrated in the Django core as of Django 1.7. We'll look specifically at a solid workflow that you can use for creating and applying migrations."
----
+# Django Migrations - A Primer
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/django-migrations.png" style="max-width: 100%;">

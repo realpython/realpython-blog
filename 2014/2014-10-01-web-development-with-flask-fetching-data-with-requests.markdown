@@ -1,15 +1,4 @@
----
-layout: post
-title: "Full Stack Development - fetching data, visualizing with D3, and deploying with Dokku"
-date: 2014-10-01 06:48:03 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, front-end, devops]
-
-keywords: "python, web development, flask, d3, data visualizing, dokku, digital ocean. deployment"
-description: "In this tutorial we'll build a web application to grab data from the NASDAQ-100 and visualize it as a bubble graph with D3. Then we'll deploy this app on Digital Ocean via Dokku."
----
+# Full Stack Development - fetching data, visualizing with D3, and deploying with Dokku
 
 In this tutorial we'll build a web application to grab data from the [NASDAQ-100](http://www.nasdaq.com/quotes/nasdaq-100-stocks.aspx) and visualize it as a bubble graph with D3. Then to top it off, we'll deploy this on Digital Ocean via Dokku.
 

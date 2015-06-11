@@ -1,15 +1,4 @@
----
-layout: post
-title: "Kickstarting a Django Open Source Project"
-date: 2014-01-12 07:11:58 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django]
-
-keywords: "python, web development, django, open source"
-description: "In this article we will dissect a Django app boilerplate meant for quickly developing open source projects that adhere to widely shared conventions."
----
+# Kickstarting a Django Open Source Project
 
 This is a guest post by [Patrick Altman](http://paltman.com/), a passionate open source hacker, and VP of engineering at [Eldarion](http://eldarion.com/).
 

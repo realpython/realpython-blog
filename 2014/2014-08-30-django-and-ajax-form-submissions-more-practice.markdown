@@ -1,15 +1,4 @@
----
-layout: post
-title: "Django and AJAX Form Submissions - more practice"
-date: 2014-08-31 07:48:11 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django,front-end]
-
-keywords: "python, Django, javascript, jquery, ajax"
-description: "Continuing from the first tutorial, we again look at adding AJAX to Django to better the user experience."
----
+# Django and AJAX Form Submissions - more practice
 
 This is a collaboration piece between Real Python and Mr. [Nathan Nichols](https://twitter.com/natsamnic).
 

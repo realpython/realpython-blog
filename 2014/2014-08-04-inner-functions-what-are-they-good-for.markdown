@@ -1,15 +1,4 @@
----
-layout: post
-title: "Inner functions - what are they good for?"
-date: 2014-08-04 06:57:51 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals]
-
-keywords: "python, inner functions, nested functions, decorators, encapsulation, closure"
-description: "In this article we take a look at three common reasons for using inner functions in Python."
----
+# Inner functions - what are they good for?
 
 Let's look at three common reasons for writing inner functions.
 

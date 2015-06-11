@@ -1,15 +1,4 @@
----
-layout: post
-title: "Fingerprinting Images for Near-Duplicate Detection"
-date: 2014-12-18 07:51:47 -0800
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, opencv, data science]
-
-keywords: "python, opencv, fingerprinting images, near-duplicate, near-duplicate detection, image processing, computer vision"
-description: "Let's look at how to to utilize image fingerprinting to perform near-duplicate image detection."
----
+# Fingerprinting Images for Near-Duplicate Detection
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/image_fingerprint_flow.jpg" style="max-width: 100%;" alt="python requests cache">

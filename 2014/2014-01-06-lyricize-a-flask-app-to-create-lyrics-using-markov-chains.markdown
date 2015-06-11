@@ -1,15 +1,4 @@
----
-layout: post
-title: "Lyricize: A Flask app to create lyrics using Markov chains"
-date: 2014-01-06 17:20:19 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask, markov chains"
-description: "In this post, we'll work through the process of launching a MVP, from the initial conception of the idea to a shareable prototype utilizing Flask. We'll create an app to generate lyrics using Markov chains."
----
+# Lyricize: A Flask app to create lyrics using Markov chains
 
 New coders [are](http://www.reddit.com/r/learnpython/comments/xjlsh/i_just_finished_codeacademys_python_course/) [always](http://www.reddit.com/r/learnpython/comments/zc2c2/done_learning_python_what_next/) [looking](http://www.reddit.com/r/learnpython/comments/ul1b8/any_good_projects_for_beginners/) [for](http://www.reddit.com/r/learnpython/comments/1a9yie/worked_with_python_for_almost_a_year_now_how_to/) [new](http://www.reddit.com/r/learnpython/comments/1iqv3c/please_help_me_prepare_a_roadmap_as_to_what_i/) [projects](http://www.reddit.com/r/learnpython/comments/1czbfw/kinda_lostwhat_to_do_next/) - as well they should be! Not only is making your own side project the best way to get hands-on experience, but if you're looking to make the move from a hobby to a profession, then side projects are a great way to start building up a portfolio of work.
 

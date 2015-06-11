@@ -1,15 +1,4 @@
----
-layout: post
-title: "Primer on Python Decorators"
-date: 2014-02-05 08:43:57 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals]
-
-keywords: "python, fundamentals, decorators"
-description: "In this introductory tutorial, we'll look at what decorators are and how to create and use them."
----
+# Primer on Python Decorators
 
 Decorators provide a simple syntax for calling [higher-order functions](http://en.wikipedia.org/wiki/Higher-order_function). By definition, a decorator is a function that takes another function and extends the behavior of the latter function without explicitly modifying it. Sounds confusing - but it's really not, especially after we go over a number of examples.
 

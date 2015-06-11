@@ -1,15 +1,4 @@
----
-layout: post
-title: "Working with Django and Flask on Nitrous.IO"
-date: 2014-01-16 07:45:19 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django, flask]
-
-keywords: "python, web development, django, flask, nitrious.io"
-description: "In this article we will look at how to quickly set up a cloud-based development environment with Nitrious.IO."
----
+# Working with Django and Flask on Nitrous.IO
 
 This is a guest post by our friend Greg McKeever from [Nitrous.IO](http://www.nitrous.io?utm_source=realpython.com&utm_medium=blog&utm_content=nitrous_io_python_dev_environment).
 

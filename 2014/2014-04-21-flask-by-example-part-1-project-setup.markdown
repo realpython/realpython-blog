@@ -1,15 +1,4 @@
----
-layout: post
-title: "Flask by Example - Project Setup"
-date: 2014-04-21 10:09:52 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, devops]
-
-keywords: "python, web development, flask, heroku"
-description: "This tutorial shows you how to process text and then setup a request queue with Flask. In part one, we'll set up a local development environment and then deploy both a staging environment and a production environment on Heroku."
----
+# Flask by Example - Project Setup
 
 *The following is a collaboration piece between Cam Linke, co-founder of [Startup Edmonton](http://startupedmonton.com/), and the folks at Real Python.*
 

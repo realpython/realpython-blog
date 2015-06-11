@@ -1,15 +1,4 @@
----
-layout: post
-title: "Flask by Example - Implementing a Redis Task Queue"
-date: 2014-09-08 05:52:29 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask, heroku, requests, nltk, beautiful soup, text processing"
-description: "This tutorial shows you how to process text and then setup a request queue with Flask. In part four, we're implementing a Redis task queue to handle the text processing."
----
+# Flask by Example - Implementing a Redis Task Queue
 
 *The following is a collaboration piece between Cam Linke, co-founder of [Startup Edmonton](http://startupedmonton.com/), and the folks at Real Python.*
 

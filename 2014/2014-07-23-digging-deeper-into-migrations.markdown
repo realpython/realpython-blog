@@ -1,15 +1,4 @@
----
-layout: post
-title: "Digging Deeper into Migrations"
-date: 2014-07-23 07:14:57 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django, migrations]
-
-keywords: "python, django, web development, python tutorial, django 1.7, migrations"
-description: "This tutorial takes you deeper through the new Django migration system that is integrated in the Django, taking you through the migration files themselves."
----
+# Digging Deeper into Migrations
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/django-migrations.png" style="max-width: 100%;">

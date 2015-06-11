@@ -1,15 +1,4 @@
----
-layout: post
-title: "Flask by Example - Integrating Flask and AngularJS"
-date: 2014-10-06 06:48:03 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, front-end]
-
-keywords: "python, web development, flask, angular, angularjs, polling"
-description: "This tutorial shows you how to utilize AngularJS to create a simple polling service."
----
+# Flask by Example - Integrating Flask and AngularJS
 
 {% assign openTag = '{%' %}
 

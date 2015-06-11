@@ -1,15 +1,4 @@
----
-layout: post
-title: "Flask by Example - Updating the Staging Environment"
-date: 2014-11-17 07:42:18 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, devops]
-
-keywords: "python, web development, flask, heroku, dyno"
-description: "In this part of the Flask By Example series, we'll setup Redis on Heroku and look at how to run both our web and worker process on a single dyno"
----
+# Flask by Example - Updating the Staging Environment
 
 **In this part, we'll update the staging environment, with our latest code changes, by first setting up Redis on Heroku and then looking at how to run both our web and worker processes on a single dyno.**
 

@@ -1,15 +1,4 @@
----
-layout: post
-title: "Web Scraping with Scrapy and MongoDB"
-date: 2014-12-31 08:49:52 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, scraping]
-
-keywords: "python, scrapy, scraping, python scraping, web scraping, mongo, mongodb"
-description: "This tutorial covers how to write a crawler using Scrapy to scrape and parse data and then store the data in MongoDB."
----
+# Web Scraping with Scrapy and MongoDB
 
 <br>
 

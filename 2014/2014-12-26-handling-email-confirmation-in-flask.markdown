@@ -1,15 +1,4 @@
----
-layout: post
-title: "Handling Email Confirmation during Registration in Flask"
-date: 2014-12-26 08:44:03 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, flask, email confirmation, confirmation email, registration, authentication"
-description: "This tutorial details how to validate email addresses during user registration."
----
+# Handling Email Confirmation during Registration in Flask
 
 **This tutorial details how to validate email addresses during user registration.**
 

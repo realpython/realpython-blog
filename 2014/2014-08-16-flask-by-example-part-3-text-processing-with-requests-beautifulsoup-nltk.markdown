@@ -1,15 +1,4 @@
----
-layout: post
-title: "Flask by Example - Text Processing with Requests, BeautifulSoup, and NLTK"
-date: 2014-08-18 08:18:37 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, data science]
-
-keywords: "python, web development, flask, heroku, requests, nltk, beautiful soup, text processing"
-description: "This tutorial shows you how to process text and then setup a request queue with Flask. In part three, we're going scrape the content of a webpage that the user enters and then process the text to display the number of times a word occurs."
----
+# Flask by Example - Text Processing with Requests, BeautifulSoup, and NLTK
 
 *The following is a collaboration piece between Cam Linke, co-founder of [Startup Edmonton](http://startupedmonton.com/), and the folks at Real Python.*
 

@@ -1,15 +1,4 @@
----
-layout: post
-title: "Discover Flask, Part 1 - Setting up a static site"
-date: 2014-06-04 12:22:03 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask, hello world"
-description: "In Part 1 of this series on the Flask framework, we'll set up a basic project structure then develop a static site, styled with Bootstrap."
----
+# Discover Flask, Part 1 - Setting up a static site
 
 Welcome to the Discover Flask series ...
 

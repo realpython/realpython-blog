@@ -1,15 +1,4 @@
----
-layout: post
-title: "Twitter Sentiment - Python, Docker, Elasticsearch, Kibana"
-date: 2014-11-13 08:49:48 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, analytics, docker]
-
-keywords: "python, docker, sentiment analysis, elasticsearch, kibana, twitter sentiment analysis"
-description: "This post details how to perform Twitter sentiment analysis using Python, Docker, Elasticsearch, and Kibana."
----
+# Twitter Sentiment - Python, Docker, Elasticsearch, Kibana
 
 ![kibana-pie-chart](https://raw.githubusercontent.com/realpython/twitter-sentiment-elasticsearch/master/images/overall-pie-chart.png)
 

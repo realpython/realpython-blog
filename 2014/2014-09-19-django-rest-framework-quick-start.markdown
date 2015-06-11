@@ -1,15 +1,4 @@
----
-layout: post
-title: "Django Rest Framework - an introduction"
-date: 2014-09-22 08:02:45 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django, api]
-
-keywords: "python, REST, Django, django rest framework, django rest, API, REST API"
-description: "In this tutorial, we'll develop a RESTful API with the Django Rest Framework."
----
+# Django Rest Framework - an introduction
 
 ![drf-image](https://raw.githubusercontent.com/realpython/django-form-fun/master/images/drf.png)
 

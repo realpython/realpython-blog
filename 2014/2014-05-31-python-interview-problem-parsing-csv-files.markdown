@@ -1,15 +1,4 @@
----
-layout: post
-title: "Python Interview Problem - Parsing CSV Files"
-date: 2014-05-31 11:55:32 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals, data science]
-
-keywords: "python, fundamentals, parse, parsing, parsing csv, csv, parsing csv python"
-description: "In this post, I answer a Python interview question involving CSV parsing and test driven development."
----
+# Python Interview Problem - Parsing CSV Files
 
 So, a friend of mine recently interviewed for a back-end Python developer position, and the initial interview consisted of answering the following problem. He was given two hours.
 

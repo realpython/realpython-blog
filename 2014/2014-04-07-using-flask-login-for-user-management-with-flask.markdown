@@ -1,15 +1,4 @@
----
-layout: post
-title: "Using Flask-Login for User Management with Flask"
-date: 2014-04-07 09:46:55 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask, flask-login"
-description: "This post details how to add an anaytics platform to the digital goods payment service 'bull' by Jeff Knupp."
----
+# Using Flask-Login for User Management with Flask
 
 *The following is a guest post by [Jeff Knupp](http://www.jeffknupp.com/), author of [Writing Idiomatic Python](http://www.jeffknupp.com/writing-idiomatic-python-ebook/). Jeff currently has a [Kickstarter](https://www.kickstarter.com/projects/1219760486/a-writing-idiomatic-python-video-series-watch-and) campaign running to turn the book into a video series - check it out!*
 

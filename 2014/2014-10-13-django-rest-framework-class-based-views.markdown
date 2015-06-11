@@ -1,15 +1,4 @@
----
-layout: post
-title: "Django Rest Framework - class based views"
-date: 2014-10-13 06:26:43 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django, api]
-
-keywords: "python, REST, Django, django rest framework, django rest, API, REST API, cbv, class based views"
-description: "In this part we'll refactor our Django Rest Framework views to use class based views."
----
+# Django Rest Framework - class based views
 
 ![drf-cbv-image](https://raw.githubusercontent.com/realpython/django-form-fun/master/images/drf-cbv.png)
 

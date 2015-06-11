@@ -1,15 +1,4 @@
----
-layout: post
-title: "Django and AJAX Form Submissions - say 'goodbye' to the page refresh"
-date: 2014-08-25 07:28:36 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django,front-end]
-
-keywords: "python, Django, javascript, jquery, ajax"
-description: "In this tutorial we'll look at how to add AJAX to a Django form to handle form submissions."
----
+# Django and AJAX Form Submissions - say 'goodbye' to the page refresh
 
 This is a collaboration piece between Real Python and the mighty Nathan Nichols, using a collaborative method we have dubbed 'agile blogging`. Say 'hi' [@natsamnic](http://twitter.com/natsamnic).
 

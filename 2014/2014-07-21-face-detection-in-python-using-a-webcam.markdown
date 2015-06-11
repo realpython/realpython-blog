@@ -1,15 +1,4 @@
----
-layout: post
-title: "Face detection in Python using a webcam"
-date: 2014-07-22 06:14:28 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, opencv, data science]
-
-keywords: "python, facial detection, face recognition, opencv, face detection, image processing, computer vision"
-description: "Let's look at an example of using Python and OpenCV to perform face recognition using a Webcam."
----
+# Face detection in Python using a webcam
 
 *The following is a guest post by Shantnu Tiwari, who suffered at the hands of C/C++ for several years before he discovered Python, and it felt like a breath of fresh air.*
 

@@ -1,15 +1,4 @@
----
-layout: post
-title: "Primer on Jinja Templating"
-date: 2014-03-03 09:08:15 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask, jinja, jinja2"
-description: "In this tutorial we take a look at Jinja2, a full-featured template engine for the Flask framework and Python"
----
+# Primer on Jinja Templating
 
 <div class="center-text">
   <img class="no-border" src="https://raw.githubusercontent.com/mjhea0/thinkful-mentor/master/python/jinja/images/jinja2.png" style="max-width: 100%;" alt="jinja2">

@@ -1,15 +1,4 @@
----
-layout: post
-title: "Adding Social Authentication to Django"
-date: 2014-11-10 07:49:48 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django]
-
-keywords: "python, Django, Python Social Auth, social authentication, authentication, django social authentication"
-description: "This tutorial shows you how to setup social authentication on Django."
----
+# Adding Social Authentication to Django
 
 [Python Social Auth](https://github.com/omab/python-social-auth) is a library that provides "an easy-to-setup social authentication/registration mechanism with support for several [frameworks](http://psa.matiasaguirre.net/docs/intro.html#supported-frameworks) and [auth providers](http://psa.matiasaguirre.net/docs/intro.html#auth-providers)". In this tutorial, we'll detail how to integrate this library into a Django project to provide user authentication.
 

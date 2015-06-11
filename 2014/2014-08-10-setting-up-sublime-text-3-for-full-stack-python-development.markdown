@@ -1,15 +1,4 @@
----
-layout: post
-title: "Setting up Sublime Text 3 for Full Stack Python Development"
-date: 2014-08-11 08:24:04 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals]
-
-keywords: "python, full-stack, sublime text, sublime-text 3, submlime"
-description: "This article details how to setup Sublime Text for full stack Python development."
----
+# Setting up Sublime Text 3 for Full Stack Python Development
 
 [Sublime Text 3](http://www.sublimetext.com/3) (ST3) is lightweight, cross-platform code editor known for its speed, ease of use, and strong community support. It's an incredible editor right out of the box, but the real power comes from the ability to enhance its functionality using Package Control and creating custom settings.
 

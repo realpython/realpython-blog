@@ -1,15 +1,4 @@
----
-layout: post
-title: "Discover Flask, Part 2 - Creating a login page"
-date: 2014-06-06 12:52:26 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask, hello world"
-description: "In Part 2 of this series on the Flask framework, we'll set up a basic login page."
----
+# Discover Flask, Part 2 - Creating a login page
 
 Welcome to the Discover Flask series ...
 

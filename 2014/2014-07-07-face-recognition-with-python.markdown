@@ -1,15 +1,4 @@
----
-layout: post
-title: "Face Recognition with Python, in under 25 lines of code"
-date: 2014-07-07 13:24:47 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, opencv, data science]
-
-keywords: "python, facial detection, face recognition, opencv, face detection, image processing, computer vision"
-description: "In this tutorial, we'll show an example of using Python and OpenCV to perform face recognition."
----
+# Face Recognition with Python, in under 25 lines of code
 
 *The following is a guest post by Shantnu Tiwari, who has worked in the low level/embedded domain for ten years. Shantnu suffered at the hands of C/C++ for several years before he discovered Python, and it felt like a breath of fresh air. He is now [sharing his love](http://pythonforengineers.com/).*
 

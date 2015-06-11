@@ -1,15 +1,4 @@
----
-layout: post
-title: "Model-View-Controller (MVC) Explained -- with Legos"
-date: 2014-12-20 09:25:15 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, fundamentals]
-
-keywords: "python, software design, model view controller, mvc, model-view-controller, mvc explained"
-description: "This article details the Model-View-Controller (MVC) design pattern with Legos!"
----
+# Model-View-Controller (MVC) Explained -- with Legos
 
 {% assign openTag = '{%' %}
 

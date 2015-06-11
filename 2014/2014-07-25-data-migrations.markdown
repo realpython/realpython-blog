@@ -1,15 +1,4 @@
----
-layout: post
-title: "Data Migrations"
-date: 2014-07-25 09:24:04 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django, migrations]
-
-keywords: "python, django, web development, python tutorial, django 1.7, migrations"
-description: "In this final article covering Django 1.7 migrations, we take a look at Data Migrations."
----
+# Data Migrations
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/django-migrations.png" style="max-width: 100%;">

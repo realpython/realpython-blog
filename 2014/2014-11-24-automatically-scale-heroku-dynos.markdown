@@ -1,15 +1,4 @@
----
-layout: post
-title: "Automatically Scale Heroku Dynos"
-date: 2014-11-24 09:51:28 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, devops]
-
-keywords: "python, web development, flask, heroku, dyno, scale, autoscale,"
-description: "Let's write a simple script to automate the scaling of Heroku dynos."
----
+# Automatically Scale Heroku Dynos
 
 This post details how to write a script to automate the scaling of Heroku dynos based on the time of day. We'll also look at how to add a fail-safe so that our application automatically scales if it's either down completely or experiencing a heavy load.
 

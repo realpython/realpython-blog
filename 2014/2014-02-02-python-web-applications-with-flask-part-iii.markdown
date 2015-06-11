@@ -1,15 +1,4 @@
----
-layout: post
-title: "Python Web Applications With Flask - Part III"
-date: 2014-02-02 08:20:06 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask"
-description: "In this part of our series on Building a Web Application with Flask we'll explore unit and integration testing."
----
+# Python Web Applications With Flask - Part III
 
 Please note: This is a collaboration piece between Michael Herman, from Real Python, and Sean Vieira, a Python developer from [De Deo Designs](http://dedeodesigns.com/).
 

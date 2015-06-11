@@ -1,15 +1,4 @@
----
-layout: post
-title: "Flask by Example - Setting up Postgres, SQLAlchemy, and Alembic"
-date: 2014-04-29 10:53:49 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask]
-
-keywords: "python, web development, flask, heroku, postgres, postgresql, sqlalchemy, alembic"
-description: "This tutorial shows you how to process text and then setup a request queue with Flask. In part two, we'll set up our PostgreSQL database along with SQLAlchemy and Alembic to handle migrations."
----
+# Flask by Example - Setting up Postgres, SQLAlchemy, and Alembic
 
 *The following is a collaboration piece between Cam Linke, co-founder of [Startup Edmonton](http://startupedmonton.com/), and the folks at Real Python.*
 

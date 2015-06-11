@@ -1,15 +1,4 @@
----
-layout: post
-title: "Caching External API Requests"
-date: 2014-12-05 07:29:57 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, fundamentals, api]
-
-keywords: "python, flask, request, cache, caching API requests, caching external API requests, cacheing api calls"
-description: "Let's look at how to to cache external api calls."
----
+# Caching External API Requests
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/requests-cache.png" alt="python requests cache">

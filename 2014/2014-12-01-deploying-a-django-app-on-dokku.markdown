@@ -1,15 +1,4 @@
----
-layout: post
-title: "Deploying Django on Dokku"
-date: 2014-12-01 08:08:46 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, devops, django, docker]
-
-keywords: "python, web development, django, dokku, deployment, heroku"
-description: "Let's look at how to use Dokku as a Heroku replacement for deploying your Django App."
----
+# Deploying Django on Dokku
 
 **Originally written for *[Gun.io](http://www.gun.io)*, this post details how to use Dokku as a Heroku replacement for deploying your Django App.**
 

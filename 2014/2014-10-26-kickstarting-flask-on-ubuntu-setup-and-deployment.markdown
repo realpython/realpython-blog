@@ -1,15 +1,4 @@
----
-layout: post
-title: "Kickstarting Flask on Ubuntu - setup and deployment"
-date: 2014-10-26 08:12:05 -0500
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, devops]
-
-keywords: "python, flask, deployment, ubuntu, digital ocean, linode, deploy, delivery, fabric"
-description: "This guide shows how to setup and deploy a Flask application on an Ubuntu server."
----
+# Kickstarting Flask on Ubuntu - setup and deployment
 
 **This tutorial details how to setup a Flask application on a server running Ubuntu.**
 
