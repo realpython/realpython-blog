@@ -208,7 +208,7 @@ Logging in and viewing the profile are critical parts of security so we want to 
 **`login`**
 
 ```python
-def (self):
+def test_correct_login(self):
     # Ensure login behaves correctly with correct credentials.
     with self.client:
         response = self.client.post(
