@@ -109,7 +109,7 @@ app.Commands = []cli.Command{
 
 The registration logic is as follows:
 
-1. If the user asks to `--append` read the `.[py|ru|go]mr` file if it exits.
+1. If the user asks to `--append` read the `.[py|ru|go]mr` file if it exists.
 2. Merge the existing tags with the given tags.
 3. Write a new `.[...]mr` file with the new tags.
 
