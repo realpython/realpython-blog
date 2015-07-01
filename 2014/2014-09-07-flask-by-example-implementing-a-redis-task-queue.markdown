@@ -182,7 +182,7 @@ job = q.enqueue_call(
 print(job.get_id())
 ```
 
-Here we use the queue that we initialized earlier and call the `enqueue_call()` function. This adds a new job to our queue and that job runs the `count_and_save_words()` function with the URL as the argument. The `result_ttl=5000` line argument tells RQ how long to hold on to the result of the job for - 5 seconds. Then we output the job id to the terminal. This id is needed to see if the job is done processing.
+Here we use the queue that we initialized earlier and call the `enqueue_call()` function. This adds a new job to our queue and that job runs the `count_and_save_words()` function with the URL as the argument. The `result_ttl=5000` line argument tells RQ how long to hold on to the result of the job for - 5000 seconds. Then we output the job id to the terminal. This id is needed to see if the job is done processing.
 
 Let's setup a new route for that...
 
@@ -206,7 +206,7 @@ Fire up the server, navigate to [http://localhost:5000/](http://localhost:5000/)
 
 For example: [http://localhost:5000/results/ef600206-3503-4b87-a436-ddd9438f2197](http://localhost:5000/results/ef600206-3503-4b87-a436-ddd9438f2197).
 
-As long as 5 seconds has elapsed before you check the status, then you should see an id number, which is generated when we add the results to the database:
+As long as less than 5 seconds have elapsed before you check the status, then you should see an id number, which is generated when we add the results to the database:
 
 ```python
 # save the results
