@@ -425,7 +425,7 @@ This simply says, "Use the environment variable settings if present, otherwise u
 
 ### Handling database migrations
 
-With our database setup, we still need to make sure that migrations are ran so that the database table structure is correct. We can do that by modifying *.ebextensions/02_python.confg* and adding the following lines at the top of the file:
+With our database setup, we still need to make sure that migrations are ran so that the database table structure is correct. We can do that by modifying *.ebextensions/02_python.config* and adding the following lines at the top of the file:
 
 ```yaml
 container_commands:
