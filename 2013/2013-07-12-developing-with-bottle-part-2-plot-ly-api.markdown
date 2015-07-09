@@ -53,6 +53,7 @@ $ pip install plotly==1.2.6
 
 Next update the code in *app.py*:
 
+{% raw %}
 ```python
 import os
 from bottle import run, template, get, post, request
@@ -113,6 +114,7 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
     run(host='0.0.0.0', port=port, debug=True)
 ```
+{% endraw %}
 
 ### What's going on here?
 
