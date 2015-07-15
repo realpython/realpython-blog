@@ -152,7 +152,7 @@ pip install rethinkdb
 ```python
 # rethink imports
 import rethinkdb as r
-from rethinkdb.errors import RqlRuntimeError, RqlDriverError
+from rethinkdb.errors import RqlRuntimeError
 
 # rethink config
 RDB_HOST =  'localhost'
