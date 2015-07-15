@@ -252,11 +252,11 @@ Update the `index()` function again to pull the data from the form and add it to
 @app.route('/', methods = ['GET', 'POST'])
 def index():
     form = TaskForm()
-        if form.validate_on_submit():
-            r.table('todos').insert({"name":form.label.data}).run(g.rdb_conn)
-            return redirect(url_for('index'))
-        selection = list(r.table('todos').run(g.rdb_conn))
-        return render_template('index.html', form = form, tasks = selection)
+      if form.validate_on_submit():
+          r.table('todos').insert({"name":form.label.data}).run(g.rdb_conn)
+          return redirect(url_for('index'))
+      selection = list(r.table('todos').run(g.rdb_conn))
+      return render_template('index.html', form = form, tasks = selection)
 ```
 
 Test this out. Add some todos. Go crazy.
@@ -272,7 +272,7 @@ Here's a few ideas:
 3. Add functional and unit tests.
 4. Add the ability to create sub tasks for each task.
 5. Read over the API reference [docs](http://www.rethinkdb.com/api/python/). Play around with various methods.
-6. Moduralize the app.
+6. Modularize the app.
 7. Refactor the code. Show off your new code to RethinkDB.
 
 What else would you like to see? Interested in seeing a part 2? How do you like RethinkDB in comparison to MongoDB? Share your thoughts below.
