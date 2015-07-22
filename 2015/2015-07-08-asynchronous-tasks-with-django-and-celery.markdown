@@ -1,15 +1,4 @@
----
-layout: post
-title: "Asynchronous Tasks with Django and Celery"
-date: 2015-07-08 07:55:26 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, django]
-
-keywords: "python, web development, django, celery, celery tasks, asynchronous tasks, redis, task queue"
-description: "This tutorial shows how to integrate Celery and Django and create Periodic Tasks"
----
+# Asynchronous Tasks with Django and Celery
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/django-and-celery/django-celery.png" style="max-width: 100%;" alt="Django and Celery">
