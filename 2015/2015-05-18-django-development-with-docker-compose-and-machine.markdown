@@ -162,7 +162,7 @@ data:
   image: postgres:latest
   volumes:
     - /var/lib/postgresql
-  command: true
+  command: "true"
 ```
 
 Here, we're defining five services - *web*, *nginx*, *postgres*, *redis*, and *data*.
