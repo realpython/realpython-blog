@@ -255,7 +255,7 @@ APP_SETTINGS: config.StagingConfig
 Since we don't see anything about a database, we need to add the Postgres addon to the staging server. To do so, run the following command to add the Postgres addon to your Heroku app:
 
 ```
-$ heroku addons:add heroku-postgresql:dev --app wordcounts-stage
+$ heroku addons:create heroku-postgresql:hobby-dev --app wordcounts-stage
   Adding heroku-postgresql:dev on wordcount-stage... done, v8 (free)
   Attached as HEROKU_POSTGRESQL_AMBER_URL
   Database has been created and is available
@@ -263,6 +263,8 @@ $ heroku addons:add heroku-postgresql:dev --app wordcounts-stage
    ! data from another database with pgbackups:restore.
   Use `heroku addons:docs heroku-postgresql:dev` to view documentation.
 ```
+
+Please note: The `hobby-dev` is the free teir Heroku Postgres addon.
 
 Now when we run Heroku config again we should see the connection settings for our URL.
 
@@ -295,7 +297,7 @@ $ heroku run python manage.py db upgrade --app wordcounts-stage
 Let's now do the same for our production site. Set up a database for your production app on Heroku, just like you did for staging. Push your changes to your production site. Notice how you don't have to make any changes to the config file - it's setting the database based on the newly created `DATABASE_URL` environment variable.
 
 ```sh
-$ heroku addons:add heroku-postgresql:dev --app wordcounts-pro
+$ heroku addons:create heroku-postgresql:hobby-dev --app wordcounts-pro
 $ git push pro master
 $ heroku run python manage.py db upgrade --app wordcounts-pro
 ```
