@@ -254,7 +254,7 @@ APP_SETTINGS: config.StagingConfig
 
 Since we don't see anything about a database, we need to add the Postgres addon to the staging server. To do so, run the following command to add the Postgres addon to your Heroku app:
 
-```
+```sh
 $ heroku addons:create heroku-postgresql:hobby-dev --app wordcounts-stage
   Adding heroku-postgresql:dev on wordcount-stage... done, v8 (free)
   Attached as HEROKU_POSTGRESQL_AMBER_URL
@@ -264,7 +264,7 @@ $ heroku addons:create heroku-postgresql:hobby-dev --app wordcounts-stage
   Use `heroku addons:docs heroku-postgresql:dev` to view documentation.
 ```
 
-Please note: The `hobby-dev` is the free teir Heroku Postgres addon.
+> **NOTE**: `hobby-dev` is the [free teir](https://addons.heroku.com/heroku-postgresql#hobby-dev) Heroku Postgres addon.
 
 Now when we run Heroku config again we should see the connection settings for our URL.
 
