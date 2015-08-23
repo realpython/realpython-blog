@@ -39,25 +39,24 @@ $ pip install psycopg2 Flask-SQLAlchemy Flask-Migrate
 $ pip freeze > requirements.txt
 ```
 
-Psycopg is is a Python adapter for Postgres, SQLAlchemy is an awesome Python ORM, and Flask-Migrate will install both that extension and Alembic which we'll use for our database migrations.
+Psycopg is a Python adapter for Postgres, SQLAlchemy is an awesome Python ORM, and Flask-Migrate will install both that extension and Alembic which we'll use for our database migrations.
 
 > If you're on Mavericks and having trouble installing psycopg2 check out [this](http://stackoverflow.com/questions/22313407/clang-error-unknown-argument-mno-fused-madd-python-package-installation-fa) Stack Overflow article.
 
 ## Update Configuration
 
-Add the following line to the `Config()` class in your *config.py* file to set your app to use the newly created database in development (local), staging, and production:
-
-```python
-SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-```
-
-Also make sure to add the following import:
+Add `SQLALCHEMY_DATABASE_URI` field to the `Config()` class in your *config.py* file to set your app to use the newly created database in development (local), staging, and production:
 
 ```python
 import os
+
+class Config(object):
+    ...
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 ```
 
-Your config file should now look like this:
+
+Your *config.py* file should now look like this:
 
 ```python
 import os
@@ -91,21 +90,16 @@ class TestingConfig(Config):
 
 Now when our config is loaded into our app the appropriate database will be connected to it as well.
 
-Similar to how we added an environment variable in the last post, we are going to add a `DATABASE_URL` variable to our *postactivate* file. Using VIM you can do this in the following way:
+Similar to how we added an environment variable in the last post, we are going to add a `DATABASE_URL` variable to our *postactivate* file (located at `$VIRTUAL_ENV/bin/postactivate`).
 
-Open your file in VIM:
-
+Your postactivate should look like:
 ```
-$ vi $VIRTUAL_ENV/bin/postactivate
-```
+$cat $VIRTUAL_ENV/bin/postactivate
+#!/bin/bash
 
-Press 'i' on your keyboard to insert text and add the following line to your file:
-
-```
+export APP_SETTINGS="config.DevelopmentConfig"
 export DATABASE_URL="postgresql://localhost/wordcount_dev"
 ```
-
-Now hit escape, type ':' then 'wq', and press enter to save and close VIM.
 
 Restart your environment:
 
@@ -170,13 +164,13 @@ class Result(db.Model):
 
 What we're doing here is creating a table to store the results of our word counts. We first import the database connection that we created in our *app.py* file as well as JSON from SQLAlchemy's [PostgreSQL dialects](http://docs.sqlalchemy.org/en/latest/dialects/postgresql.html#sqlalchemy.dialects.postgresql.JSON). JSON columns are fairly new to Postgres and are not available in every database supported by SQLAlchemy so we need to import it specifically.
 
-Next we create a `Result()` class and assign it a table name of `results`. We then set the attributes that we want to store for a result - the 'id' of the result we stored, the 'url' that we counted the words from, a full list of words that we counted, and a list of words that we counted minus stop words (more on this later).
+Next we create a `Result()` class and assign it a table name of `results`. We then set the attributes that we want to store for a result - the `id` of the result we stored, the `url` that we counted the words from, a full list of words that we counted, and a list of words that we counted minus stop words (more on this later).
 
 We then create an `__init__()` method that will run the first time we create a new result and, finally, a `__repr__()` method to represent the object when we query for it.
 
 ## Local Migration
 
-We are going to use Alembic and Flask-Migrate to migrate our database to the latest version. Alembic is migration library for SQLAlchemy and could be used without Flask-Migrate if you want. However Flask-Migrate does help with some of the setup and makes things easier.
+We are going to use [Alembic](https://alembic.readthedocs.org/) and [Flask-Migrate](https://flask-migrate.readthedocs.org/) to migrate our database to the latest version. Alembic is migration library for SQLAlchemy and could be used without Flask-Migrate if you want. However Flask-Migrate does help with some of the setup and makes things easier.
 
 Create a new file called *manage.py*:
 
