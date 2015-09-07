@@ -102,9 +102,9 @@ $ touch app.py .gitignore README.md requirements.txt
 This will give you the following structure:
 
 ```sh
-├── README.md
+├── .gitignore
 ├── app.py
-├── blog.md
+├── README.md
 └── requirements.txt
 ```
 
