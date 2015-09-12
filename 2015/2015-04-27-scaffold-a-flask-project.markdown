@@ -113,7 +113,7 @@ We now need to generate a custom *config.py* file for each skeleton. This script
 
 {% raw %}
 ```python
-# config.py
+# config.jinja2
 
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
