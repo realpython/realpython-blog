@@ -258,7 +258,7 @@ $ heroku addons:create heroku-postgresql:hobby-dev --app wordcounts-stage
   Use `heroku addons:docs heroku-postgresql:dev` to view documentation.
 ```
 
-> **NOTE**: `hobby-dev` is the [free teir](https://addons.heroku.com/heroku-postgresql#hobby-dev) Heroku Postgres addon.
+> **NOTE**: `hobby-dev` is the [free tier](https://addons.heroku.com/heroku-postgresql#hobby-dev) Heroku Postgres addon.
 
 Now when we run Heroku config again we should see the connection settings for our URL.
 
