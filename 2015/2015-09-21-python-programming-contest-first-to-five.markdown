@@ -25,7 +25,7 @@ Need some motivation? We'll be giving out prizes to the strategies that perform 
 
 ## Grading
 
-The grading is simple: We'll play against each algorithm 100 times, and track the rate that the AI player wins. *Be sure to test your code out in the [game runner](https://gist.github.com/mjhea0/0a6b0bb6cc7557776ab8) before submitting.*
+The grading is simple: We'll run each strategy through the random number generator 100 times as a first screen - `return random.randrange(1, 10)`. The strategies that beat the generator we'll then be ran against one other in a round robin format to determine the overall winners. *Be sure to test your code out in the [game runner](https://gist.github.com/mjhea0/0a6b0bb6cc7557776ab8) before submitting.*
 
 To submit your script, just email us a link to a secret Gist - *info (at) realpython (dot) com*. Submissions end on September 28th. You have one week.
 
