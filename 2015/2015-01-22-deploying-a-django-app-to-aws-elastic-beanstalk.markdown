@@ -556,7 +556,7 @@ container_commands:
     command: "cp .ebextensions/enable_mod_deflate.conf /etc/httpd/conf.d/enable_mod_deflate.conf"
 ```
 
-Then you need to create the file `.ebextension/enable_mod_deflate.conf`:
+Then you need to create the file `.ebextensions/enable_mod_deflate.conf`:
 
 ```
 # mod_deflate configuration
