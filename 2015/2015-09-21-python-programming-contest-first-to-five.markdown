@@ -1,6 +1,10 @@
-# Python Programming Contest - first to five
+# Python Programming Challenge - first to five
 
 We've partnered with our friends at [Interview Cake](https://www.interviewcake.com/) to bring you a programming challenge to test your logic skills and abilities.
+
+<br>
+
+**Updated 10/16/2015:** Added additional challenges - cheers!
 
 ## The Challenge
 
@@ -15,6 +19,8 @@ The challenge is to write a script to play this game. Knowing the rules and all 
 
 Is it possible to program a strong strategy?
 
+> Want to make the strategy a bit more interesting? Add an additional constraint to the challenge so that players can only use each number once. *The first ten working submissions get a free copy of Real Python! (still open to submissions)*
+
 ## The Prizes
 
 Need some motivation? We'll be giving out prizes to the strategies that perform the best:
@@ -23,10 +29,10 @@ Need some motivation? We'll be giving out prizes to the strategies that perform 
 - 2nd and 3rd places: [RC Quadcopter with Camera](http://www.amazon.com/UDI-U818A-2-4GHz-RC-Quadcopter/dp/B00D3IN11Q/ref=sr_1_2)
 - The top 5 submissions will receive a free account on Interview Cake as well as a free copy of the Real Python courses!
 
+> Although the challenge is officially over you can still partake! First, see if you can beat the [current](https://gist.github.com/mjhea0/d7fc846ea8ab2b03e819) winner to receive $20 off of Real Python. Second, create a web application with Flask that (a) makes it easy to add a new strategy and then (b) runs a given strategy against all the other strategies.
+
 ## Grading
 
 The grading is simple: We'll run each strategy through the random number generator 100 times as a first screen - `return random.randrange(1, 10)`. The strategies that beat the generator we'll then be ran against one other in a round robin format to determine the overall winners. *Be sure to test your code out in the [game runner](https://gist.github.com/mjhea0/0a6b0bb6cc7557776ab8) before submitting.*
 
-To submit your script, just email us a link to a secret Gist - *info (at) realpython (dot) com*. Submissions end on September 28th. You have one week.
-
-Good luck!
+To submit your script, just email us a link to a secret Gist - *info (at) realpython (dot) com*. Good luck!
