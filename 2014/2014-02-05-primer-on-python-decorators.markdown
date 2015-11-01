@@ -6,6 +6,8 @@ Decorators provide a simple syntax for calling [higher-order functions](http://e
 
 > You can find all the examples from this article [here](https://github.com/mjhea0/python-decorators).
 
+*Updated 11/01/2015:* Added a brief explanation on the `functools.wraps()` decorator.
+
 ## First things first
 
 Before you can understand decorators, you must first understand ...
@@ -337,5 +339,7 @@ def login_required(f):
 def secret():
     pass
 ```
+
+Did you notice that the function gets passed to the `functools.wraps()` [decorator](https://docs.python.org/2/library/functools.html#functools.wraps)? This simply [preserves](http://stackoverflow.com/questions/308999/what-does-functools-wraps-do) the metadata of the wrapped function.
 
 **Cheers!**
