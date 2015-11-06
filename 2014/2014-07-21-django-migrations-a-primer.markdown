@@ -10,6 +10,9 @@ In the past you probably used [South](http://south.aeracode.org/) to handle data
 
 In honor of this momentous update, we are going to cover migrations, how they work and how to get the most out of them across three blog posts and one video:
 
+> Note: this article has been updated to cover 1.8 specific functionality as it relates to migraitons as well.
+
+
 - **Part 1: Django Migrations - A Primer (current article)**
 - Part 2: [Digging Deeper into Migrations](https://realpython.com/blog/python/digging-deeper-into-migrations/)
 - Part 3: [Data Migrations](https://realpython.com/blog/python/data-migrations)
@@ -44,7 +47,7 @@ For this blog post we are going to create a simple bitcoin tracker app (actually
 
 ### Setup the project
 
-With Django 1.7 installed you can create the project using the following commands:
+With Django 1.8 installed you can create the project using the following commands:
 
 ```sh
 $ django-admin.py startproject bitcoin_tracker
@@ -86,6 +89,16 @@ Migrations for 'historical_data':
 
 This creates the migrations files which instruct Django on how to create the models that you need.
 
+#### Being OCD about naming
+
+If you noticed in the above example django came up with a name for the migration.  i.e. `0001_initial.py`.  If your name happy with that name and your running >= Django 1.8 you can use the `--name` parameter to give it whatever name you want.  i.e.
+
+```sh
+./manage.py makemigrations historical_data --name myfirstmigration
+```
+
+This will create the same migration as before accept with the nem name of `myfirstmigration.py`
+
 ### Apply migrations
 
 Then to apply the models (e.g., update the database) just run:
@@ -111,7 +124,7 @@ That's it! Pretty straight-forward for the basic use-case. Fortunately, this bas
 
 That's all well and good if you're starting from scratch but many people will be upgrading from a previous version of Django and migrating from South.
 
-To do that, Django recommends to just start using the new migrations system and everything should work. The recommended upgrade path from South to Django 1.7 migrations, paraphrased from [here](https://docs.djangoproject.com/en/dev/topics/migrations/#upgrading-from-south) is basically:
+To do that, Django recommends to just start using the new migrations system and everything should work. The recommended upgrade path from South to Django 1.8 migrations, paraphrased from [here](https://docs.djangoproject.com/en/dev/topics/migrations/#upgrading-from-south) is basically:
 
 1. Delete all your South migration files (yup - just blow 'em away).
 2. Run `./manage.py makemigrations`. Django will just make initial migrations files based upon your current models.
@@ -124,6 +137,26 @@ $ ./manage.py migrate --fake <appname>
 ```
 
 Also, if you have a need to support both South and Django Migrations at the same time then upgrade to South 1.0 and read [this article](http://treyhunner.com/2014/03/migrating-to-django-1-dot-7/).
+
+## Listing out migrations
+
+It's also worth mentioning that if for whatever reason you want to see what migrations are in a certain app / project you can use the `showmigrations` command like so:
+
+```sh
+$ ./manage.py showmigrations --list
+```
+
+This will list all apps in the project and the migrations associated with each app.  Also it will but a big `X` next to the migrations that have already been applied.  Useful information if your trying to understand what migrations exists / have been applied to your project.
+
+### If you already have a database
+
+A similar scenario is when you already have a database (maybe because you have restored it from production) and you want to start working with migrtaions against that database without blowing away the data already there.  In that case you can use the `--fake-inital` option.
+
+```sh
+$ ./manage.py migrate --fake-initial <appname>
+```
+
+This will lok at your migration files, and basically skip the creation of tables that are already in your database.  Do note though that any migrations that don't create tables but rather modify existing tables will be run.  This makes it simple to work with existing databases.
 
 ## South vs Django migrations
 
