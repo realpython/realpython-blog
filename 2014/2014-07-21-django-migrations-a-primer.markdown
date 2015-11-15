@@ -92,7 +92,7 @@ Migrations for 'historical_data':
 
 This creates the migrations files which instruct Django on how to create the models that you need.
 
-#### Being OCD about naming
+**Being OCD about naming**
 
 Did you notice in the above example that Django came up with a name for the migration - *0001_initial.py*. If you're not happy with that name and you're running >= Django 1.8, then you can use the `--name` parameter to give it whatever name you want:
 
