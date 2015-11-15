@@ -4,14 +4,17 @@
   <img class="no-border" src="/images/blog_images/django-migrations.png" style="max-width: 100%;">
 </div>
 
+**Updates**:
+
+- *Nov 12, 2015*: Updated to cover Django 1.8 specific functionality as it relates to migrations.
+
+<hr>
+
 What's new in Django 1.7? Basically migrations. While there are some other nice features, the new migrations system is the big one.
 
 In the past you probably used [South](http://south.aeracode.org/) to handle database changes. However, in Django 1.7, migrations are now integrated into the Django Core thanks to Andrew Godwin, who ran [this Kickstarter](https://www.kickstarter.com/projects/andrewgodwin/schema-migrations-for-django). He is also the original creator of South.
 
 In honor of this momentous update, we are going to cover migrations, how they work and how to get the most out of them across three blog posts and one video:
-
-> Note: this article has been updated to cover 1.8 specific functionality as it relates to migraitons as well.
-
 
 - **Part 1: Django Migrations - A Primer (current article)**
 - Part 2: [Digging Deeper into Migrations](https://realpython.com/blog/python/digging-deeper-into-migrations/)
@@ -74,7 +77,7 @@ This is a basic model to keep track of bitcoin prices.
 With the model created, the first thing we need to do is "initialize" our migrations. We can do this with the following command:
 
 ```sh
-./manage.py makemigrations historical_data
+$ $ ./manage.py makemigrations historical_data
 ```
 
 > **Note:** Specifying the name of the application, `historical_data`, is optional. Leaving it off will create migrations for all apps.
@@ -91,10 +94,10 @@ This creates the migrations files which instruct Django on how to create the mod
 
 #### Being OCD about naming
 
-If you noticed in the above example django came up with a name for the migration.  i.e. `0001_initial.py`.  If your name happy with that name and your running >= Django 1.8 you can use the `--name` parameter to give it whatever name you want.  i.e.
+Did you notice in the above example that Django came up with a name for the migration - *0001_initial.py*. If you're not happy with that name and you're running >= Django 1.8, then you can use the `--name` parameter to give it whatever name you want:
 
 ```sh
-./manage.py makemigrations historical_data --name myfirstmigration
+$ ./manage.py makemigrations historical_data --name myfirstmigration
 ```
 
 This will create the same migration as before accept with the nem name of `myfirstmigration.py`
@@ -146,17 +149,17 @@ It's also worth mentioning that if for whatever reason you want to see what migr
 $ ./manage.py showmigrations --list
 ```
 
-This will list all apps in the project and the migrations associated with each app.  Also it will but a big `X` next to the migrations that have already been applied.  Useful information if your trying to understand what migrations exists / have been applied to your project.
+This will list all apps in the project and the migrations associated with each app.  Also it will but a big `X` next to the migrations that have already been applied.  Useful information if you're trying to understand what migrations exists / have been applied to your project.
 
 ### If you already have a database
 
-A similar scenario is when you already have a database (maybe because you have restored it from production) and you want to start working with migrtaions against that database without blowing away the data already there.  In that case you can use the `--fake-inital` option.
+A similar scenario is when you already have a database (maybe because you have restored it from production) and you want to start working with migrations against that database without blowing away the data already there. In that case you can use the `--fake-inital` option:
 
 ```sh
 $ ./manage.py migrate --fake-initial <appname>
 ```
 
-This will lok at your migration files, and basically skip the creation of tables that are already in your database.  Do note though that any migrations that don't create tables but rather modify existing tables will be run.  This makes it simple to work with existing databases.
+This will look at your migration files, and basically skip the creation of tables that are already in your database. Do note though that any migrations that don't create tables but rather modify existing tables will be run. This makes it simple to work with existing databases.
 
 ## South vs Django migrations
 
