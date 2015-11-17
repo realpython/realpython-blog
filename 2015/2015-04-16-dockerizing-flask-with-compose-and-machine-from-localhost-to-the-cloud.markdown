@@ -258,6 +258,6 @@ Grab the IP address associated with that Digital Ocean account from the [control
 
 Cheers!
 
-- Grab the code from the [repo](https://github.com/realpython/orchestrating-docker) (star it too!).
+- Grab the code from the [Github repo](https://github.com/realpython/orchestrating-docker) (star it too!).
 - Comment below with questions.
 - Next time we'll extend this workflow to include two more Docker containers running the Flask app and incorporate load balancing into the mix. Stay tuned!
