@@ -212,8 +212,6 @@ $ docker-machine create \
 production
 ```
 
-a626d7b46e92ef3e6796245ef5a357e71edcc9369b2ca193cbda695d2e8d0ddf
-
 This will take a few minutes to provision the droplet and setup a new Docker Machine called *production*:
 
 ```sh
