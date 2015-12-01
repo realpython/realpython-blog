@@ -128,7 +128,7 @@ The following image shows some other basic features that come with Emacs out of 
 One of my favorite simple features of Emacs is being able to do a quick [recursive-grep search](http://www.gnu.org/software/emacs/manual/html_node/emacs/Grep-Searching.html) - `M-x rgrep` For example, say you want to find all instances of the word *python* in any *.md* (markdown) in a given directory:
 
 <div class="center-text">
-  <img class="no-border" src="/images/blog_images/emacs/emacs-simple-features.png" style="max-width: 100%;" alt="emacs rgrep">
+  <img class="no-border" src="/images/blog_images/emacs/emacs-rgrep.gif" style="max-width: 100%;" alt="emacs rgrep">
 </div>
 
 With this basic configuration complete we can begin to dive into configuring the environment for Python development!
