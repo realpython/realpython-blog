@@ -31,7 +31,7 @@ Another topic that does not need to be covered again is the basics of using Emac
 
 To enter the tutorial, use your arrow keys to position the cursor over the words "Emacs Tutorial" and press Enter. You will then be greeted with the following passage:
 
-```
+{% codeblock lang:lisp %}
 Emacs commands generally involve the CONTROL key (sometimes labeled
 CTRL or CTL) or the META key (sometimes labeled EDIT or ALT).  Rather than
 write that in full each time, we'll use the following abbreviations:
@@ -41,7 +41,7 @@ write that in full each time, we'll use the following abbreviations:
  M-<chr>  means hold the META or EDIT or ALT key down while typing <chr>.
     If there is no META, EDIT or ALT key, instead press and release the
     ESC key and then type <chr>.  We write <ESC> for the ESC key.
-```
+{% endcodeblock %}
 
 So, key entries/commands like `C-x C-s` (which is used to save) will be shown throughout the remainder of the post. This command indicates that the CONTROL and X key are pressed at the same time, and then the CONTROL and S key. This is the basic form of interacting with Emacs. Please follow the built-in tutorial as well as the [Guided Tour of Emacs](http://www.gnu.org/software/emacs/tour/) to learn more.
 
@@ -65,7 +65,7 @@ Meanwhile, in Windows, if the *HOME* environment variable is not set, this file 
 
 To begin, the following configuration snippet provides package installation and installs a theme package:
 
-```
+{% codeblock lang:lisp %}
 ;; init.el --- Emacs configuration
 
 ;; INSTALL PACKAGES
@@ -97,7 +97,7 @@ To begin, the following configuration snippet provides package installation and 
 (global-linum-mode t) ;; enable line numbers globally
 
 ;; init.el ends here
-```
+{% endcodeblock %}
 
 The first section of the configuration snippet, `;; INSTALL PACKAGES`, installs two packages called *[better-defaults](http://melpa.org/#/better-defaults)* and [material-theme](http://melpa.org/#/material-theme). The *better-defaults* package is a collection of minor changes to the Emacs defaults that makes a great base to begin customizing from. The *material-theme* package provides a customized set of styles.
 
@@ -127,9 +127,13 @@ The following image shows some other basic features that come with Emacs out of 
 
 One of my favorite simple features of Emacs is being able to do a quick [recursive-grep search](http://www.gnu.org/software/emacs/manual/html_node/emacs/Grep-Searching.html) - `M-x rgrep` For example, say you want to find all instances of the word *python* in any *.md* (markdown) in a given directory:
 
+<br>
+
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/emacs/emacs-rgrep.gif" style="max-width: 100%;" alt="emacs rgrep">
 </div>
+
+<br>
 
 With this basic configuration complete we can begin to dive into configuring the environment for Python development!
 
@@ -149,18 +153,18 @@ To install and enable elpy we need to add a bit of configuration and install `fl
 
 The following will install the elpy package:
 
-```
+{% codeblock lang:lisp %}
 (defvar myPackages
   '(better-defaults
     elpy ;; add the elpy package
     material-theme))
-```
+{% endcodeblock %}
 
 Now just enable it:
 
-```
+{% codeblock lang:lisp %}
 (elpy-enable)
-```
+{% endcodeblock %}
 
 With the new configuration, we can restart Emacs and open up a Python file to see the new mode in action:
 
@@ -197,20 +201,21 @@ In addition to all the basic IDE features described above, Emacs provides some a
 
 By default Emacs+elpy comes with a package called *[Flymake](https://www.gnu.org/software/emacs/manual/html_node/flymake/Overview-of-Flymake.html#Overview-of-Flymake)* to support syntax checking. However, another Emacs package, *[Flycheck](http://www.flycheck.org/)*, is available and supports realtime syntax checking. Luckily switching out for *Flycheck* is simple:
 
-```
+{% codeblock lang:lisp %}
 (defvar myPackages
   '(better-defaults
     elpy
     flycheck ;; add the flycheck package
     material-theme))
-```
+{% endcodeblock %}
+
 and
 
-```
+{% codeblock lang:lisp %}
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
-```
+{% endcodeblock %}
 
 Now we get realtime feedback when editing Python code:
 
@@ -224,20 +229,21 @@ Love it or hate it, [PEP8](https://www.python.org/dev/peps/pep-0008/) is here to
 
 First, you will need to install the Python package *autopep8* using your preferred method, then add the following Emacs configuration:
 
-```
+{% codeblock lang:lisp %}
 (defvar myPackages
   '(better-defaults
     elpy
     flycheck
     material-theme
     py-autopep8)) ;; add the autopep8 package
-```
+{% endcodeblock %}
+
 and
 
-```
+{% codeblock lang:lisp %}
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-```
+{% endcodeblock %}
 
 Now (after forcing some pep8 errors) when we save our demo Python file, the errors will automatically be corrected:
 
@@ -249,9 +255,9 @@ Now (after forcing some pep8 errors) when we save our demo Python file, the erro
 
 Next up is a really cool feature: Emacs integration with the IPython REPL and Jupyter Notebooks. First, let's look at swapping the standard Python REPL integration for the IPython version:
 
-```
+{% codeblock lang:lisp %}
 (elpy-use-ipython)
-```
+{% endcodeblock %}
 
 Now when we run our Python code with `C-c C-c` we will be presented with the IPython REPL:
 
@@ -261,7 +267,7 @@ Now when we run our Python code with `C-c C-c` we will be presented with the IPy
 
 While this is pretty useful on its own, the real magic is the notebook integration. We'll assume that you already know how to launch a Jupyter Notebook server (if not [check this out](http://jupyter-notebook-beginner-guide.readthedocs.org/en/latest/what_is_jupyter.html)). Again we just need to add a bit of configuration:
 
-```
+{% codeblock lang:lisp %}
 (defvar myPackages
   '(better-defaults
     ein ;; add the ein package (Emacs ipython notebook)
@@ -269,7 +275,7 @@ While this is pretty useful on its own, the real magic is the notebook integrati
     flycheck
     material-theme
     py-autopep8))
-```
+{% endcodeblock %}
 
 The standard Jupyter web interface for notebooks is nice but requires us to leave Emacs to use:
 
@@ -321,7 +327,7 @@ After learning Emacs you'll want Emacs keybindings everywhere. This is as simple
 
 As you can see, Emacs is clearly the best editor... To be fair, there are a lot of great options out there for Python IDEs, but I would absolutely recommend learning either Vim or Emacs as they are by far the most versatile development environments possible. I said I'd leave you with the complete Emacs configuration, so here it is:
 
-```
+{% codeblock lang:lisp %}
 ;; init.el --- Emacs configuration
 
 ;; INSTALL PACKAGES
@@ -372,6 +378,6 @@ As you can see, Emacs is clearly the best editor... To be fair, there are a lot 
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 ;; init.el ends here
-```
+{% endcodeblock %}
 
 Hopefully this configuration will spark your Emacs journey!
