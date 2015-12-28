@@ -26,22 +26,30 @@ In the end, the stack will include a separate container for each service:
 
 <br>
 
+*Updates:*
+
+- 12/27/2015: Updated to the latest versions of Docker - Docker client (v1.9.1), Docker compose (v1.5.2), and Docker Machine (v0.5.4) - and Python (v3.5)
+
 > Interested in creating a similar environment for Flask? Check out [this](https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/) blog post.
 
 ## Local Setup
 
-Along with Docker (v1.6.1) we will be using -
+Along with Docker (v1.9.1) we will be using -
 
-- *[Docker Compose](https://docs.docker.com/compose/)* (v1.2.0) for orchestrating a multi-container application into a single app, and
-- *[Docker Machine](https://docs.docker.com/machine/)* (v0.2.0) for creating Docker hosts both locally and in the cloud.
+- *[Docker Compose](https://docs.docker.com/compose/)* (v1.5.2) for orchestrating a multi-container application into a single app, and
+- *[Docker Machine](https://docs.docker.com/machine/)* (v0.5.4) for creating Docker hosts both locally and in the cloud.
 
-Follow the directions [here](http://docs.docker.com/compose/install/) and [here](https://docs.docker.com/machine/#installation) to install Docker Compose and Machine, respectively. Then test out the installs:
+Follow the directions [here](http://docs.docker.com/compose/install/) and [here](https://docs.docker.com/machine/#installation) to install Docker Compose and Machine, respectively.
+
+> Running either Mac OS X or Windows, then your best bet is to install [Docker Toolbox](https://www.docker.com/docker-toolbox).
+
+Test out the installs:
 
 ```sh
 $ docker-machine --version
-docker-machine version 0.2.0 (8b9eaf2)
+docker-machine version 0.5.4, build 6643d0e
 $ docker-compose --version
-docker-compose 1.2.0
+docker-compose version 1.5.2, build 7240ff3
 ```
 
 Next clone the project from the [repository](https://github.com/realpython/dockerizing-django) or create your own project based on the project structure found on the repo:
@@ -82,22 +90,29 @@ We're now ready to get the containers up and running...
 
 ## Docker Machine
 
-To start Docker Machine, simply run:
+To start Docker Machine, simply navigate to the project root and then run:
 
 ```sh
 $ docker-machine create -d virtualbox dev;
-INFO[0000] Creating CA: /Users/michael/.docker/machine/certs/ca.pem
-INFO[0000] Creating client certificate: /Users/michael/.docker/machine/certs/cert.pem
-INFO[0001] Downloading boot2docker.iso to /Users/michael/.docker/machine/cache/boot2docker.iso...
-INFO[0035] Creating SSH key...
-INFO[0035] Creating VirtualBox VM...
-INFO[0043] Starting VirtualBox VM...
-INFO[0044] Waiting for VM to start...
-INFO[0094] "dev" has been created and is now the active machine.
-INFO[0094] To point your Docker client at it, run this in your shell: eval "$(docker-machine env dev)"
+Running pre-create checks...
+Creating machine...
+(dev) Creating VirtualBox VM...
+(dev) Creating SSH key...
+(dev) Starting VM...
+Waiting for machine to be running, this may take a few minutes...
+Machine is running, waiting for SSH to be available...
+Detecting operating system of created instance...
+Detecting the provisioner...
+Provisioning with boot2docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect Docker to this machine, run: docker-machine env dev
 ```
 
-The `create` command setup a new "Machine" (called *dev*) for Docker development. In essence, it downloaded [boot2docker](http://boot2docker.io/) and started a VM with Docker running. Now just point Docker at the *dev* machine:
+The `create` command set up a new "Machine" (called *dev*) for Docker development. In essence, it started a VM with Docker running. Now just point Docker at the *dev* machine:
 
 ```sh
 $ eval "$(docker-machine env dev)"
@@ -107,8 +122,8 @@ Run the following command to view the currently running Machines:
 
 ```sh
 $ docker-machine ls
-NAME   ACTIVE   DRIVER       STATE     URL
-dev    *        virtualbox   Running   tcp://192.168.99.100:2376
+NAME   ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER   ERRORS
+dev    *        virtualbox   Running   tcp://192.168.99.100:2376           v1.9.1
 ```
 
 Next, let's fire up the containers with Docker Compose and get Django, Postgres, and Redis up and running.
@@ -188,7 +203,7 @@ Once the services are running, we need to create the database migrations:
 $ docker-compose run web /usr/local/bin/python manage.py migrate
 ```
 
-Grab the IP associated with Docker Machine - `docker-machine ip` - and then navigate to that IP in your browser:
+Grab the IP associated with Docker Machine - `docker-machine ip dev` - and then navigate to that IP in your browser:
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/dockerizing-django/django-on-docker.png" style="max-width: 100%;" alt="flask running on docker">
@@ -225,7 +240,7 @@ To view the logs:
 $ docker-compose logs
 ```
 
-You can also enter the Postgres Shell - since we forward the port to the host environment in the *docker-compose.yml* file - to add users/roles as well as databases via:
+You can also enter the Postgres Shell - since we forwarded the port to the host environment in the *docker-compose.yml* file - to add users/roles as well as databases via:
 
 ```sh
 $ psql -h 192.168.99.100 -p 5432 -U postgres --password
@@ -246,28 +261,45 @@ $ docker-machine create \
 production
 ```
 
+docker-machine create \
+-d digitalocean \
+--digitalocean-access-token=0a70cf09e66c5e55ba9f4069af010df488d778c2583ace40b7ea677244e4b0a5 \
+production
+
 This will take a few minutes to provision the droplet and setup a new Docker Machine called *production*:
 
 ```sh
-INFO[0000] Creating SSH key...
-INFO[0001] Creating Digital Ocean droplet...
-INFO[0133] "production" has been created and is now the active machine.
-INFO[0133] To point your Docker client at it, run this in your shell: eval "$(docker-machine env production)"
+Running pre-create checks...
+Creating machine...
+(production) Creating SSH key...
+(production) Creating Digital Ocean droplet...
+(production) Waiting for IP address to be assigned to the Droplet...
+Waiting for machine to be running, this may take a few minutes...
+Machine is running, waiting for SSH to be available...
+Detecting operating system of created instance...
+Detecting the provisioner...
+Provisioning with ubuntu(systemd)...
+Installing Docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect Docker to this machine, run: docker-machine env production
 ```
 
 Now we have two Machines running, one locally and one on Digital Ocean:
 
 ```sh
 $ docker-machine ls
-NAME         ACTIVE   DRIVER         STATE     URL
-dev          *        virtualbox     Running   tcp://192.168.99.100:2376
-production            digitalocean   Running   tcp://104.131.107.8:2376
+NAME         ACTIVE   DRIVER         STATE     URL                         SWARM   DOCKER   ERRORS
+dev          *        virtualbox     Running   tcp://192.168.99.100:2376           v1.9.1
+production   -        digitalocean   Running   tcp://45.55.35.188:2376             v1.9.1
 ```
 
 Set *production* as the active machine and load the Docker environment into the shell:
 
 ```sh
-$ docker-machine active production
 $ eval "$(docker-machine env production)"
 ```
 
@@ -275,9 +307,11 @@ Finally, let's build the Django app again in the cloud. This time we need to use
 
 ```sh
 $ docker-compose build
-$ docker-compose up -d -f production.yml
+$ docker-compose -f production.yml up -d
 $ docker-compose run web /usr/local/bin/python manage.py migrate
 ```
+
+> Did you notice how we specified a different config file for production? What if you wanted to also run [collectstatic](https://docs.djangoproject.com/en/1.9/ref/contrib/staticfiles/#collectstatic)? See this [issue](https://github.com/realpython/dockerizing-django/issues/13).
 
 Grab the IP address associated with that Digital Ocean account and view it in the browser. If all went well, you should see your app running, as it should.
 
@@ -285,5 +319,5 @@ Grab the IP address associated with that Digital Ocean account and view it in th
 
 - Grab the code from the [repo](https://github.com/realpython/dockerizing-django) (star it too... my self-esteem depends on it!).
 - Comment below with questions.
-- Need a challenge? Try using [extends](https://docs.docker.com/compose/extends/) to clean up the receptive code in the two Docker Compose configuration files. Keep it DRY!
+- Need a challenge? Try using [extends](https://docs.docker.com/compose/extends/) to clean up the repetitive code in the two Docker Compose configuration files. Keep it DRY!
 - Have a great day!
