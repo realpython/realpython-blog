@@ -12,7 +12,7 @@ We'll be using the popular [cookiecutter-django](https://github.com/pydanny/cook
 
 Let’s begin!
 
-## Local Set up
+## Local Setup
 
 Start by installing [cookiecutter](https://github.com/audreyr/cookiecutter) globally:
 
@@ -64,7 +64,7 @@ Take a quick look at the generated project structure, taking specific note of th
 1. "requirements" contains all the requirement files - *base.txt*, *local.txt*, *production.txt*, *test.txt* - which you can make changes to and then install via `pip install -r file_name`.
 1. "django_cookiecutter_docker" is the main project directory which consists of the "static", "contrib" and "templates" directories along with the `users` app containing the models and boilerplate code associated with user authentication.
 
-## Docker Set up
+## Docker Setup
 
 Start by downloading and then installing the [Docker Toolbox](https://www.docker.com/docker-toolbox) (v[1.9.1f](https://github.com/docker/toolbox/releases/tag/v1.9.1f)) to obtain virtualbox and the required Docker components:
 
@@ -111,6 +111,8 @@ Now we can fire everything up - e.g., Django and Postgres - via Docker Compose:
 $ docker-compose -f dev.yml build
 $ docker-compose -f dev.yml up -d
 ```
+
+> Running Windows? Hit this error - `Interactive mode is not yet supported on Windows`? See [this comment](https://realpython.com/blog/python/development-and-deployment-of-cookiecutter-django-via-docker/#comment-2442262433).
 
 The first build will take a while. Due to [caching](https://docs.docker.com/engine/articles/dockerfile_best-practices/#build-cache), subsequent builds will run much faster.
 
