@@ -358,7 +358,7 @@ $ cd deploy
 $ sudo vi gunicorn_start
 ```
 
-The contents of the *gunicorn_start* script can be found [here](https://github.com/realpython/blog-posts/blob/master/Django-Bootstrap/deploy/gunicorn_start). It is divided into 3 significant parts, which are, for the most part, self-explanatory. For any questions, please comment below.
+The contents of the *gunicorn_start* script can be found [here](https://github.com/realpython/django_cookiecutter_fedora/blob/master/deploy/gunicorn_start). It is divided into 3 significant parts, which are, for the most part, self-explanatory. For any questions, please comment below.
 
 > **NOTE**: Make sure the `USER` and `GROUP` variables match the same user and group for the non-root user.
 
@@ -452,4 +452,4 @@ Now you are good to go, and you will see the Django web app running on the web b
 
 <hr>
 
-For further reference grab the code from the [repository](https://github.com/realpython/blog-posts/blob/master/Django-Bootstrap). Add your questions/comments/concerns below. Cheers!
+For further reference grab the code from the [repository](https://github.com/realpython/django_cookiecutter_fedora/). Add your questions/comments/concerns below. Cheers!
