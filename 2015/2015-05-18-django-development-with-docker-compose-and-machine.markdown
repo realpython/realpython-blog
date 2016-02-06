@@ -261,11 +261,6 @@ $ docker-machine create \
 production
 ```
 
-docker-machine create \
--d digitalocean \
---digitalocean-access-token=0a70cf09e66c5e55ba9f4069af010df488d778c2583ace40b7ea677244e4b0a5 \
-production
-
 This will take a few minutes to provision the droplet and setup a new Docker Machine called *production*:
 
 ```sh
