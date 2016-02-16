@@ -142,9 +142,10 @@ web:
     - postgres:postgres
     - redis:redis
   volumes:
-    - /usr/src/app/static
+    - ./web:/usr/src/app
+    - ./web/static:/usr/src/app/static
   env_file: .env
-  command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000
+  command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000 --reload
 
 nginx:
   restart: always
