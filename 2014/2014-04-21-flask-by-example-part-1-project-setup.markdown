@@ -133,7 +133,7 @@ $ pip freeze > requirements.txt
 We also need to specify a Python version so that Heroku uses the right one to run our app. Simply create a file called *runtime.txt* with the following code:
 
 ```
-python-3.4.2
+python-3.5.1
 ```
 
 Commit your changes in git and optionally PUSH to Github, then create two new Heroku apps.
@@ -149,6 +149,8 @@ And one for staging:
 ```sh
 $ heroku create wordcounts-stage
 ```
+
+These names are now already taken, so you will have to add on something individual for yours, such as your initials or a number
 
 Add your new apps to your git remotes. Make sure to name one remote *pro* (for "production") and the other *stage* (for "staging"):
 
@@ -215,6 +217,9 @@ With our config file we're going to borrow a bit from how Django's config is set
 Add the following to your newly created *config.py* file:
 
 ```python
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 class Config(object):
     DEBUG = False
     TESTING = False
@@ -240,25 +245,19 @@ class TestingConfig(Config):
     TESTING = True
 ```
 
-We set up a base `Config` class with some basic setup that our other config classes inherit from. Now we'll be able to import the appropriate config class based on the current environment. Thus, we can use environment variables to choose which settings we’re going to use based on the environment (e.g., local, staging, production).
+We import os and then set the basedir variable as a relative path from any place we call it to this file. We then set up a base `Config` class with some basic setup that our other config classes inherit from. Now we'll be able to import the appropriate config class based on the current environment. Thus, we can use environment variables to choose which settings we’re going to use based on the environment (e.g., local, staging, production).
 
 ### Local Settings
 
-To set up our `APP_SETTINGS` variable locally, we can use our Virtualenvwrapper *postactivate* file again.
+To set up our `APP_SETTINGS` variable locally, we can use our config file to define which environment we are working in.
 
-Add the following line to your *postactivate* file:
+Run the following line in your teminal:
 
 ```sh
-export APP_SETTINGS="config.DevelopmentConfig"
+$ export APP_SETTINGS="config.DevelopmentConfig"
 ```
 
-Reload your environment by running the `workon wordcounts` command again:
-
-```
-$ workon wordcounts
-```
-
-Now when you run your app it will import the configuration that you set up in your `DevelopmentConfig` class.
+Now you have declared that the current environment you are working in is the development one.
 
 ### Heroku Settings
 
@@ -314,7 +313,7 @@ Now when you run the app, it will show which config settings it's importing:
 **Local**:
 
 ```sh
-$ python app.py
+$ python3 app.py
 config.DevelopmentConfig
 ```
 
