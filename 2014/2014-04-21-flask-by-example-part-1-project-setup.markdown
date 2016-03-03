@@ -322,7 +322,7 @@ Commit and push again to staging and production. Now let's test it out...
 **Staging**:
 
 ```sh
-$ heroku run python app.py --app wordcounts-stage
+$ heroku run python3 app.py --app wordcounts-stage
 Running `python app.py` attached to terminal... up, run.2830
 config.StagingConfig
 ```
@@ -330,7 +330,7 @@ config.StagingConfig
 **Production**:
 
 ```sh
-$ heroku run python app.py --app wordcounts-pro
+$ heroku run python3 app.py --app wordcounts-pro
 Running `python app.py` attached to terminal... up, run.1360
 config.ProductionConfig
 ```
