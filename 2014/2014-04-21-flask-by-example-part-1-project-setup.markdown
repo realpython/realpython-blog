@@ -28,7 +28,6 @@ We'll start with a *basic "Hello World" app on Heroku with staging (or pre-produ
 For the initial setup, we're going to use Virtualenv and Virtualenvwrapper. This will give us a few extra tools to help us silo our environment. I'm going to assume for this tutorial you've used the following tools before:
 
 - **Virtualenv** - [http://www.virtualenv.org/en/latest/](http://www.virtualenv.org/en/latest/)
-- **Virtualenvwrapper** - [http://virtualenvwrapper.readthedocs.org/en/latest/](http://virtualenvwrapper.readthedocs.org/en/latest/)
 - **Flask** - [http://flask.pocoo.org/](http://flask.pocoo.org/)
 - **git/Github** - [http://try.github.io/levels/1/challenges/1](http://try.github.io/levels/1/challenges/1)
 - **Heroku (basics)** - [https://devcenter.heroku.com/articles/getting-started-with-python](https://devcenter.heroku.com/articles/getting-started-with-python)
@@ -45,53 +44,14 @@ Initialize a new git repo within your working directory:
 $ git init
 ```
 
-Next, we're going to use Virtualenvwrapper to set up a new virtual environment with Python 3.
+Now we're going to set up a virtual environment to use for our application.
 
 ```sh
-$ which python3
-/usr/local/bin/python3
-
-$ mkvirtualenv --python=/usr/local/bin/python3 wordcounts
-Running virtualenv with interpreter /usr/local/bin/python3
-Using base prefix '/usr/local/Cellar/python3/3.4.2_1/Frameworks/Python.framework/Versions/3.4'
-New python executable in wordcounts/bin/python3.4
-Also creating executable in wordcounts/bin/python
-Installing setuptools, pip...done.
-
-(wordcounts)$ python
-Python 3.4.2 (default, Feb 10 2015, 03:38:22)
-[GCC 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.56)] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
->>> exit()
+$ pyvenv-3.5 env
+$ source env/bin/activate
 ```
 
-This creates a new virtualenv for us. Along with creating a new virtualenv, it creates some new options, including *[Postactivate](http://virtualenvwrapper.readthedocs.org/en/latest/scripts.html#scripts-postactivate)*, after you run the `workon` command to start your virtual environment. This is going to help us later when we are setting up some environment variables - but for now we're also going to use it to automatically jump to our project when we first start it.
-
-Open up the *postactivate* file. The easiest way to do this is with VIM:
-
-```sh
-$ vi $VIRTUAL_ENV/bin/postactivate
-```
-
-Add the following line to your project:
-
-```sh
-cd ~/path/to/your/project
-```
-
-*Make sure to alter the above command for your environment. For example, my working directory is within my "repos" directory, so my path is: `cd ~/repos/realpython/flask-by-example`.*
-
-> Within VIM, press "i" to enter the INSERT mode. Paste the line in the file, then press "escape" to exit INSERT mode. Finally press ":", then "w", and finally "q" to save and exit VIM.
-
-Now open a new terminal window and run the following command:
-
-```sh
-$ workon wordcounts
-```
-
-If all is setup properly, it will activate your environment and move you directly to the project directory. A nice timesaver.
-
-> If you are having problems with virtualenvwrapper, just use virtualenv.
+You should now see you `(env)` before your user name in terminal. This shows you are working in a virtual environment.
 
 Next we're going to get our basic structure for our app set up. Add the following files to your "flask-by-example" folder:
 
@@ -140,7 +100,7 @@ if __name__ == '__main__':
 Run the app:
 
 ```sh
-$ python app.py
+$ python3 app.py
 ```
 
 And you should see your basic Hello world app in action on [http://localhost:5000/](http://localhost:5000/). Kill the server.
