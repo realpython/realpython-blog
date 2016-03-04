@@ -1,4 +1,4 @@
-# Flask by Example - Integrating Flask and AngularJS
+python -m nltk.downloader# Flask by Example - Integrating Flask and AngularJS
 
 {% assign openTag = '{%' %}
 
