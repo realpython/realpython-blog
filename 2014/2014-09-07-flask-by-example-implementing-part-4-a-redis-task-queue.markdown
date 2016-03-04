@@ -36,17 +36,20 @@ Start by downloading and installing Redis from [http://redis.io/](http://redis.i
 $ redis-server
 ```
 
-Next install the Python Redis library as well as the RQ Library in a new terminal window:
+Next install the Python Redis library as well as the RQ Library in a new terminal window, make sure to redeclare your environment variables if necessary:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
+$ source env/bin/activate
+$ export APP_SETTINGS="config.DevelopmentConfig"
+$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 $ pip install redis rq
 $ pip freeze > requirements.txt
 ```
 
 ## Setup the Worker
 
-Let's start by creating a worker process to listen for queued tasks:
+Let's start by creating a worker process to listen for queued tasks, create a new file *worker.py*, and add this code:
 
 ```python
 import os
@@ -66,13 +69,14 @@ if __name__ == '__main__':
         worker.work()
 ```
 
-Save this as *worker.py*. Here, we listen for a queue called `default` and establish a connection to our Redis server on `localhost:6379`.
+Here, we listen for a queue called `default` and establish a connection to our Redis server on `localhost:6379`.
 
 Fire this up in another terminal window:
 
 ```sh
-$ workon wordcounts
-$ python worker.py
+$ cd wordcounts
+$ source env/bin/activate
+$ python3 worker.py
 17:01:29 RQ worker started, version 0.4.6
 17:01:29
 17:01:29 *** Listening on default...
@@ -95,6 +99,7 @@ Then update the configuration section:
 ```python
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 q = Queue(connection=conn)
