@@ -53,6 +53,12 @@ $ source env/bin/activate
 
 You should now see you `(env)` before your user name in terminal. This shows you are working in a virtual environment.
 
+> In order to leave your virtual environment, just run the command
+
+```sh
+$ deactivate
+```
+
 Next we're going to get our basic structure for our app set up. Add the following files to your "flask-by-example" folder:
 
 ```sh

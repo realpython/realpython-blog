@@ -33,7 +33,8 @@ Tools we'll use the following tools:
 - **NLTK** - [http://www.nltk.org/](http://www.nltk.org/)
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
+$ source env/bin/activate
 $ pip install requests nltk beautifulsoup4
 $ pip freeze > requirements.txt
 ```
@@ -96,6 +97,7 @@ import os
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 
@@ -109,10 +111,12 @@ if __name__ == '__main__':
 
 Why both HTTP methods? Well, we will eventually use that same route for both GET and POST requests - to serve the *index.html* page and handle form submissions, respectively.
 
-Fire up the app to test it out:
+Fire up the app to test it out, you'll have to redeclare your environment variables if you've deactivated the virtual environment and then started it up again:
 
 ```sh
-$ python manage.py runserver
+$ export APP_SETTINGS="config.DevelopmentConfig"
+$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
+$ python3 manage.py runserver
 ```
 
 Navigate to [http://localhost:5000/](http://localhost:5000/) and you should see the form staring back at you.
@@ -160,7 +164,7 @@ import requests
 **Let's test this out:**
 
 ```
-$ python manage.py runserver
+$ python3 manage.py runserver
 ```
 
 You should be able to type in a web page and in the terminal you'll see the text of that webpage returned (as long as it's a valid page, of course).
@@ -188,6 +192,7 @@ import nltk
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 from models import Result
@@ -379,7 +384,7 @@ Now let's update *index.html* in order to display the results:
 Here, we added an `if` statement to see if our `results` dictionary has anything in it and then added a `for` loop to iterate over the `results` and display them in a table. Run your app and you should be able to enter a URL and get back the count of the words on the page.
 
 ```sh
-$ python manage.py runserver
+$ python3 manage.py runserver
 ```
 
 What if we wanted to display the first ten keywords from the dictionary? We can simply limit the dictionary to the first 10 results:
