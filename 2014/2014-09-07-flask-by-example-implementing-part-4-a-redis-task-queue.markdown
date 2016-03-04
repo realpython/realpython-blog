@@ -258,13 +258,13 @@ Test this out again. If all went well, you should see the following results in y
 ```javascript
 {
     Course: 5,
-    Download: 4,
     Python: 19,
     Real: 11,
+    content: 4,
     courses: 7,
     development: 7,
-    return: 4,
-    sample: 4,
+    g: 4,
+    r: 6,
     videos: 5,
     web: 12
 }
