@@ -98,7 +98,7 @@ gunicorn app:app --daemon
 python worker.py
 ```
 
-Then, update the *Procfile*:
+Then, update the *Procfile*, replace the code in there with the following:
 
 ```
 web: sh heroku.sh
