@@ -8,6 +8,12 @@
 
 <br>
 
+*Updates:*
+
+  - 03/06/2016: Updated to the latest versions of Python ([3.5.1](https://www.python.org/downloads/release/python-351/)) and AngularJS ([1.4.9](https://code.angularjs.org/1.4.9/docs/api)); added a section on persistent logins.
+
+<hr>
+
 Before beginning, keep in mind that this is not the *only* solution to the question at hand, and it may not even be the *right* solution for your situation. Regardless of the solution you implement, it is important to note that *since end users have full control of the browser as well as access to the front-end code, sensitive data living in your server-side API must be secure. In other words, make certain that you implement an authentication strategy on the server-side to protect sensitive API endpoints.*
 
 That said, we need to enable the following workflow:
@@ -17,11 +23,9 @@ That said, we need to enable the following workflow:
 1. Assuming the server indicates that a user is not logged in, the client is immediately asked to log in.
 1. Once logged in, the Angular app then tracks the user's login status.
 
-> This tutorial uses Python [3.4](https://www.python.org/download/releases/3.4.0/) and Angular [1.3.15](https://code.angularjs.org/1.3.15/docs/api).
-
 ## Getting Started
 
-First, grab the boilerplate code from the [repo](https://github.com/realpython/flask-angular-auth/releases/tag/v1), activate a virtual environment and install the requirements.
+First, grab the boilerplate code from the [repo](https://github.com/realpython/flask-angular-auth/releases/tag/v1.1), activate a virtual environment, and install the requirements.
 
 Then create the initial migration:
 
@@ -94,7 +98,8 @@ from project.models import User
 Let's test this via curl. Fire up the server and then run the following command in a new terminal window:
 
 ```sh
-$ curl -H "Accept: application/json" -H "Content-type: application/json" -X POST \
+$ curl -H "Accept: application/json" \
+-H "Content-type: application/json" -X POST \
 -d '{"email": "test@test.com", "password": "test"}' \
 http://localhost:5000/api/register
 ```
@@ -156,7 +161,8 @@ from flask import Flask, request, jsonify, session
 With the server running, test again with curl-
 
 ```sh
-$ curl -H "Accept: application/json" -H "Content-type: application/json" -X POST \
+$ curl -H "Accept: application/json" \
+-H "Content-type: application/json" -X POST \
 -d '{"email": "test@test.com", "password": "test"}' \
 http://localhost:5000/api/login
 ```
@@ -194,11 +200,11 @@ This should be straightforward, and you can probably guess the response to this 
 
 ## Developing the Angular App
 
-> Need the code from the previous section? Grab it from the [repo](https://github.com/realpython/flask-angular-auth/releases/tag/v2).
+> Need the code from the previous section? Grab it from the [repo](https://github.com/realpython/flask-angular-auth/releases/tag/v2.1).
 
 Now, here's where things get a bit tricky. Again, since end users have full access to the power of the browser as well as [DevTools](https://developer.chrome.com/devtools) and the client-side code, it's vital that you not only restrict access to sensitive endpoints on the server-side - but that you also not store sensitive data on the client-side. Keep this in mind as you add auth functionality to your own application stack.
 
-Let's jump right in by creating a [service](https://docs.angularjs.org/guide/services) to handle authentication.
+Let's jump right in by creating a [service](https://code.angularjs.org/1.4.9/docs/guide/services) to handle authentication.
 
 ### Authentication Service
 
@@ -219,10 +225,11 @@ angular.module('myApp').factory('AuthService',
       logout: logout,
       register: register
     });
+
 }]);
 ```
 
-Here, we defined the service name, `AuthService`, and injected the dependencies that we will be using - `$q`, `$timeout`, `$http` - and then return the functions for use outside the service.
+Here, we defined the service name, `AuthService`, and injected the dependencies that we will be using - `$q`, `$timeout`, `$http` - and then returned the functions for use outside the service.
 
 Make sure to add the script to the *index.html* file:
 
@@ -278,9 +285,9 @@ function login(email, password) {
 }
 ```
 
-Here, we used the [$q](https://code.angularjs.org/1.3.15/docs/api/ng/service/$q) service to set up a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), which we'll access in a future controller. We also utilized the [$http](https://code.angularjs.org/1.3.15/docs/api/ng/service/$http) service to send an AJAX request to the `/api/login` endpoint that we already set up in our back-end Flask app.
+Here, we used the [$q](https://code.angularjs.org/1.4.9/docs/api/ng/service/$q) service to set up a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), which we'll access in a future controller. We also utilized the [$http](https://code.angularjs.org/1.4.9/docs/api/ng/service/$http) service to send an AJAX request to the `/api/login` endpoint that we already set up in our back-end Flask app.
 
-Based on the returned response, we either [resolve](https://code.angularjs.org/1.3.15/docs/api/ng/service/$q#usage) or [reject](https://code.angularjs.org/1.3.15/docs/api/ng/service/$q#usage) the object and set the value of `user` to `true` or `false`.
+Based on the returned response, we either [resolve](https://code.angularjs.org/1.4.9/docs/api/ng/service/$q#usage) or [reject](https://code.angularjs.org/1.4.9/docs/api/ng/service/$q#usage) the object and set the value of `user` to `true` or `false`.
 
 **`logout()`**
 
@@ -309,7 +316,7 @@ function logout() {
 }
 ```
 
-Here, we followed the same formula as the `login()` function, except we sent a GET request rather than a POST and, to be cautious, instead of sending an error if the user does not exist, we're just logging the user out.
+Here, we followed the same formula as the `login()` function, except we sent a GET request rather than a POST and, to be cautious, instead of sending an error if the user does not exist, we just logged the user out.
 
 **`register()`**
 
@@ -351,13 +358,29 @@ Add the remainder of the client-side routes to the *app.js* file:
 ```javascript
 myApp.config(function ($routeProvider) {
   $routeProvider
-    .when('/', {templateUrl: 'static/partials/home.html'})
-    .when('/login', {templateUrl: 'static/partials/login.html', controller: 'loginController'})
-    .when('/logout', {controller: 'logoutController'})
-    .when('/register', {templateUrl: 'static/partials/register.html', controller: 'registerController'})
-    .when('/one', {template: '<h1>This is page one!</h1>'})
-    .when('/two', {template: '<h1>This is page two!</h1>'})
-    .otherwise({redirectTo: '/'});
+    .when('/', {
+      templateUrl: 'static/partials/home.html'
+    })
+    .when('/login', {
+      templateUrl: 'static/partials/login.html',
+      controller: 'loginController'
+    })
+    .when('/logout', {
+      controller: 'logoutController'
+    })
+    .when('/register', {
+      templateUrl: 'static/partials/register.html',
+      controller: 'registerController'
+    })
+    .when('/one', {
+      template: '<h1>This is page one!</h1>'
+    })
+    .when('/two', {
+      template: '<h1>This is page two!</h1>'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
 });
 ```
 
@@ -368,9 +391,17 @@ Here, we created five new routes. Now we can add the subsequent templates and co
 Looking back at our routes, we need to setup two partials/templates and three controllers:
 
 ```javascript
-.when('/login', {templateUrl: 'static/partials/login.html', controller: 'loginController'})
-.when('/logout', {controller: 'logoutController'})
-.when('/register', {templateUrl: 'static/partials/register.html', controller: 'registerController'})
+.when('/login', {
+  templateUrl: 'static/partials/login.html',
+  controller: 'loginController'
+})
+.when('/logout', {
+  controller: 'logoutController'
+})
+.when('/register', {
+  templateUrl: 'static/partials/register.html',
+  controller: 'registerController'
+})
 ```
 
 **Login**
@@ -379,7 +410,7 @@ First, add the following HTML to a new file called *login.html*:
 
 ```html
 <div class="col-md-4">
-  <h1>Login</h2>
+  <h1>Login</h1>
   <div ng-show="error" class="alert alert-danger">{% raw %}{{errorMessage}}{% endraw %}</div>
   <form class="form" ng-submit="login()">
     <div class="form-group">
@@ -399,7 +430,7 @@ First, add the following HTML to a new file called *login.html*:
 
 Add this file to the "partials" directory.
 
-Take note of the form. We used the [ng-model](https://code.angularjs.org/1.3.15/docs/api/ng/directive/ngModel) directive on each of the inputs so that we can capture those values in the controller. Also, when the form is submitted, the [ng-submit](https://code.angularjs.org/1.3.15/docs/api/ng/directive/ngSubmit) directive handles the event by firing the `login()` function.
+Take note of the form. We used the [ng-model](https://code.angularjs.org/1.4.9/docs/api/ng/directive/ngModel) directive on each of the inputs so that we can capture those values in the controller. Also, when the form is submitted, the [ng-submit](https://code.angularjs.org/1.4.9/docs/api/ng/directive/ngSubmit) directive handles the event by firing the `login()` function.
 
 Next, within the "static" folder and add a new file called *controllers.js*. Yes, this will hold all of our Angular app's controllers. Be sure to add the script to the *index.html* file:
 
@@ -413,8 +444,6 @@ Now, let's add the first controller:
 angular.module('myApp').controller('loginController',
   ['$scope', '$location', 'AuthService',
   function ($scope, $location, AuthService) {
-
-    console.log(AuthService.isLoggedIn());
 
     $scope.login = function () {
 
@@ -445,13 +474,9 @@ angular.module('myApp').controller('loginController',
 
 So, when the `login()` function is fired, we set some initial values and then call `login()` from the `AuthService`, passing the user inputed email and password as arguments. The subsequent success or error is then handled and the DOM/view/template is updated appropriately.
 
-Did you notice how we logged the return value of `AuthService.isLoggedIn()` to the console? This is to ensure that the value is correct based on whether a user is logged in or out - `true` or `false`, respectively.
-
-Ready to test the first round-trip - client to server and then back again to client?
+Ready to test the first round-trip - *client to server and then back again to client*?
 
 Fire up the server and navigate to [http://localhost:5000/#/login](http://localhost:5000/#/login) in your browser. First, try logging in with the user credentials used to register earlier - e.g, `test@test.com` and `test`. If all went well, you should be redirected to the main URL. Next, try to log in using invalid credentials. You should see the error message flash, "Invalid username and/or password".
-
-Once done, make sure to remove `console.log(AuthService.isLoggedIn());`.
 
 **Logout**
 
@@ -463,8 +488,6 @@ angular.module('myApp').controller('logoutController',
   function ($scope, $location, AuthService) {
 
     $scope.logout = function () {
-
-      console.log(AuthService.isLoggedIn());
 
       // call logout from service
       AuthService.logout()
@@ -487,7 +510,7 @@ Add a button to *home.html*:
 </div>
 ```
 
-And then test it out again. Remember to remove `console.log(AuthService.isLoggedIn());` after you're done testing.
+And then test it out again.
 
 **Register**
 
@@ -495,7 +518,7 @@ Add a new new file called *register.html* to the "partials" folder and add the f
 
 ```html
 <div class="col-md-4">
-  <h1>Register</h2>
+  <h1>Register</h1>
   <div ng-show="error" class="alert alert-danger">{% raw %}{{errorMessage}}{% endraw %}</div>
   <form class="form" ng-submit="register()">
     <div class="form-group">
@@ -527,7 +550,8 @@ angular.module('myApp').controller('registerController',
       $scope.disabled = true;
 
       // call register from service
-      AuthService.register($scope.registerForm.email, $scope.registerForm.password)
+      AuthService.register($scope.registerForm.email,
+                           $scope.registerForm.password)
         // handle success
         .then(function () {
           $location.path('/login');
@@ -568,7 +592,7 @@ myApp.run(function ($rootScope, $location, $route, AuthService) {
 });
 ```
 
-The [$routeChangeStart](https://code.angularjs.org/1.3.15/docs/api/ngRoute/service/$route) event happens before the actual route change occurs. So, whenever a route is accessed, before the view is served, we ensure that the user is logged in. Test this out!
+The [$routeChangeStart](https://code.angularjs.org/1.4.9/docs/api/ngRoute/service/$route) event happens before the actual route change occurs. So, whenever a route is accessed, before the view is served, we ensure that the user is logged in. Test this out!
 
 ### Protect Certain Routes
 
@@ -609,7 +633,9 @@ myApp.config(function ($routeProvider) {
       template: '<h1>This is page two!</h1>',
       access: {restricted: false}
     })
-    .otherwise({redirectTo: '/'});
+    .otherwise({
+      redirectTo: '/'
+    });
 });
 ```
 
@@ -627,6 +653,74 @@ myApp.run(function ($rootScope, $location, $route, AuthService) {
 ```
 
 Test each route out!
+
+## Persistant Login
+
+Finally, what happens on a page refresh? Try it.
+
+The user is logged out, right? Why? Because the controller and services are called again, setting the `user` variable to `null`. This is a problem since the user is still logged in on the client-side.
+
+Fortunately, the fix is simple: Within the `$routeChangeStart` we need to ALWAYS check if a user is logged in. Right now, it's checking whether `isLoggedIn()` is `false`. Let's add a new function, `getUserStatus()`, that checks the user status on the back-end:
+
+```javascript
+function getUserStatus() {
+  $http.get('/api/status')
+  // handle success
+  .success(function (data) {
+    if(data.status){
+      user = true;
+    } else {
+      user = false;
+    }
+  })
+  // handle error
+  .error(function (data) {
+    user = false;
+  });
+}
+```
+
+Make sure to return the function as well:
+
+```javascript
+return ({
+  isLoggedIn: isLoggedIn,
+  login: login,
+  logout: logout,
+  register: register,
+  getUserStatus: getUserStatus
+});
+```
+
+Then add the route handler on the client-side:
+
+```python
+@app.route('/api/status')
+def status():
+    if session.get('logged_in'):
+        if session['logged_in']:
+            return jsonify({'status': True})
+    else:
+        return jsonify({'status': False})
+```
+
+Finally, update the `$routeChangeStart`:
+
+```javascript
+myApp.run(function ($rootScope, $location, $route, AuthService) {
+  $rootScope.$on('$routeChangeStart',
+    function (event, next, current) {
+      AuthService.getUserStatus();
+      if (next.access.restricted &&
+          !AuthService.isLoggedIn()) {
+        $location.path('/login');
+        $route.reload();
+      }
+  });
+});
+```
+
+Try it out!
 
 ## Conclusion
 
