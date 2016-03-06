@@ -35,7 +35,6 @@ To get started install Postgres on your local computer if you don't have it alre
 
 ```sh
 $ cd wordcounts
-$ source env/bin/activate
 $ pip install psycopg2 Flask-SQLAlchemy Flask-Migrate
 $ pip freeze > requirements.txt
 ```
@@ -98,6 +97,8 @@ Similar to how we added an environment variable in the last post, we are going t
 ```sh
 $ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 ```
+
+And then add that line into your *.env* file.
 
 In your *app.py* file import SQLAlchemy and connect to the database:
 
@@ -191,7 +192,7 @@ First we set our config to get our environment - based on the environment variab
 In order to run our migrations initialize Alembic:
 
 ```sh
-$ python3 manage.py db init
+$ python manage.py db init
   Creating directory /Users/michael/repos/realpython/flask-by-example/migrations ... done
   Creating directory /Users/michael/repos/realpython/flask-by-example/migrations/versions ... done
   Generating /Users/michael/repos/realpython/flask-by-example/migrations/alembic.ini ... done
@@ -207,7 +208,7 @@ After you run the database initialization you will see a new folder called "migr
 Let's create our first migration by running the `migrate` command.
 
 ```sh
-$ python3 manage.py db migrate
+$ python manage.py db migrate
   INFO  [alembic.migration] Context impl PostgresqlImpl.
   INFO  [alembic.migration] Will assume transactional DDL.
   INFO  [alembic.autogenerate.compare] Detected added table 'results'
@@ -305,7 +306,7 @@ Now let's test.
 **Local**:
 
 ```
-$ python3 config.py
+$ python config.py
 postgresql://localhost/wordcount_dev
 ```
 

@@ -29,9 +29,6 @@ Let's start with pushing up the code in its current state and see what needs to 
 
 ```sh
 $ cd wordcounts
-$ source env/bin/activate
-$ export APP_SETTINGS="config.DevelopmentConfig"
-$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 $ git add -A
 $ git commit -m "added angular and the backend worker process"
 $ git push stage master

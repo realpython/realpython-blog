@@ -41,9 +41,6 @@ In another window, navigate to your project directory and then run the worker:
 
 ```sh
 $ cd wordcounts
-$ source env/bin/activate
-$ export APP_SETTINGS="config.DevelopmentConfig"
-$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 $ python worker.py
 20:38:04 RQ worker started, version 0.4.6
 20:38:04
@@ -54,9 +51,6 @@ Finally, open a third terminal window, navigate to your project directory, and f
 
 ```sh
 $ cd wordcounts
-$ source env/bin/activate
-$ export APP_SETTINGS="config.DevelopmentConfig"
-$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 $ python manage.py runserver
 ```
 

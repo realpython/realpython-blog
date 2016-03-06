@@ -106,7 +106,7 @@ if __name__ == '__main__':
 Run the app:
 
 ```sh
-$ python3 app.py
+$ python app.py
 ```
 
 And you should see your basic Hello world app in action on [http://localhost:5000/](http://localhost:5000/). Kill the server.
@@ -255,15 +255,22 @@ We import os and then set the basedir variable as a relative path from any place
 
 ### Local Settings
 
-To set up our `APP_SETTINGS` variable locally, we can use our config file to define which environment we are working in.
-
-Run the following line in your teminal:
+To set up our application with environment variables, we're going to use [autoenv](https://github.com/kennethreitz/autoenv). This program allows us to set commands that will run every time we cd into our directory. In order to use it, we will need to install it globally. First, kill your environment in the terminal, install autoenv and add a *.env* file:
 
 ```sh
-$ export APP_SETTINGS="config.DevelopmentConfig"
+$ deactivate
+$ pip install autoenv
+$ touch .env
 ```
 
-Now you have declared that the current environment you are working in is the development one.
+Next, in your .env file, add the following:
+
+```
+source env/bin/activate
+export APP_SETTINGS="config.DevelopmentConfig"
+```
+
+Now, if you move up a directory and then cd back into it, your virtual environment will automatically be started and your variable APP_SETTINGS is declared.
 
 ### Heroku Settings
 
@@ -319,7 +326,7 @@ Now when you run the app, it will show which config settings it's importing:
 **Local**:
 
 ```sh
-$ python3 app.py
+$ python app.py
 config.DevelopmentConfig
 ```
 
@@ -328,7 +335,7 @@ Commit and push again to staging and production. Now let's test it out...
 **Staging**:
 
 ```sh
-$ heroku run python3 app.py --app wordcounts-stage
+$ heroku run python app.py --app wordcounts-stage
 Running `python app.py` attached to terminal... up, run.2830
 config.StagingConfig
 ```
@@ -336,7 +343,7 @@ config.StagingConfig
 **Production**:
 
 ```sh
-$ heroku run python3 app.py --app wordcounts-pro
+$ heroku run python app.py --app wordcounts-pro
 Running `python app.py` attached to terminal... up, run.1360
 config.ProductionConfig
 ```

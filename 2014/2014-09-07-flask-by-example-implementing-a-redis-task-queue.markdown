@@ -40,9 +40,6 @@ Next install the Python Redis library as well as the RQ Library in a new termina
 
 ```sh
 $ cd wordcounts
-$ source env/bin/activate
-$ export APP_SETTINGS="config.DevelopmentConfig"
-$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 $ pip install redis rq
 $ pip freeze > requirements.txt
 ```
@@ -75,8 +72,7 @@ Fire this up in another terminal window:
 
 ```sh
 $ cd wordcounts
-$ source env/bin/activate
-$ python3 worker.py
+$ python worker.py
 17:01:29 RQ worker started, version 0.4.6
 17:01:29
 17:01:29 *** Listening on default...
