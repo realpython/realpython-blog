@@ -74,7 +74,7 @@ Change the button in the HTML to the following:
 
 ```html
 {{ openTag }} raw %}
-{% raw %}<button type="submit" class="btn btn-primary" ng-disabled="loading">{{ submitButtonText }}</button>{% endraw %}
+<button type="submit" class="btn btn-primary" ng-disabled="loading">{{ submitButtonText }}</button>å
 {{ openTag }} endraw %}
 ```
 
