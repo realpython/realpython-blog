@@ -34,7 +34,10 @@ $ redis-server
 Then get your worker going in another window:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
+$ source env/bin/activate
+$ export APP_SETTINGS="config.DevelopmentConfig"
+$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 $ python worker.py
 17:11:39 RQ worker started, version 0.4.6
 17:11:39
@@ -44,7 +47,10 @@ $ python worker.py
 Finally, in a third window, fire up the app:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
+$ source env/bin/activate
+$ export APP_SETTINGS="config.DevelopmentConfig"
+$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 $ python manage.py runserver
 ```
 
