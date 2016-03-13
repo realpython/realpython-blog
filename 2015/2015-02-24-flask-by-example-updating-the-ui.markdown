@@ -34,7 +34,7 @@ $ redis-server
 Then get your worker going in another window:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
 $ python worker.py
 17:11:39 RQ worker started, version 0.4.6
 17:11:39
@@ -44,7 +44,7 @@ $ python worker.py
 Finally, in a third window, fire up the app:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
 $ python manage.py runserver
 ```
 
@@ -68,7 +68,7 @@ Change the button in the HTML to the following:
 
 ```html
 {{ openTag }} raw %}
-{% raw %}<button type="submit" class="btn btn-primary" ng-disabled="loading">{{ submitButtonText }}</button>{% endraw %}
+<button type="submit" class="btn btn-primary" ng-disabled="loading">{{ submitButtonText }}</button>å
 {{ openTag }} endraw %}
 ```
 

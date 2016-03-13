@@ -34,7 +34,7 @@ Tools we'll use in this part:
 To get started install Postgres on your local computer if you don't have it already. Since Heroku uses Postgres it will be good for us to develop locally on the same database. If you don't have Postgres installed, [Postgres.app](http://postgresapp.com/) is an easy way to get up and running quick for Mac OSX users. Once you have Postgres installed and running, create a database called *wordcount_dev* to use as our local development database. In order to use our newly created database in the Flask app we're going to need to install a few things:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
 $ pip install psycopg2 Flask-SQLAlchemy Flask-Migrate
 $ pip freeze > requirements.txt
 ```
@@ -60,6 +60,7 @@ Your *config.py* file should now look like this:
 
 ```python
 import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
@@ -90,22 +91,14 @@ class TestingConfig(Config):
 
 Now when our config is loaded into our app the appropriate database will be connected to it as well.
 
-Similar to how we added an environment variable in the last post, we are going to add a `DATABASE_URL` variable to our *postactivate* file (located at `$VIRTUAL_ENV/bin/postactivate`).
+Similar to how we added an environment variable in the last post, we are going to add a `DATABASE_URL` variable. Run this in the terminal:
 
-Your postactivate should look like:
-```
-$cat $VIRTUAL_ENV/bin/postactivate
-#!/bin/bash
 
-export APP_SETTINGS="config.DevelopmentConfig"
-export DATABASE_URL="postgresql://localhost/wordcount_dev"
+```sh
+$ export DATABASE_URL="postgresql://localhost/wordcount_dev"
 ```
 
-Restart your environment:
-
-```
-$ workon wordcounts
-```
+And then add that line into your *.env* file.
 
 In your *app.py* file import SQLAlchemy and connect to the database:
 
@@ -117,6 +110,7 @@ import os
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 from models import Result
@@ -267,7 +261,6 @@ For example:
 ```sh
 APP_SETTINGS:               config.StagingConfig
 DATABASE_URL:               postgres://srxgxusbbyadyc:8NA0X-zdGZfPwPhfOtLuLZ5hzI@ec2-54-221-243-6.compute-1.amazonaws.com:5432/d7j5r8c30kbvuh
-HEROKU_POSTGRESQL_CYAN_URL: postgres://srxgxusbbyadyc:8NA0X-zdGZfPwPhfOtLuLZ5hzI@ec2-54-221-243-6.compute-1.amazonaws.com:5432/d7j5r8c30kbvuh
 ```
 
 Next we need to commit the changes that you've made to git and push to your staging server:

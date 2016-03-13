@@ -18,7 +18,7 @@ Remember, here's what we're building: A Flask app that calculates word-frequency
 1. [Part Four](https://realpython.com/blog/python/flask-by-example-implementing-a-redis-task-queue/): Implement a Redis task queue to handle the text processing.
 1. [Part Five](https://realpython.com/blog/python/flask-by-example-integrating-flask-and-angularjs/): Setup Angular on the front-end to continuously poll the back-end to see if the request is done.
 1. **Part Six: Push to the staging server on Heroku - setting up Redis, detailing how to run two processes (web and worker) on a single Dyno. (current)**
-1. Part Seven: Update the front-end to make it more user-friendly.
+1. [Part Seven](https://realpython.com/blog/python/flask-by-example-updating-the-ui/): Update the front-end to make it more user-friendly.
 1. Part Eight: Add the D3 library into the mix to graph a frequency distribution and histogram.
 
 > Need the code? Grab it from the [repo](https://github.com/realpython/flask-by-example/releases).
@@ -28,9 +28,9 @@ Remember, here's what we're building: A Flask app that calculates word-frequency
 Let's start with pushing up the code in its current state and see what needs to be fixed.
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
 $ git add -A
-$ git commit -am "added angular and the backend worker process"
+$ git commit -m "added angular and the backend worker process"
 $ git push stage master
 $ heroku open --app wordcounts-stage
 ```
@@ -95,7 +95,7 @@ gunicorn app:app --daemon
 python worker.py
 ```
 
-Then, update the *Procfile*:
+Then, update the *Procfile*, replace the code in there with the following:
 
 ```
 web: sh heroku.sh

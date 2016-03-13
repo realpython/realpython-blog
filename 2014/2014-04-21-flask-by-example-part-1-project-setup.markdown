@@ -28,7 +28,6 @@ We'll start with a *basic "Hello World" app on Heroku with staging (or pre-produ
 For the initial setup, we're going to use Virtualenv and Virtualenvwrapper. This will give us a few extra tools to help us silo our environment. I'm going to assume for this tutorial you've used the following tools before:
 
 - **Virtualenv** - [http://www.virtualenv.org/en/latest/](http://www.virtualenv.org/en/latest/)
-- **Virtualenvwrapper** - [http://virtualenvwrapper.readthedocs.org/en/latest/](http://virtualenvwrapper.readthedocs.org/en/latest/)
 - **Flask** - [http://flask.pocoo.org/](http://flask.pocoo.org/)
 - **git/Github** - [http://try.github.io/levels/1/challenges/1](http://try.github.io/levels/1/challenges/1)
 - **Heroku (basics)** - [https://devcenter.heroku.com/articles/getting-started-with-python](https://devcenter.heroku.com/articles/getting-started-with-python)
@@ -45,53 +44,20 @@ Initialize a new git repo within your working directory:
 $ git init
 ```
 
-Next, we're going to use Virtualenvwrapper to set up a new virtual environment with Python 3.
+Now we're going to set up a virtual environment to use for our application.
 
 ```sh
-$ which python3
-/usr/local/bin/python3
-
-$ mkvirtualenv --python=/usr/local/bin/python3 wordcounts
-Running virtualenv with interpreter /usr/local/bin/python3
-Using base prefix '/usr/local/Cellar/python3/3.4.2_1/Frameworks/Python.framework/Versions/3.4'
-New python executable in wordcounts/bin/python3.4
-Also creating executable in wordcounts/bin/python
-Installing setuptools, pip...done.
-
-(wordcounts)$ python
-Python 3.4.2 (default, Feb 10 2015, 03:38:22)
-[GCC 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.56)] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
->>> exit()
+$ pyvenv-3.5 env
+$ source env/bin/activate
 ```
 
-This creates a new virtualenv for us. Along with creating a new virtualenv, it creates some new options, including *[Postactivate](http://virtualenvwrapper.readthedocs.org/en/latest/scripts.html#scripts-postactivate)*, after you run the `workon` command to start your virtual environment. This is going to help us later when we are setting up some environment variables - but for now we're also going to use it to automatically jump to our project when we first start it.
+You should now see you `(env)` before your user name in terminal. This shows you are working in a virtual environment.
 
-Open up the *postactivate* file. The easiest way to do this is with VIM:
+> In order to leave your virtual environment, just run the command
 
 ```sh
-$ vi $VIRTUAL_ENV/bin/postactivate
+$ deactivate
 ```
-
-Add the following line to your project:
-
-```sh
-cd ~/path/to/your/project
-```
-
-*Make sure to alter the above command for your environment. For example, my working directory is within my "repos" directory, so my path is: `cd ~/repos/realpython/flask-by-example`.*
-
-> Within VIM, press "i" to enter the INSERT mode. Paste the line in the file, then press "escape" to exit INSERT mode. Finally press ":", then "w", and finally "q" to save and exit VIM.
-
-Now open a new terminal window and run the following command:
-
-```sh
-$ workon wordcounts
-```
-
-If all is setup properly, it will activate your environment and move you directly to the project directory. A nice timesaver.
-
-> If you are having problems with virtualenvwrapper, just use virtualenv.
 
 Next we're going to get our basic structure for our app set up. Add the following files to your "flask-by-example" folder:
 
@@ -173,7 +139,7 @@ $ pip freeze > requirements.txt
 We also need to specify a Python version so that Heroku uses the right one to run our app. Simply create a file called *runtime.txt* with the following code:
 
 ```
-python-3.4.2
+python-3.5.1
 ```
 
 Commit your changes in git and optionally PUSH to Github, then create two new Heroku apps.
@@ -189,6 +155,8 @@ And one for staging:
 ```sh
 $ heroku create wordcounts-stage
 ```
+
+These names are now already taken, so you will have to add on something individual for yours, such as your initials or a number
 
 Add your new apps to your git remotes. Make sure to name one remote *pro* (for "production") and the other *stage* (for "staging"):
 
@@ -255,6 +223,9 @@ With our config file we're going to borrow a bit from how Django's config is set
 Add the following to your newly created *config.py* file:
 
 ```python
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 class Config(object):
     DEBUG = False
     TESTING = False
@@ -280,25 +251,26 @@ class TestingConfig(Config):
     TESTING = True
 ```
 
-We set up a base `Config` class with some basic setup that our other config classes inherit from. Now we'll be able to import the appropriate config class based on the current environment. Thus, we can use environment variables to choose which settings we’re going to use based on the environment (e.g., local, staging, production).
+We import os and then set the basedir variable as a relative path from any place we call it to this file. We then set up a base `Config` class with some basic setup that our other config classes inherit from. Now we'll be able to import the appropriate config class based on the current environment. Thus, we can use environment variables to choose which settings we’re going to use based on the environment (e.g., local, staging, production).
 
 ### Local Settings
 
-To set up our `APP_SETTINGS` variable locally, we can use our Virtualenvwrapper *postactivate* file again.
-
-Add the following line to your *postactivate* file:
+To set up our application with environment variables, we're going to use [autoenv](https://github.com/kennethreitz/autoenv). This program allows us to set commands that will run every time we cd into our directory. In order to use it, we will need to install it globally. First, kill your environment in the terminal, install autoenv and add a *.env* file:
 
 ```sh
+$ deactivate
+$ pip install autoenv
+$ touch .env
+```
+
+Next, in your .env file, add the following:
+
+```
+source env/bin/activate
 export APP_SETTINGS="config.DevelopmentConfig"
 ```
 
-Reload your environment by running the `workon wordcounts` command again:
-
-```
-$ workon wordcounts
-```
-
-Now when you run your app it will import the configuration that you set up in your `DevelopmentConfig` class.
+Now, if you move up a directory and then cd back into it, your virtual environment will automatically be started and your variable APP_SETTINGS is declared.
 
 ### Heroku Settings
 

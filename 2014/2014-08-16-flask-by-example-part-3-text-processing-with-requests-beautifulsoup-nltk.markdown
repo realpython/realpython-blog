@@ -33,7 +33,7 @@ Tools we'll use the following tools:
 - **NLTK** - [http://www.nltk.org/](http://www.nltk.org/)
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
 $ pip install requests nltk beautifulsoup4
 $ pip freeze > requirements.txt
 ```
@@ -96,6 +96,7 @@ import os
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 
@@ -188,6 +189,7 @@ import nltk
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 from models import Result

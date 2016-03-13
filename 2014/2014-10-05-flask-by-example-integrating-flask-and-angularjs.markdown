@@ -1,4 +1,4 @@
-# Flask by Example - Integrating Flask and AngularJS
+python -m nltk.downloader# Flask by Example - Integrating Flask and AngularJS
 
 {% assign openTag = '{%' %}
 
@@ -20,7 +20,7 @@ Remember, here's what we're building: A Flask app that calculates word-frequency
 1. [Part Four](https://realpython.com/blog/python/flask-by-example-implementing-a-redis-task-queue/): Implement a Redis task queue to handle the text processing.
 1. **Part Five: Setup Angular on the front-end to continuously poll the back-end to see if the request is done. (current)**
 1. [Part Six](https://realpython.com/blog/python/updating-the-staging-environment/): Push to the staging server on Heroku - setting up Redis, detailing how to run two processes (web and worker) on a single Dyno.
-1. Part Seven: Update the front-end to make it more user-friendly.
+1. [Part Seven](https://realpython.com/blog/python/flask-by-example-updating-the-ui/): Update the front-end to make it more user-friendly.
 1. Part Eight: Add the D3 library into the mix to graph a frequency distribution and histogram.
 
 > Need the code? Grab it from the [repo](https://github.com/realpython/flask-by-example/releases).
@@ -40,7 +40,7 @@ $ redis-server
 In another window, navigate to your project directory and then run the worker:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
 $ python worker.py
 20:38:04 RQ worker started, version 0.4.6
 20:38:04
@@ -50,7 +50,7 @@ $ python worker.py
 Finally, open a third terminal window, navigate to your project directory, and fire up the main app:
 
 ```sh
-$ workon wordcounts
+$ cd wordcounts
 $ python manage.py runserver
 ```
 
@@ -82,7 +82,7 @@ Now we're ready to add in Angular.
 Add Angular to *index.html*:
 
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 ```
 
 ## Update *index.html*
@@ -323,7 +323,7 @@ success(function(data, status, headers, config) {
 
 Here, we attach the results to the `$scope` object so that it's available to the view.
 
-Test that out. If all went well, you should see the object on the DOM. Not very pretty, but that's an easy fix with Bootstrap:
+Test that out. If all went well, you should see the object on the DOM. Not very pretty, but that's an easy fix with Bootstrap, add the following code underneath your div with `id=results` and remove the `{% raw %}` and `{% endraw %}` tags that were wrapping the results div from the code above:
 
 ```html
 <div id="results">
