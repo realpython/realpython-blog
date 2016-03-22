@@ -1,52 +1,62 @@
 # Flask by Example - Implementing a Redis Task Queue
 
-*The following is a collaboration piece between Cam Linke, co-founder of [Startup Edmonton](http://startupedmonton.com/), and the folks at Real Python.*
-
-**Updated 02/22/2015:** Added Python 3 support.
+**This part of the tutorial details how to implement a Redis task queue to handle text processing.**
 
 <br>
 
-**In this section, we'll add a basic Redis task queue to handle the text processing.**
+<div class="center-text">
+  <img class="no-border" src="/images/blog_images/flask_by_example/flask-by-example-part4.png" style="max-width: 100%;" alt="flask by example part 4">
+</div>
 
-There are a number of tools to do this, such as [ReTask](http://retask.readthedocs.org/en/latest/) and [HotQueue](http://richardhenry.github.io/hotqueue/). We are going to use [Python RQ](http://python-rq.org/). It's a really simple library for creating a task queue built on top of Redis that's easy to set up and implement.
+<br>
 
-Remember, here's what we're building: A Flask app that calculates word-frequency pairs based on the text from a given URL. This is a full-stack tutorial.
+*Updates:*
 
-1. [Part One](http://www.realpython.com/blog/python/flask-by-example-part-1-project-setup): Setup a local development environment and then deploy both a staging environment and a production environment on Heroku.
-1. [Part Two](http://www.realpython.com/blog/flask-by-example-part-2-postgres-sqlalchemy-and-alembic): Setup a PostgreSQL database along with SQLAlchemy and Alembic to handle migrations.
-1. [Part Three](https://realpython.com/blog/python/flask-by-example-part-3-text-processing-with-requests-beautifulsoup-nltk/): Add in the back-end logic to scrape and then process the counting of words from a webpage using the requests, BeautifulSoup, and Natural Language Toolkit (NLTK) libraries.
-1. **Part Four: Implement a Redis task queue to handle the text processing. (current)**
-1. [Part Five](https://realpython.com/blog/python/flask-by-example-integrating-flask-and-angularjs/): Setup Angular on the front-end to continuously poll the back-end to see if the request is done.
-1. [Part Six](https://realpython.com/blog/python/updating-the-staging-environment/): Push to the staging server on Heroku - setting up Redis, detailing how to run two processes (web and worker) on a single Dyno.
-1. [Part Seven](https://realpython.com/blog/python/flask-by-example-updating-the-ui/): Update the front-end to make it more user-friendly.
+  - 03/22/2016: Upgraded to Python version [3.5.1](https://www.python.org/downloads/release/python-351/) as well as the latest versions of Redis, Python Redis, and RQ. See [below](#install-requirements) for details.
+  - 02/22/2015: Added Python 3 support.
+
+<hr><br>
+
+Remember: Here's what we're building - A Flask app that calculates word-frequency pairs based on the text from a given URL.
+
+<br>
+
+1. [Part One](/blog/python/flask-by-example-part-1-project-setup/): Set up a local development environment and then deploy both a staging and a production environment on Heroku.
+1. [Part Two](/blog/python/flask-by-example-part-2-postgres-sqlalchemy-and-alembic): Set up a PostgreSQL database along with SQLAlchemy and Alembic to handle migrations.
+1. [Part Three](/blog/python/flask-by-example-part-3-text-processing-with-requests-beautifulsoup-nltk/): Add in the back-end logic to scrape and then process the word counts from a webpage using the requests, BeautifulSoup, and Natural Language Toolkit (NLTK) libraries.
+1. **Part Four: Implement a Redis task queue to handle the text processing. (_current_)**
+1. [Part Five](/blog/python/flask-by-example-integrating-flask-and-angularjs/): Set up Angular on the front-end to continuously poll the back-end to see if the request is done processing.
+1. [Part Six](/blog/python/updating-the-staging-environment/): Push to the staging server on Heroku - setting up Redis and detailing how to run two processes (web and worker) on a single Dyno.
+1. [Part Seven](/blog/python/flask-by-example-updating-the-ui/): Update the front-end to make it more user-friendly.
 1. Part Eight: Add the D3 library into the mix to graph a frequency distribution and histogram.
 
 > Need the code? Grab it from the [repo](https://github.com/realpython/flask-by-example/releases).
 
 ## Install Requirements
 
-Tools:
+Tools used:
 
-- **Redis** - [http://redis.io/](http://redis.io/)
-- **RQ (Redis Queue)** - [http://python-rq.org/](http://python-rq.org/)
+- Redis ([3.0.7](https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES))
+- Python Redis ([2.10.5](https://pypi.python.org/pypi/redis/2.10.5))
+- RQ ([0.5.6](https://pypi.python.org/pypi/rq/0.5.6)) - a simple library for creating a task queue
 
-Start by downloading and installing Redis from [http://redis.io/](http://redis.io/) (or use Homebrew - `brew install redis`), then start the Redis server:
+Start by downloading and installing Redis from either [the official site](http://redis.io/download) or via Homebrew (`brew install redis`). Once installed, start the Redis server:
 
 ```sh
 $ redis-server
 ```
 
-Next install the Python Redis library as well as the RQ Library in a new terminal window:
+Next install Python Redis and RQ in a new terminal window:
 
 ```sh
-$ workon wordcounts
-$ pip install redis rq
+$ cd flask-by-example
+$ pip install redis==2.10.5 rq==0.5.6
 $ pip freeze > requirements.txt
 ```
 
-## Setup the Worker
+## Set up the Worker
 
-Let's start by creating a worker process to listen for queued tasks:
+Let's start by creating a worker process to listen for queued tasks. Create a new file *worker.py*, and add this code:
 
 ```python
 import os
@@ -66,14 +76,14 @@ if __name__ == '__main__':
         worker.work()
 ```
 
-Save this as *worker.py*. Here, we listen for a queue called `default` and establish a connection to our Redis server on `localhost:6379`.
+Here, we listened for a queue called `default` and established a connection to the Redis server on `localhost:6379`.
 
 Fire this up in another terminal window:
 
 ```sh
-$ workon wordcounts
+$ cd flask-by-example
 $ python worker.py
-17:01:29 RQ worker started, version 0.4.6
+17:01:29 RQ worker started, version 0.5.6
 17:01:29
 17:01:29 *** Listening on default...
 ```
@@ -95,6 +105,7 @@ Then update the configuration section:
 ```python
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 q = Queue(connection=conn)
@@ -102,15 +113,11 @@ q = Queue(connection=conn)
 from models import *
 ```
 
-`q = Queue(connection=conn)` sets up a Redis connection and initializes a queue based on that connection.
+`q = Queue(connection=conn)` set up a Redis connection and initialized a queue based on that connection.
 
-Now let's move the text processing functionality out of our index route and into a new function called `count_and_save_words()`. This function accepts one argument, a URL, which we will pass to it when we call it from our index route.
+Move the text processing functionality out of our index route and into a new function called `count_and_save_words()`. This function accepts one argument, a URL, which we will pass to it when we call it from our index route.
 
 ```python
-##########
-# helper #
-##########
-
 def count_and_save_words(url):
 
     errors = []
@@ -153,10 +160,6 @@ def count_and_save_words(url):
         return {"error": errors}
 
 
-##########
-# routes #
-##########
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     results = {}
@@ -182,11 +185,11 @@ job = q.enqueue_call(
 print(job.get_id())
 ```
 
-Here we use the queue that we initialized earlier and call the `enqueue_call()` function. This adds a new job to our queue and that job runs the `count_and_save_words()` function with the URL as the argument. The `result_ttl=5000` line argument tells RQ how long to hold on to the result of the job for - 5,000 seconds. Then we output the job id to the terminal. This id is needed to see if the job is done processing.
+Here we used the queue that we initialized earlier and called the `enqueue_call()` function. This added a new job to the queue and that job ran the `count_and_save_words()` function with the URL as the argument. The `result_ttl=5000` line argument tells RQ how long to hold on to the result of the job for - 5,000 seconds, in this case. Then we outputted the job id to the terminal. This id is needed to see if the job is done processing.
 
 Let's setup a new route for that...
 
-## New Route
+## Get Results
 
 ```python
 @app.route("/results/<job_key>", methods=['GET'])
@@ -202,9 +205,7 @@ def get_results(job_key):
 
 Let's test this out.
 
-Fire up the server, navigate to [http://localhost:5000/](http://localhost:5000/), use the URL [http://realpython.com](http://realpython.com), and then grab the job id from the terminal. Then use that id in the '/results/' endpoint.
-
-For example: [http://localhost:5000/results/ef600206-3503-4b87-a436-ddd9438f2197](http://localhost:5000/results/ef600206-3503-4b87-a436-ddd9438f2197).
+Fire up the server, navigate to [http://localhost:5000/](http://localhost:5000/), use the URL [http://realpython.com](http://realpython.com), and grab the job id from the terminal. Then use that id in the '/results/' endpoint - i.e., [http://localhost:5000/results/ef600206-3503-4b87-a436-ddd9438f2197](http://localhost:5000/results/ef600206-3503-4b87-a436-ddd9438f2197).
 
 As long as less than 5,000 seconds have elapsed before you check the status, then you should see an id number, which is generated when we add the results to the database:
 
@@ -248,27 +249,31 @@ Make sure to add the import:
 from flask import jsonify
 ```
 
-Test this out again. If all went well, you should see the following results in your browser:
+Test this out again. If all went well, you should see something similar to in your browser:
 
-```javascript
+```sh
 {
-    Course: 5,
-    Download: 4,
-    Python: 19,
-    Real: 11,
-    courses: 7,
-    development: 7,
-    return: 4,
-    sample: 4,
-    videos: 5,
-    web: 12
+  Course: 5,
+  Python: 19,
+  Real: 11,
+  course: 4,
+  courses: 7,
+  development: 7,
+  product: 4,
+  sample: 4,
+  videos: 5,
+  web: 12
 }
 ```
 
 ## What's Next?
 
-In order to bring everything together, we'll add AngularJS into the mix, in the next [part](https://realpython.com/blog/python/flask-by-example-integrating-flask-and-angularjs/), to create a basic means of polling the server side - sending a request every five seconds or so to the `/results/<job_key>` endpoint, asking for updates. Once the data is available, we'll add it to the DOM.
-
-> Curious about Redis and what it's used for? Check out this excellent [presentation](http://www.slideshare.net/dvirsky/kicking-ass-with-redis).
+*In [Part 5](/blog/python/flask-by-example-integrating-flask-and-angularjs/) we'll bring the client and server together by adding Angular into the mix to create a [poller](https://en.wikipedia.org/wiki/Polling_%28computer_science%29), which will send a request every five seconds to the `/results/<job_key>` endpoint asking for updates. Once the data is available, we'll add it to the DOM.*
 
 Cheers!
+
+<br>
+
+<p style="font-size: 14px;">
+  <em>This is a collaboration piece between Cam Linke, co-founder of <a href="http://startupedmonton.com/">Startup Edmonton</a>, and the folks at Real Python</em>
+</p>
