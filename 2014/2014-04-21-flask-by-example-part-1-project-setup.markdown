@@ -12,7 +12,7 @@
 
 *Updates:*
 
-  - 03/22/2106: Upgraded to Python version [3.5.1](https://www.python.org/downloads/release/python-351/), and added autoenv version [1.0.0](https://pypi.python.org/pypi/autoenv/1.0.0).
+  - 03/22/2016: Upgraded to Python version [3.5.1](https://www.python.org/downloads/release/python-351/), and added autoenv version [1.0.0](https://pypi.python.org/pypi/autoenv/1.0.0).
   - 02/22/2015: Added Python 3 support.
 
 <hr><br>
