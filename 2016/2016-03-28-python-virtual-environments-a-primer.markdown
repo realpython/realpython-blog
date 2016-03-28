@@ -388,5 +388,5 @@ As you can see, thanks to the huge Python community there are quite a few tools 
 <br>
 
 <p style="font-size: 14px;">
-  <em>This is a collaboration piece between Scott Robinson, author of [Stack Abuse]((http://stackabuse.com)) and the folks at Real Python.</em>
+  <em>This is a collaboration piece between Scott Robinson, author of <a href="http://stackabuse.com">Stack Abuse</a> and the folks at Real Python.</em>
 </p>
