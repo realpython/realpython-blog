@@ -4,13 +4,13 @@ The following is a soup to nuts walkthrough of how to setup and deploy a Django 
 
 Tools/technologies used:
 
-1. [Python v2.7.8](https://www.python.org/download/releases/2.7.8/)
-1. [Django v1.7](https://www.djangoproject.com)
+1. [Python v3.4.3](https://www.python.org/download/releases/python-343/)
+1. [Django v1.9](https://www.djangoproject.com)
 1. [Amazon Elastic Beanstalk](http://aws.amazon.com/elasticbeanstalk/), [EC2](http://aws.amazon.com/ec2/), [S3](http://aws.amazon.com/s3/), and [RDS](http://aws.amazon.com/rds/)
 1. [EB CLI 3.x](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-cmd-commands.html)
 1. [PostgreSQL](http://www.postgresql.org)
 
-> **Why not Python 3?** As of writing, Elastic Beanstalk doesn't support it natively. You can get it to work with Docker, though - which we may cover in a future blog post.
+> **Now with Python 3?** This article has now been updated to cover deploying with Python 3 because AWS now has tons of love for python 3. 
 
 ## Elastic Beanstalk vs EC2
 
@@ -69,13 +69,11 @@ Now that we have the site up and running on our local machine, let's start the A
 
 ## CLI for AWS Elastic Beanstalk
 
-To work with a Amazon Elastic Beanstalk, we can use a package called [awsebcli](https://pypi.python.org/pypi/awsebcli/3.0.10). As of this writing the latest version of is 3.0.10 and the recommended way to install it is with pip:
+To work with a Amazon Elastic Beanstalk, we can use a package called [awsebcli](https://pypi.python.org/pypi/awsebcli/3.0.10). As of this writing the latest version of is 3.7.4 and the recommended way to install it is with pip:
 
 ```sh
 $ pip install awsebcli
 ```
-
-> Do not use brew to install this package. As of this writing, it installs v2.6.3 which is broken in subtle ways that will lead to serious frustration.
 
 Now test the installation to make sure it's working:
 
@@ -86,7 +84,7 @@ $ eb --version
 This should give you a nice 3.x version number:
 
 ```sh
-EB CLI 3.0.10 (Python 2.7.8)
+EB CLI 3.7.4 (Python 3.4.3)
 ```
 
 To actually start using Elastic Beanstalk you will need an [account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) with AWS (surprise!). Sign up (or log in).
@@ -123,7 +121,20 @@ This will default to the directory name. Just go with that.
 
 **Python version**
 
-Next, the CLI should automagically detect that you are using Python and just ask for confirmation. Say yes. Then you need to select a platform version. Select `Python 2.7`.
+Next, the CLI should automagically detect that you are using Python and just ask for confirmation. Say yes. Then you need to select a platform version. You have 2 different options here for python 3
+
+* Python 3.4
+* Python 3.4 (Preconfigured - Docker)
+
+If your a hipster choose the Preconfigured - Docker choice, otherwise go with the normal Python 3.4.  No only teasing.  The basic difference is this.
+
+### Python 3.4
+This gives you an Ec2 image running 64bit Amazon Linux with python 3.4 pre installed.  The front end web server is apache, with mod_wsgi installed.  This is the "standard" or "traditional" way that beanstalk works.  Meaning with this option beanstalk will create Ec2 images for you, and you can use the `ebextension` files we will talk about later to customize the ec2 imagee.
+
+### Python 3.4 (Preconfigured - Docker)
+This gives you an Ec2 image running Docker, with a docker image already setup for you.  The docker image runs 64bit Debian Jessie with python 3.4, nginx 1.8 and uWSGI 2.0.8.  Because your basically interacting with the docker image directly if you chose this route you would use standard docker configuration techniques (i.e. a 'Dockerfile'), and then you don't have to do much that is AWS Beanstalk speciic, as beanstalk knows how to manage the docker image for you. 
+
+For this article we will focus on the "standard" or "traditional" way using an Ec2 image, so choose the 'Python 3.4' option and let's move on.
 
 **SSH**
 
@@ -204,13 +215,15 @@ You should use a similar naming convention to what Amazon suggest - e.g., applic
 
 **DNS CNAME prefix**
 
-When you deploy an app to Elastic Beanstalk you will automatically get a domain name like xxx.elasticbeanstalk.com. `DNS CNAME prefix` is what you want to be used in place of `xxx`. Just go with the default.
+When you deploy an app to Elastic Beanstalk you will automatically get a domain name like xxx.elasticbeanstalk.com. `DNS CNAME prefix` is what you want to be used in place of `xxx`. The default probably won't work if your following along cause somebody else has already used it (the names are global to AWS), so pick something unique and keep on going. 
 
 ### What happens now?
 
 At this point `eb` will actually create your environment for you. Be patient as this can take some time.
 
 > If you do get an error creating the environment, like - `aws.auth.client.error.ARCInstanceIdentityProfileNotFoundException`- check that that the credentials you are using have appropriate permissions to create the Beanstalk environment, as discussed earlier in this post.
+
+> Also it may prompt you with a message about `Platform requires a service role` if it does just say yes and let it create the role for you.
 
 Immediately after the environment is created, `eb` will attempt to deploy your application, by copying all the code in your project directory to the new EC2 instance, running `pip install -r requirements.txt` in the process.
 
@@ -247,9 +260,10 @@ packages:
   yum:
     git: []
     postgresql93-devel: []
+    libjpeg-turbo-devel: []
 ```
 
-EC2 instances run Amazon Linux, which is a Redhat flavor, so we can use [yum](http://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified) to install the packages that we need. For now, we are just going to install two packages - git and the Postgres client.
+EC2 instances run Amazon Linux, which is a Redhat flavor, so we can use [yum](http://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified) to install the packages that we need. For now, we are just going to install three packages - git, the Postgres client, and libjpeg for Pillow.
 
 After creating that file to redeploy the application, we need to do the following:
 
@@ -440,7 +454,7 @@ Don't forget that our application makes use of Django's admin, so we are going t
 
 ### Create the Admin User
 
-Unfortunately `createsuperuser` doesn't allow you to specify a password when using the `--noinput` option, so we will have to write our own command. Fortunately, Django makes it very easy to create [custom commands](https://docs.djangoproject.com/en/1.7/howto/custom-management-commands/).
+Unfortunately `createsuperuser` doesn't allow you to specify a password when using the `--noinput` option, so we will have to write our own command. Fortunately, Django makes it very easy to create [custom commands](https://docs.djangoproject.com/en/1.9/howto/custom-management-commands/).
 
 Create the file *iotd/images/management/commands/createsu.py*:
 
@@ -542,7 +556,7 @@ You will need to:
 1. [Create a bucket](http://docs.aws.amazon.com/AmazonS3/latest/UG/CreatingaBucket.html)
 1. [Grab your user's ARN (Amazon Resource Name)](http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 1. [Add bucket permissions](http://docs.aws.amazon.com/AmazonS3/latest/UG/EditingBucketPermissions.html)
-1. [Configure your Django app to use S3 to serve your static files](https://docs.djangoproject.com/en/1.7/howto/static-files/)
+1. [Configure your Django app to use S3 to serve your static files](https://docs.djangoproject.com/en/1.9/howto/static-files/)
 
 Since there are good write ups on this already, I'll just point you to my favorite: [Using Amazon S3 to store you Django Static and Media Files](http://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/)
 
