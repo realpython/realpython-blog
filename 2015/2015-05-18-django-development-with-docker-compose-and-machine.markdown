@@ -26,30 +26,32 @@ In the end, the stack will include a separate container for each service:
 
 <br>
 
-*Updates:*
+**Updates:**
 
-- 12/27/2015: Updated to the latest versions of Docker - Docker client (v1.9.1), Docker compose (v1.5.2), and Docker Machine (v0.5.4) - and Python (v3.5)
+- *04/13/2016*: Added Docker Toolbox, and also updated to the latest versions of Docker - Docker client (v1.10.3), Docker compose (v1.6.2), and Docker Machine (v0.6.0)
+- *12/27/2015*: Updated to the latest versions of Docker - Docker client (v1.9.1), Docker compose (v1.5.2), and Docker Machine (v0.5.4) - and Python (v3.5)
 
 > Interested in creating a similar environment for Flask? Check out [this](https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/) blog post.
 
 ## Local Setup
 
-Along with Docker (v1.9.1) we will be using -
+Along with Docker (v1.10.3) we will be using -
 
-- *[Docker Compose](https://docs.docker.com/compose/)* (v1.5.2) for orchestrating a multi-container application into a single app, and
-- *[Docker Machine](https://docs.docker.com/machine/)* (v0.5.4) for creating Docker hosts both locally and in the cloud.
+- *[Docker Compose](https://docs.docker.com/compose/)* (v1.6.2) for orchestrating a multi-container application into a single app, and
+- *[Docker Machine](https://docs.docker.com/machine/)* (v0.6.0) for creating Docker hosts both locally and in the cloud.
 
-Follow the directions [here](http://docs.docker.com/compose/install/) and [here](https://docs.docker.com/machine/#installation) to install Docker Compose and Machine, respectively.
+If you're running either Mac OS X or Windows, then download and install the [Docker Toolbox](https://www.docker.com/products/docker-toolbox) to get all the necessary tools. Otherwise follow the directions [here](https://docs.docker.com/compose/install/) and [here](https://docs.docker.com/machine/install-machine/) to install Docker Compose and Machine, respectively.
 
-> Running either Mac OS X or Windows, then your best bet is to install [Docker Toolbox](https://www.docker.com/docker-toolbox).
-
-Test out the installs:
+Once done, test out the installs:
 
 ```sh
-$ docker-machine --version
-docker-machine version 0.5.4, build 6643d0e
-$ docker-compose --version
-docker-compose version 1.5.2, build 7240ff3
+$ docker-machine version
+docker-machine version 0.6.0, build e27fb87
+$ docker-compose version
+docker-compose version 1.6.2, build 4d72027
+docker-py version: 1.7.2
+CPython version: 2.7.9
+OpenSSL version: OpenSSL 1.0.1j 15 Oct 2014
 ```
 
 Next clone the project from the [repository](https://github.com/realpython/dockerizing-django) or create your own project based on the project structure found on the repo:
@@ -98,10 +100,12 @@ Running pre-create checks...
 Creating machine...
 (dev) Creating VirtualBox VM...
 (dev) Creating SSH key...
-(dev) Starting VM...
+(dev) Starting the VM...
+(dev) Check network to re-create if needed...
+(dev) Waiting for an IP...
 Waiting for machine to be running, this may take a few minutes...
-Machine is running, waiting for SSH to be available...
 Detecting operating system of created instance...
+Waiting for SSH to be available...
 Detecting the provisioner...
 Provisioning with boot2docker...
 Copying certs to the local machine directory...
@@ -109,21 +113,22 @@ Copying certs to the remote machine...
 Setting Docker configuration on the remote daemon...
 Checking connection to Docker...
 Docker is up and running!
-To see how to connect Docker to this machine, run: docker-machine env dev
+To see how to connect your Docker Client to the Docker Engine
+running on this virtual machine, run: docker-machine env dev
 ```
 
-The `create` command set up a new "Machine" (called *dev*) for Docker development. In essence, it started a VM with Docker running. Now just point Docker at the *dev* machine:
+The `create` command set up a new "Machine" (called *dev*) for Docker development. In essence, it started a VM with the Docker client running. Now just point Docker at the *dev* machine:
 
 ```sh
-$ eval "$(docker-machine env dev)"
+$ eval $(docker-machine env dev)
 ```
 
 Run the following command to view the currently running Machines:
 
 ```sh
 $ docker-machine ls
-NAME   ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER   ERRORS
-dev    *        virtualbox   Running   tcp://192.168.99.100:2376           v1.9.1
+NAME   ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER    ERRORS
+dev    *        virtualbox   Running   tcp://192.168.99.100:2376           v1.10.3
 ```
 
 Next, let's fire up the containers with Docker Compose and get Django, Postgres, and Redis up and running.
@@ -179,6 +184,7 @@ data:
   volumes:
     - /var/lib/postgresql
   command: "true"
+
 ```
 
 Here, we're defining five services - *web*, *nginx*, *postgres*, *redis*, and *data*.
@@ -220,13 +226,13 @@ Again, this created five services, all running in different containers:
 
 ```sh
 $ docker-compose ps
-            Name                          Command               State           Ports
-----------------------------------------------------------------------------------------------
-dockerizingdjango_data_1       /docker-entrypoint.sh true       Up      5432/tcp
-dockerizingdjango_nginx_1      /usr/sbin/nginx                  Up      0.0.0.0:80->80/tcp
-dockerizingdjango_postgres_1   /docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp
-dockerizingdjango_redis_1      /entrypoint.sh redis-server      Up      0.0.0.0:6379->6379/tcp
-dockerizingdjango_web_1        /usr/local/bin/gunicorn do ...   Up      8000/tcp
+            Name                          Command                 State              Ports
+---------------------------------------------------------------------------------------------------
+dockerizingdjango_data_1       /docker-entrypoint.sh true       Restarting   5432/tcp
+dockerizingdjango_nginx_1      /usr/sbin/nginx                  Up           0.0.0.0:80->80/tcp
+dockerizingdjango_postgres_1   /docker-entrypoint.sh postgres   Up           0.0.0.0:5432->5432/tcp
+dockerizingdjango_redis_1      /entrypoint.sh redis-server      Up           0.0.0.0:6379->6379/tcp
+dockerizingdjango_web_1        /usr/local/bin/gunicorn do ...   Up           8000/tcp
 ```
 
 To see which environment variables are available to the *web* service, run:
@@ -289,8 +295,8 @@ Now we have two Machines running, one locally and one on Digital Ocean:
 ```sh
 $ docker-machine ls
 NAME         ACTIVE   DRIVER         STATE     URL                         SWARM   DOCKER   ERRORS
-dev          *        virtualbox     Running   tcp://192.168.99.100:2376           v1.9.1
-production   -        digitalocean   Running   tcp://45.55.35.188:2376             v1.9.1
+dev          *        virtualbox     Running   tcp://192.168.99.100:2376           v1.10.3
+production   -        digitalocean   Running   tcp://45.55.35.188:2376             v1.10.3
 ```
 
 Set *production* as the active machine and load the Docker environment into the shell:
