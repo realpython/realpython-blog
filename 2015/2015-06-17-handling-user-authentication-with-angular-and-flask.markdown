@@ -10,7 +10,7 @@
 
 *Updates:*
 
-  - 03/06/2016: Updated to the latest versions of Python ([3.5.1](https://www.python.org/downloads/release/python-351/)) and AngularJS ([1.4.9](https://code.angularjs.org/1.4.9/docs/api)); added a section on persistent logins.
+  - 04/17/2016: Updated to the latest versions of Python ([3.5.1](https://www.python.org/downloads/release/python-351/)) and AngularJS ([1.4.10](https://code.angularjs.org/1.4.10/docs/api)); added a section on persistent logins.
 
 <hr>
 
@@ -204,7 +204,7 @@ This should be straightforward, and you can probably guess the response to this 
 
 Now, here's where things get a bit tricky. Again, since end users have full access to the power of the browser as well as [DevTools](https://developer.chrome.com/devtools) and the client-side code, it's vital that you not only restrict access to sensitive endpoints on the server-side - but that you also not store sensitive data on the client-side. Keep this in mind as you add auth functionality to your own application stack.
 
-Let's jump right in by creating a [service](https://code.angularjs.org/1.4.9/docs/guide/services) to handle authentication.
+Let's jump right in by creating a [service](https://code.angularjs.org/1.4.10/docs/guide/services) to handle authentication.
 
 ### Authentication Service
 
@@ -285,9 +285,9 @@ function login(email, password) {
 }
 ```
 
-Here, we used the [$q](https://code.angularjs.org/1.4.9/docs/api/ng/service/$q) service to set up a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), which we'll access in a future controller. We also utilized the [$http](https://code.angularjs.org/1.4.9/docs/api/ng/service/$http) service to send an AJAX request to the `/api/login` endpoint that we already set up in our back-end Flask app.
+Here, we used the [$q](https://code.angularjs.org/1.4.10/docs/api/ng/service/$q) service to set up a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), which we'll access in a future controller. We also utilized the [$http](https://code.angularjs.org/1.4.10/docs/api/ng/service/$http) service to send an AJAX request to the `/api/login` endpoint that we already set up in our back-end Flask app.
 
-Based on the returned response, we either [resolve](https://code.angularjs.org/1.4.9/docs/api/ng/service/$q#usage) or [reject](https://code.angularjs.org/1.4.9/docs/api/ng/service/$q#usage) the object and set the value of `user` to `true` or `false`.
+Based on the returned response, we either [resolve](https://code.angularjs.org/1.4.10/docs/api/ng/service/$q#usage) or [reject](https://code.angularjs.org/1.4.10/docs/api/ng/service/$q#usage) the object and set the value of `user` to `true` or `false`.
 
 **`logout()`**
 
@@ -430,7 +430,7 @@ First, add the following HTML to a new file called *login.html*:
 
 Add this file to the "partials" directory.
 
-Take note of the form. We used the [ng-model](https://code.angularjs.org/1.4.9/docs/api/ng/directive/ngModel) directive on each of the inputs so that we can capture those values in the controller. Also, when the form is submitted, the [ng-submit](https://code.angularjs.org/1.4.9/docs/api/ng/directive/ngSubmit) directive handles the event by firing the `login()` function.
+Take note of the form. We used the [ng-model](https://code.angularjs.org/1.4.10/docs/api/ng/directive/ngModel) directive on each of the inputs so that we can capture those values in the controller. Also, when the form is submitted, the [ng-submit](https://code.angularjs.org/1.4.10/docs/api/ng/directive/ngSubmit) directive handles the event by firing the `login()` function.
 
 Next, within the "static" folder and add a new file called *controllers.js*. Yes, this will hold all of our Angular app's controllers. Be sure to add the script to the *index.html* file:
 
@@ -592,7 +592,7 @@ myApp.run(function ($rootScope, $location, $route, AuthService) {
 });
 ```
 
-The [$routeChangeStart](https://code.angularjs.org/1.4.9/docs/api/ngRoute/service/$route) event happens before the actual route change occurs. So, whenever a route is accessed, before the view is served, we ensure that the user is logged in. Test this out!
+The [$routeChangeStart](https://code.angularjs.org/1.4.10/docs/api/ngRoute/service/$route) event happens before the actual route change occurs. So, whenever a route is accessed, before the view is served, we ensure that the user is logged in. Test this out!
 
 ### Protect Certain Routes
 
@@ -664,7 +664,7 @@ Fortunately, the fix is simple: Within the `$routeChangeStart` we need to ALWAYS
 
 ```javascript
 function getUserStatus() {
-  $http.get('/api/status')
+  return $http.get('/api/status')
   // handle success
   .success(function (data) {
     if(data.status){
@@ -710,12 +710,13 @@ Finally, update the `$routeChangeStart`:
 myApp.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
     function (event, next, current) {
-      AuthService.getUserStatus();
-      if (next.access.restricted &&
-          !AuthService.isLoggedIn()) {
-        $location.path('/login');
-        $route.reload();
-      }
+      AuthService.getUserStatus()
+      .then(function(){
+        if (next.access.restricted && !AuthService.isLoggedIn()){
+          $location.path('/login');
+          $route.reload();
+        }
+      });
   });
 });
 ```
