@@ -28,6 +28,7 @@ In the end, the stack will include a separate container for each service:
 
 **Updates:**
 
+- *04/18/2016*: Added named data volumes to the Postgres and Redis containers.
 - *04/13/2016*: Added Docker Toolbox, and also updated to the latest versions of Docker - Docker client (v1.10.3), Docker compose (v1.6.2), and Docker Machine (v0.6.0)
 - *12/27/2015*: Updated to the latest versions of Docker - Docker client (v1.9.1), Docker compose (v1.5.2), and Docker Machine (v0.5.4) - and Python (v3.5)
 
@@ -147,10 +148,10 @@ web:
     - postgres:postgres
     - redis:redis
   volumes:
-    - ./web:/usr/src/app
-    - ./web/static:/usr/src/app/static
+    - /usr/src/app
+    - /usr/src/app/static
   env_file: .env
-  command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000 --reload
+  command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000
 
 nginx:
   restart: always
@@ -167,33 +168,26 @@ nginx:
 postgres:
   restart: always
   image: postgres:latest
-  volumes_from:
-    - data
   ports:
     - "5432:5432"
+  volumes:
+    - pgdata:/var/lib/postgresql/data/
 
 redis:
   restart: always
   image: redis:latest
   ports:
     - "6379:6379"
-
-data:
-  restart: always
-  image: postgres:latest
   volumes:
-    - /var/lib/postgresql
-  command: "true"
-
+    - redisdata:/data
 ```
 
-Here, we're defining five services - *web*, *nginx*, *postgres*, *redis*, and *data*.
+Here, we're defining four services - *web*, *nginx*, *postgres*, and *redis*.
 
 1. First, the *web* service is built via the instructions in the *Dockerfile* within the "web" directory - where the Python environment is setup, requirements are installed, and the Django application is fired up on port 8000. That port is then forwarded to port 80 on the host environment - e.g., the Docker Machine. This service also adds environment variables to the container that are defined in the *.env* file.
 1. The *nginx* service is used for reverse proxy to forward requests either to Django or the static file directory.
-1. Next, the *postgres* service is built from the the official [PostgreSQL image](https://registry.hub.docker.com/_/postgres/) from [Docker Hub](https://hub.docker.com/), which installs Postgres and runs the server on the default port 5432.
+1. Next, the *postgres* service is built from the the official [PostgreSQL image](https://registry.hub.docker.com/_/postgres/) from [Docker Hub](https://hub.docker.com/), which installs Postgres and runs the server on the default port 5432. Did you notice the [data volume](https://docs.docker.com/engine/userguide/containers/dockervolumes/)? This helps ensure that the data persists even if the Postgres container is deleted.
 1. Likewise, the *redis* service uses the official [Redis image](https://registry.hub.docker.com/u/library/redis/) to install, well, Redis and then the service is ran on port 6379.
-1. Finally, notice how there is a separate [volume](https://docs.docker.com/userguide/dockervolumes/) container that's used to store the database data - called *data*. This helps ensure that the data persists even if the Postgres container is completely destroyed.
 
 Now, to get the containers running, build the images and then start the services:
 
@@ -222,17 +216,16 @@ Nice!
 
 Try refreshing. You should see the counter update. Essentially, we're using the [Redis INCR](http://redis.io/commands/incr) to increment after each handled request. Check out the code in *web/docker_django/apps/todo/views.py* for more info.
 
-Again, this created five services, all running in different containers:
+Again, this created four services, all running in different containers:
 
 ```sh
 $ docker-compose ps
-            Name                          Command                 State              Ports
----------------------------------------------------------------------------------------------------
-dockerizingdjango_data_1       /docker-entrypoint.sh true       Restarting   5432/tcp
-dockerizingdjango_nginx_1      /usr/sbin/nginx                  Up           0.0.0.0:80->80/tcp
-dockerizingdjango_postgres_1   /docker-entrypoint.sh postgres   Up           0.0.0.0:5432->5432/tcp
-dockerizingdjango_redis_1      /entrypoint.sh redis-server      Up           0.0.0.0:6379->6379/tcp
-dockerizingdjango_web_1        /usr/local/bin/gunicorn do ...   Up           8000/tcp
+            Name                          Command               State           Ports
+----------------------------------------------------------------------------------------------
+dockerizingdjango_nginx_1      /usr/sbin/nginx                  Up      0.0.0.0:80->80/tcp
+dockerizingdjango_postgres_1   /docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp
+dockerizingdjango_redis_1      /entrypoint.sh redis-server      Up      0.0.0.0:6379->6379/tcp
+dockerizingdjango_web_1        /usr/local/bin/gunicorn do ...   Up      8000/tcp
 ```
 
 To see which environment variables are available to the *web* service, run:
