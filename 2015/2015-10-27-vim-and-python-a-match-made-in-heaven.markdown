@@ -72,8 +72,8 @@ For Debian or Ubuntu you can try:
 
 ```sh
 $ sudo apt-get remove vim-tiny
-$ apt-get update
-$ apt-get install vim
+$ sudo apt-get update
+$ sudo apt-get install vim
 ```
 
 For other flavors of Linux check the docs from your package manager.  Here is a link to get you started: [Install Vim](http://oss.sgi.com/LDP/HOWTO/Vim-HOWTO/introduction.html)
