@@ -1,16 +1,16 @@
 # Deploying a Django App to AWS Elastic Beanstalk
 
-The following is a soup to nuts walkthrough of how to setup and deploy a Django application to [Amazon Web Services](http://aws.amazon.com) (AWS) all while remaining sane.
+The following is a soup to nuts walkthrough of how to set up and deploy a Django application to [Amazon Web Services](http://aws.amazon.com) (AWS) all while remaining sane.
 
 Tools/technologies used:
 
-1. [Python v2.7.8](https://www.python.org/download/releases/2.7.8/)
-1. [Django v1.7](https://www.djangoproject.com)
+1. [Python v3.4.3](https://www.python.org/download/releases/python-343/)
+1. [Django v1.9](https://www.djangoproject.com)
 1. [Amazon Elastic Beanstalk](http://aws.amazon.com/elasticbeanstalk/), [EC2](http://aws.amazon.com/ec2/), [S3](http://aws.amazon.com/s3/), and [RDS](http://aws.amazon.com/rds/)
 1. [EB CLI 3.x](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-cmd-commands.html)
 1. [PostgreSQL](http://www.postgresql.org)
 
-> **Why not Python 3?** As of writing, Elastic Beanstalk doesn't support it natively. You can get it to work with Docker, though - which we may cover in a future blog post.
+> **Now with Python 3!** This article has been updated to cover deploying with Python 3 because AWS now has tons of love for Python 3. 
 
 ## Elastic Beanstalk vs EC2
 
@@ -36,9 +36,7 @@ After you download the code, create a virtualenv and install the requirements vi
 $ pip install -r requirements.txt
 ```
 
-Next, with PostgreSQL running locally, setup a new database named `iotd`. Also, depending upon your local Postgres configuration, you may need to update the `DATABASES` configuration in *settings.py*.
-
-For example, I updated the config to:
+Next, with PostgreSQL running locally, set up a new database named `iotd`. Also, depending upon your local Postgres configuration, you may need to update the `DATABASES` configuration in *settings.py*. For example, I updated the config to:
 
 ```python
 DATABASES = {
@@ -53,7 +51,7 @@ DATABASES = {
 }
 ```
 
-Now you can setup the database schema, create a superuser, and run the app:
+Now you can set up the database schema, create a superuser, and run the app:
 
 ```sh
 $ python manage.py migrate
@@ -69,13 +67,11 @@ Now that we have the site up and running on our local machine, let's start the A
 
 ## CLI for AWS Elastic Beanstalk
 
-To work with a Amazon Elastic Beanstalk, we can use a package called [awsebcli](https://pypi.python.org/pypi/awsebcli/3.0.10). As of this writing the latest version of is 3.0.10 and the recommended way to install it is with pip:
+To work with a Amazon Elastic Beanstalk, we can use a package called [awsebcli](https://pypi.python.org/pypi/awsebcli/3.0.10). As of this writing the latest version of is 3.7.4 and the recommended way to install it is with pip:
 
 ```sh
 $ pip install awsebcli
 ```
-
-> Do not use brew to install this package. As of this writing, it installs v2.6.3 which is broken in subtle ways that will lead to serious frustration.
 
 Now test the installation to make sure it's working:
 
@@ -86,7 +82,7 @@ $ eb --version
 This should give you a nice 3.x version number:
 
 ```sh
-EB CLI 3.0.10 (Python 2.7.8)
+EB CLI 3.7.4 (Python 3.4.3)
 ```
 
 To actually start using Elastic Beanstalk you will need an [account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) with AWS (surprise!). Sign up (or log in).
@@ -123,7 +119,20 @@ This will default to the directory name. Just go with that.
 
 **Python version**
 
-Next, the CLI should automagically detect that you are using Python and just ask for confirmation. Say yes. Then you need to select a platform version. Select `Python 2.7`.
+Next, the CLI should automagically detect that you are using Python and just ask for confirmation. Say yes. Then you need to select a platform version. You have 2 different options here for Python 3:
+
+* Python 3.4
+* Python 3.4 (Preconfigured - Docker)
+
+If you're a hipster, choose the Preconfigured - Docker choice, otherwise go with the normal Python 3.4.  No, only teasing; the basic difference is this:
+
+#### Python 3.4
+This gives you an Ec2 image running 64bit Amazon Linux with Python 3.4 pre-installed.  The front end web server is apache, with mod_wsgi installed.  This is the "standard" or "traditional" way that Beanstalk works, meaning with this option Beanstalk will create EC2 images for you, and you can use the `ebextension` files we will talk about later to customize the EC2 image.
+
+#### Python 3.4 (Preconfigured - Docker)
+This gives you an EC2 image running Docker, with a Docker image already setup for you.  The Docker image runs 64bit Debian Jessie with Python 3.4, nginx 1.8 and uWSGI 2.0.8.  Because you're basically interacting with the Docker image directly, if you choose this route you would use standard Docker configuration techniques (i.e. a 'Dockerfile'), and then you don't have to do much that is AWS Beanstalk specific, as Beanstalk knows how to manage the Docker image for you. 
+
+For this article we will focus on the "standard" or "traditional" way using an EC2 image, so choose the 'Python 3.4' option and let's move on.
 
 **SSH**
 
@@ -200,17 +209,19 @@ Just like `eb init`, this command will prompt you with a series of questions.
 
 **Environment Name**
 
-You should use a similar naming convention to what Amazon suggest - e.g., application_name-env_name - especially when/if you start hosing multiple applications with AWS. I used - `iod-test`.
+You should use a similar naming convention to what Amazon suggest - e.g., application_name-env_name - especially when/if you start hosting multiple applications with AWS. I used - `iod-test`.
 
 **DNS CNAME prefix**
 
-When you deploy an app to Elastic Beanstalk you will automatically get a domain name like xxx.elasticbeanstalk.com. `DNS CNAME prefix` is what you want to be used in place of `xxx`. Just go with the default.
+When you deploy an app to Elastic Beanstalk you will automatically get a domain name like xxx.elasticbeanstalk.com. `DNS CNAME prefix` is what you want to be used in place of `xxx`. The default probably won't work if you're following along because somebody else has already used it (the names are global to AWS), so pick something unique and keep on going. 
 
 ### What happens now?
 
 At this point `eb` will actually create your environment for you. Be patient as this can take some time.
 
 > If you do get an error creating the environment, like - `aws.auth.client.error.ARCInstanceIdentityProfileNotFoundException`- check that that the credentials you are using have appropriate permissions to create the Beanstalk environment, as discussed earlier in this post.
+
+> Also, it may prompt you with a message about `Platform requires a service role` if it does, just say yes and let it create the role for you.
 
 Immediately after the environment is created, `eb` will attempt to deploy your application, by copying all the code in your project directory to the new EC2 instance, running `pip install -r requirements.txt` in the process.
 
@@ -226,13 +237,13 @@ Don't worry - It's not really invalid. Check the logs for details:
 $ eb logs
 ```
 
-This will grab all the recent log files from the EC2 instance and output them to your terminal. It's a lot of information so you may want to redirect the output to a file (`eb logs -z`). Looking through the logs, you'll see one log file named *eb-activity.log*:
+This will grab all the recent log files from the EC2 instance and output them to your terminal. It's a lot of information, so you may want to redirect the output to a file (`eb logs -z`). Looking through the logs, you'll see one log file named *eb-activity.log*:
 
 ```sh
 Error: pg_config executable not found.
 ```
 
-The problem is that we tried to install `psycopy2` (the Postgres Python bindings), but we need the Postgres client drivers to be installed as well. Since they are not installed by default we need to install them first. Let's fix that...
+The problem is that we tried to install `psycopy2` (the Postgres Python bindings), but we need the Postgres client drivers to be installed as well. Since they are not installed by default, we need to install them first. Let's fix that...
 
 ## Customizing the Deployment Process
 
@@ -247,9 +258,10 @@ packages:
   yum:
     git: []
     postgresql93-devel: []
+    libjpeg-turbo-devel: []
 ```
 
-EC2 instances run Amazon Linux, which is a Redhat flavor, so we can use [yum](http://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified) to install the packages that we need. For now, we are just going to install two packages - git and the Postgres client.
+EC2 instances run Amazon Linux, which is a Redhat flavor, so we can use [yum](http://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified) to install the packages that we need. For now, we are just going to install three packages - git, the Postgres client, and libjpeg for Pillow.
 
 After creating that file to redeploy the application, we need to do the following:
 
@@ -421,11 +433,11 @@ else:
     }
 ```
 
-This simply says, "Use the environment variable settings if present, otherwise use our default development settings". Simple.
+This simply says, "use the environment variable settings if present, otherwise use our default development settings." Simple.
 
 ### Handling database migrations
 
-With our database setup, we still need to make sure that migrations are ran so that the database table structure is correct. We can do that by modifying *.ebextensions/02_python.config* and adding the following lines at the top of the file:
+With our database setup, we still need to make sure that migrations are run so that the database table structure is correct. We can do that by modifying *.ebextensions/02_python.config* and adding the following lines at the top of the file:
 
 ```yaml
 container_commands:
@@ -434,13 +446,13 @@ container_commands:
     leader_only: true
 ```
 
-`container_commands` allow you to run arbitrary commands after the application has been deployed on the EC2 instance. Because the EC2 instance is set up using a virtual environment, we must first activate that virtual environment before running our migrate command. Also the `leader_only: true` setting means, "Only run this command on the first instance when deploying to multiple instances".
+`container_commands` allow you to run arbitrary commands after the application has been deployed on the EC2 instance. Because the EC2 instance is set up using a virtual environment, we must first activate that virtual environment before running our migrate command. Also the `leader_only: true` setting means, "only run this command on the first instance when deploying to multiple instances."
 
 Don't forget that our application makes use of Django's admin, so we are going to need a superuser...
 
 ### Create the Admin User
 
-Unfortunately `createsuperuser` doesn't allow you to specify a password when using the `--noinput` option, so we will have to write our own command. Fortunately, Django makes it very easy to create [custom commands](https://docs.djangoproject.com/en/1.7/howto/custom-management-commands/).
+Unfortunately `createsuperuser` doesn't allow you to specify a password when using the `--noinput` option, so we will have to write our own command. Fortunately, Django makes it very easy to create [custom commands](https://docs.djangoproject.com/en/1.9/howto/custom-management-commands/).
 
 Create the file *iotd/images/management/commands/createsu.py*:
 
@@ -542,7 +554,7 @@ You will need to:
 1. [Create a bucket](http://docs.aws.amazon.com/AmazonS3/latest/UG/CreatingaBucket.html)
 1. [Grab your user's ARN (Amazon Resource Name)](http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 1. [Add bucket permissions](http://docs.aws.amazon.com/AmazonS3/latest/UG/EditingBucketPermissions.html)
-1. [Configure your Django app to use S3 to serve your static files](https://docs.djangoproject.com/en/1.7/howto/static-files/)
+1. [Configure your Django app to use S3 to serve your static files](https://docs.djangoproject.com/en/1.9/howto/static-files/)
 
 Since there are good write ups on this already, I'll just point you to my favorite: [Using Amazon S3 to store you Django Static and Media Files](http://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/)
 
@@ -590,17 +602,17 @@ Doing this will enable gzip compression, which should help with the size of the 
 
 ## Troubleshooting
 
-Don't forget the very helpful `eb ssh` command, which will get you into the EC2 instance so you can poke around and see what's going on. When troubleshooting, there are a couple of directories you should be aware of:
+Don't forget the very helpful `eb ssh` command, which will get you into the EC2 instance so you can poke around and see what's going on. When troubleshooting, there are a few directories you should be aware of:
 
 * `/opt/python` - Root of where you application will end up.
 * `/opt/python/current/app` - The current application that is hosted in the environment.
 * `/opt/python/on-deck/app` - The app is initially put in on-deck and then, after all the deployment is complete, it will be moved to `current`. If you are getting failures in your `container_commands`, check out out the `on-deck` folder and not the `current` folder.
 * `/opt/python/current/env` - All the env variables that `eb` will set up for you. If you are trying to reproduce an error, you may first need to `source /opt/python/current/env` to get things set up as they would be when eb deploy is running.
-* `opt/python/run/venv` - The virtual env used by your application; you will also need to run `source /opt/python/run/venv/bin/activate` if you are trying to reproduce an error
+* `opt/python/run/venv` - The virtual env used by your application; you will also need to run `source /opt/python/run/venv/bin/activate` if you are trying to reproduce an error.
 
 ## Conclusion
 
-Deploying to Elastic beanstalk can be a bit daunting at first, but once you understand where all the parts are and how things work, it's actually pretty easy and extremely flexible. It also gives you an environment that will scale automatically as your usage grows. Hopefully by now you have enough to be dangerous! Good luck on your next Beanstalk deployment.
+Deploying to Elastic Beanstalk can be a bit daunting at first, but once you understand where all the parts are and how things work, it's actually pretty easy and extremely flexible. It also gives you an environment that will scale automatically as your usage grows. Hopefully by now you have enough to be dangerous! Good luck on your next Beanstalk deployment.
 
 Did we miss anything? Have any other tips or tricks? Please comment below.
 
