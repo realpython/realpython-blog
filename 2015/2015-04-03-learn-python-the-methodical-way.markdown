@@ -1,8 +1,12 @@
 # Learn Python the Methodical Way
 
-This is a guest blog post from **[Zev Averbach](http://twitter.com/zevav)** - a Python enthusiast who is working on a startup related to his current business, [Averbach Transcription](http://avtranscription.com). Say hi to him at PyCon 2015!
+This is a guest blog post from **[Zev Averbach](http://twitter.com/zevav)** - a Python enthusiast who is working on a startup related to his current business, [Averbach Transcription](http://avtranscription.com). Say "hi" to him at PyCon 2016!
 
-<hr>
+<div class="center-text">
+  <img class="no-border" src="/images/blog_images/learn-python-methodically/python-logo.png" style="max-width: 100%;" alt="python logo">
+</div>
+
+<br>
 
 One of the first pieces of advice I got about learning a programming language was from Logan Hanks: "Read the library." Then I read Derek Sivers' advice to basically [memorize the whole language](https://sivers.org/srs).
 
