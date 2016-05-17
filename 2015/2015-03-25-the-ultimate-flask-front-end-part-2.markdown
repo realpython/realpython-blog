@@ -75,7 +75,7 @@ var countries = [
   {"name": "Spain"}, {"name": "Poland"}, {"name": "Haiti"}
 ];
 
-React.render(
+ReactDOM.render(
   <DynamicSearch items={ countries } />,
   document.getElementById('main')
 );
@@ -245,6 +245,7 @@ Ready for a quick test? Update *index.html*:
     </div>
     <!-- scripts -->
     <script src="{{ url_for('static', filename='bower_components/react/react.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/react/react-dom.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/js/main.js') }}"></script>
