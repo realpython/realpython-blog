@@ -33,7 +33,7 @@ We'll be using a simple "Image of the Day" app, which you can grab from this [re
 ```sh
 $ git clone https://github.com/realpython/image-of-the-day.git
 $ cd image-of-the-day/
-$ git checkout tags/start_here
+$ git checkout tags/start_here_py3
 ```
 
 After you download the code, create a virtualenv and install the requirements via pip:
