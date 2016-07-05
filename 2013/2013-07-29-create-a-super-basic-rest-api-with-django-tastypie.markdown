@@ -65,8 +65,10 @@ $ python manage.py makemigrations
 Now migrate them:
 
 ```sh
-$ python manage.py migrate
+$ python manage.py migrate --fake-initial
 ```
+
+**Note** The `fake-initial` optional argument is required if we have to troublehsoot the existing migrations if any. Please omit if no migrations exist already.
 
 Fire up the Django Shell and populate the database:
 
