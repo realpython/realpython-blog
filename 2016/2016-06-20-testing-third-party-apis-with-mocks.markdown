@@ -1,25 +1,12 @@
----
-layout: post
-title: "Testing Third-Party APIs with Mocks"
-date: 2016-06-20 07:35:57 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, testing]
-
-keywords: "python, testing, mock, mocking, patch, unittest, unit testing, test double"
-description: "Let's look at how to test the use of an external API using Python mock objects."
----
+# Mocking External APIs in Python
 
 **The following tutorial demonstrates how to test the use of an external API using Python [mock](https://en.wikipedia.org/wiki/Mock_object) objects.**
 
 Integrating with a third-party application is a great way to extend the functionality of your product. However, the added value also comes with obstacles. You do not own the external library, which means that you cannot control the servers that host it, the code that comprises its logic, or the data that gets transferred between it and your app. On top of those issues, users are constantly manipulating the data through their interactions with the library. If you want to enhance the utility of your application with a third-party API, then you need to be confident that the two systems will play nice. You need to test that the two applications interface in predictable ways, and you need your tests to execute in a controlled environment.
 
 <div class="center-text">
-  <img class="no-border" src="/images/blog_images/python-mocks/mock-objects.png" style="max-width: 100%;" alt="Mock Objects">
+  <img class="no-border" src="/images/blog_images/python-mocks/python-mocks.png" style="max-width: 100%;" alt="Python Mocks">
 </div>
-
-<br>
 
 At first glance, it might seem like you do not have any control over a third-party application. Many of them do not offer testing servers. You cannot test live data, and even if you could, the tests would return unreliable results as the data was updated through use. Also, you never want your automated tests to connect to an external server. An error on their side could bring a halt to your development if releasing your code depends on whether your tests pass. Luckily, there is a way to test the implementation of a third-party API in a controlled environment without needing to actually connect to an outside data source. The solution is to fake the functionality of the external code using something known as mocks.
 
@@ -659,6 +646,6 @@ OK (SKIP=1)
 
 ## Next steps
 
-At this point, you have seen how to test the integration of your app with a third-party API using mocks. Now that you know how to approach the problem, you can continue practicing by writing service functions that for the other API endpoints in JSON Placeholder (e.g. posts, comments, users). Improve your skills even more by connecting your app to a real external library such as Google, Facebook, or Evernote and see if you can write tests that use mocks. Keep producing clean and reliable code and stay tuned for the next tutorial, which will describe how to take testing to the next level with mock servers!
+At this point, you have seen how to test the integration of your app with a third-party API using mocks. Now that you know how to approach the problem, you can continue practicing by writing service functions that for the other API endpoints in JSON Placeholder (e.g. posts, comments, users). Improve your skills even more by connecting your app to a real external library such as Google, Facebook, or Evernote and see if you can write tests that use mocks. Keep producing clean and reliable code and stay tuned for the next tutorial, which will describe how to take testing to the next level with [mock servers](https://realpython.com/blog/python/testing-third-party-apis-with-mock-servers/)!
 
 Grab the code from the [repo](https://github.com/realpython/python-mocks).
