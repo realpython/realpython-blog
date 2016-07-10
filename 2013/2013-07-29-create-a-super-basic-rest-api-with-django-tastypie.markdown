@@ -2,7 +2,7 @@
 
 One of my clients literally called thirty minutes ago (last Friday) needing a JSON payload based on a GET response from the data model. I installed [django-tastypie](http://tastypieapi.org/) and thirty minutes later had the project completed. Although this example is overly simplified, it's not far off from my real-world implementation.
 
-> **Note:** Although this tutorial uses Django 1.5, the basic concepts will work on most versions greater than 1.3.
+> **Note:** This tutorial is using Python 3.5  and the latest Django 1.9.7.
 
 ## Setup
 
@@ -15,23 +15,23 @@ $ mkdir django-tastypie-tutorial
 $ cd django-tastypie-tutorial
 $ virtualenv --no-site-packages env
 $ source env/bin/activate
-$ pip install Django==1.5
-$ pip install django-tastypie==0.9.15
+$ pip install Django==1.9.7
+$ pip install django-tastypie==0.13.3
 $ pip install defusedxml==0.4.1
-$ pip install lxml==3.2.1
+$ pip install lxml==3.6.0
 ```
 
 Create a basic Django Project and App:
 
 ```sh
-$ django-admin.py startproject django15
-$ cd django15
+$ django-admin.py startproject django19
+$ cd django19
 $ python manage.py startapp whatever
 ```
 
 > Make sure to add the app to your `INSTALLED_APPS` section in *settings.py*.
 
-Add support for SQLite (or your RDMS of choice) in *settings.py*:
+Add support for SQLite (or your RDBMS of choice) in *settings.py*:
 
 ```python
 DATABASES = {
@@ -52,15 +52,23 @@ class Whatever(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 ```
 
-Sync the DB:
+Create the migrations:
 
 ```sh
-$ python manage.py syncdb
+$ python manage.py makemigrations
 ```
+
+Now migrate them:
+
+```sh
+$ python manage.py migrate --fake-initial
+```
+
+**Note** The `fake-initial` optional argument is required if we have to troublehsoot the existing migrations if any. Please omit if no migrations exist already.
 
 Fire up the Django Shell and populate the database:
 
@@ -79,7 +87,7 @@ $ python manage.py shell
 
 ## Setup Tasypie
 
-Create a new file in your Project called *api.py*, then sync the DB again.
+Create a new file in your Project called *api.py*.
 
 ```python
 from tastypie.resources import ModelResource
@@ -97,7 +105,7 @@ Update *urls.py*:
 
 ```python
 from django.conf.urls import patterns, include, url
-from api import WhateverResource
+from .api import WhateverResource
 
 whatever_resource = WhateverResource()
 
