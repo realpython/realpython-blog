@@ -1,19 +1,29 @@
-# Create a Super Basic REST API with django-tastypie
+# Create a Super Basic REST API with Django Tastypie
 
-One of my clients literally called thirty minutes ago (last Friday) needing a JSON payload based on a GET response from the data model. I installed [django-tastypie](http://tastypieapi.org/) and thirty minutes later had the project completed. Although this example is overly simplified, it's not far off from my real-world implementation.
+Let's set up a RESTful API with [Django Tastypie](http://tastypieapi.org/).
 
-> **Note:** This tutorial is using Python 3.5  and the latest Django 1.9.7.
+*Updates:*
 
-## Setup
+  - 07/10/2016: Upgraded to the latest versions of Python (v[3.5.1](https://www.python.org/downloads/release/python-351/)), Django (v[1.9.7](https://docs.djangoproject.com/en/1.9/releases/1.9.7/)), and django-tastypie (v[13.3](https://github.com/django-tastypie/django-tastypie/releases/tag/v0.13.3)).
+
+<br>
+
+<div class="center-text">
+  <img class="no-border" src="/images/blog_images/django-tastypie/django-tastypie-logo.png" style="max-width: 100%;" alt="Django Tastypie">
+</div>
+
+<br>
+
+## Project set up
 
 > Either follow along below to create your sample Project or clone the repo from [Github](https://github.com/mjhea0/django-tastypie-tutorial).
 
-Create a new directory, setup and activate virtualenv, install Django and the required dependencies:
+Create a new project directory, create and activate a virtualenv, install Django and the required dependencies:
 
 ```sh
 $ mkdir django-tastypie-tutorial
 $ cd django-tastypie-tutorial
-$ virtualenv --no-site-packages env
+$ pyvenv-3.5 env
 $ source env/bin/activate
 $ pip install Django==1.9.7
 $ pip install django-tastypie==0.13.3
@@ -29,7 +39,19 @@ $ cd django19
 $ python manage.py startapp whatever
 ```
 
-> Make sure to add the app to your `INSTALLED_APPS` section in *settings.py*.
+Make sure to add the app to your `INSTALLED_APPS` section in *settings.py*:
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'whatever',
+]
+```
 
 Add support for SQLite (or your RDBMS of choice) in *settings.py*:
 
@@ -37,15 +59,16 @@ Add support for SQLite (or your RDBMS of choice) in *settings.py*:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test.db',
+        'NAME': os.path.join(BASE_DIR, 'test.db'),
     }
 }
 ```
 
-Enable the Django Admin, then update your *models.py* file:
+Update your *models.py* file:
 
 ```python
 from django.db import models
+
 
 class Whatever(models.Model):
     title = models.CharField(max_length=200)
@@ -68,7 +91,7 @@ Now migrate them:
 $ python manage.py migrate --fake-initial
 ```
 
-**Note** The `fake-initial` optional argument is required if we have to troublehsoot the existing migrations if any. Please omit if no migrations exist already.
+> **Note**: The `fake-initial` optional argument is required if you have to troubleshoot the existing migrations. Omit if no migrations exist.
 
 Fire up the Django Shell and populate the database:
 
@@ -85,56 +108,63 @@ $ python manage.py shell
 >>> w.save()
 ```
 
-## Setup Tasypie
+Exit the shell when done.
 
-Create a new file in your Project called *api.py*.
+## Tastypie set up
+
+Create a new file in your App called *api.py*.
 
 ```python
 from tastypie.resources import ModelResource
 from tastypie.constants import ALL
-from models import Whatever
+
+from whatever.models import Whatever
+
 
 class WhateverResource(ModelResource):
     class Meta:
         queryset = Whatever.objects.all()
         resource_name = 'whatever'
-        filtering = { "title" : ALL }
+        filtering = {'title': ALL}
 ```
 
 Update *urls.py*:
 
 ```python
-from django.conf.urls import patterns, include, url
-from .api import WhateverResource
+from django.conf.urls import url, include
+from django.contrib import admin
+
+from django19.api import WhateverResource
 
 whatever_resource = WhateverResource()
 
-urlpatterns = patterns('',
-   url(r'^api/', include(whatever_resource.urls)),
-)
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^api/', include(whatever_resource.urls)),
+]
 ```
 
-## Fire Away!
+## Fire away!
 
 1. Fire up the server.
-2. Navigate to [http://localhost:8000/api/whatever/?format=json](http://localhost:8000/api/whatever/?format=json) to get the data in JSON format
-3. Navigate to [http://localhost:8000/api/whatever/?format=xml](http://localhost:8000/api/whatever/?format=json) to get the data in XML format
+1. Navigate to [http://localhost:8000/api/whatever/?format=json](http://localhost:8000/api/whatever/?format=json) to get the data in JSON format
+1. Navigate to [http://localhost:8000/api/whatever/?format=xml](http://localhost:8000/api/whatever/?format=json) to get the data in XML format
 
-Remember the filer we put on the `WhateverResource` class?
+Remember the filter we put on the `WhateverResource` class?
 
 ```python
-filtering = { "title" : ALL }
+filtering = {'title': ALL}
 ```
 
 Well, we can filter the objects by title. Try out various keywords:
 
-1. [http://localhost:8000/api/whatever/?format=xml&title__contains=what](http://localhost:8000/api/whatever/?format=xml&title__contains=what)
-1. [http://localhost:8000/api/whatever/?format=xml&title__contains=test](http://localhost:8000/api/whatever/?format=xml&title__contains=test)
+1. [http://localhost:8000/api/whatever/?format=json&title__contains=what](http://localhost:8000/api/whatever/?format=json&title__contains=what)
+1. [http://localhost:8000/api/whatever/?format=json&title__contains=test](http://localhost:8000/api/whatever/?format=json&title__contains=test)
 
-Simple, right!?
+Simple, right!?!
 
 ***
 
-There is so much more that can configured with Tastypie. Check out the official [docs](http://tastypieapi.org/) if you need more info. Comment below if you have questions.
+There is so much more that can configured with Tastypie. Check out the official [docs](http://tastypieapi.org/) for more info. Comment below if you have questions.
 
-Again, you can download the code [here](https://github.com/mjhea0/django-tastypie-tutorial).
+Again, you can download the code from the [repo](https://github.com/mjhea0/django-tastypie-tutorial).

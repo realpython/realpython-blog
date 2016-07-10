@@ -259,7 +259,7 @@ class TestMockServer(object):
         assert_list_equal(response.json(), [])
 ```
 
-Notice a new technique being used in the `test_mock_server.py` code. The `response = get_users()` line is wrapped with a `patch.dict()` function from the *mock* library.
+Notice a new technique being used in the *test_mock_server.py* code. The `response = get_users()` line is wrapped with a `patch.dict()` function from the *mock* library.
 
 What does this statement do?
 
