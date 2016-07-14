@@ -150,7 +150,7 @@ The code is working as expected. You know this because you have a passing test. 
 
 ```python
 # Standard library imports...
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 # Third-party imports...
 from nose.tools import assert_is_not_none
