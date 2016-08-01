@@ -10,7 +10,9 @@
 
 <br>
 
-*This is a collaboration piece between [Depado](https://github.com/Depado) and the folks at Real Python.*
+*Updates:*
+
+  - 08/01/2016: Upgraded to Python version [3.5.1](https://www.python.org/downloads/release/python-351/).
 
 <hr>
 
@@ -39,7 +41,7 @@ $ pyvenv-3.5 env
 $ source env/bin/activate
 ```
 
-> Yes, this article utilizes Python 3.5; however, the final script is compatible with both Python 2 and 3.
+> Tis article utilizes Python 3.5; however, the final script is compatible with both Python 2 and 3.
 
 ## 1st Task - The Structure
 
@@ -103,13 +105,9 @@ $ rm -rf new_project
 
 ### Handling Multiple Skeletons
 
-What if you need an app with a MongoDB database or a payments blueprint? All apps have specific needs and you obviously can't create a skeleton for them all, but perhaps you need a NoSQL database about fifty percent of the time. You can add a new skeleton to the root to accomplish this. Then when you run the scaffold command, simply specify the name of the directory containing the skeleton app you wish to make a copy of.
+What if you need an app with a MongoDB database or a payments blueprint? All apps have specific needs and you obviously can't create a skeleton for them all, but maybe there are certain features that are needed a majority of the time. Maybe you need a NoSQL database about fifty percent of the time, for example. You can add a new skeleton to the root to accomplish this. Then when you run the scaffold command, simply specify the name of the directory containing the skeleton app you wish to make a copy of.
 
 ## 2nd Task - Configuration
-
-> Need the script up to this point? Grab it from the first [tag](https://github.com/realpython/flask-scaffold/releases/tag/first_tag). Or if you cloned the [repo](https://github.com/realpython/flask-scaffold), you can grab the tag like so - `git checkout tags/first_tag`.
-
-**Note** Need to have an updated branch with code till now(if needed).
 
 We now need to generate a custom *config.py* file for each skeleton. This script is going to do just that for us; let the code do the repetitive work! First, add a file called *config.jinja2* in the *templates* folder:
 
@@ -213,8 +211,6 @@ Make sure the *config.py* file is present in the "new_project/project" folder an
 
 ## 3rd Task - Bower
 
-> Need the updated script? Grab it [here](https://github.com/realpython/flask-scaffold/releases/tag/second_tag).
-
 That's right: We'll be using [bower](http://bower.io/) to download and manage static libraries. To add bower support to the scaffold script, start with adding another argument:
 
 ```python
@@ -296,8 +292,6 @@ $ python flask_skeleton.py new_project -s skeleton -b 'angular, jquery, bootstra
 
 ## 4th Task - virtualenv
 
-> Again, grab the updated [script](https://github.com/realpython/flask-scaffold/releases/tag/third_tag), if necessary.
-
 Since the virtual environment is one of the most important parts of any Flask (err, Python) application, creating the virtualenv using the scaffold script will be really useful. As usual, start by adding the argument:
 
 ```python
@@ -345,8 +339,6 @@ This snippet assumes that there is a *requirements.txt* file in your "skeleton" 
 
 ## 5th task - Git Init
 
-> Updated [script](https://github.com/realpython/flask-scaffold/releases/tag/fourth_tag).
-
 Notice a pattern yet? Add the argument:
 
 ```python
@@ -376,16 +368,15 @@ if args.git:
 
 Now within the templates folder add a *.gitignore* file, and then add the files and folders that you'd like to ignore. Grab the [example](https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore) from Github, if needed. Test again.
 
-## Sum and confirm
+## Sum and Confirm
 
-> Updated [script](https://github.com/realpython/flask-scaffold/releases/tag/fifth_tag).
-
-Finally, let's add a nice summary before the application is created and then ask for user confirmation before executing the script.
+Finally, let's add a nice summary before the application is created and then ask for user confirmation before executing the script...
 
 ### Summary
 
 Add a file called *brief.jinja2* to the "templates" folder:
 
+{% raw %}
 ```python
 
 Welcome! The following settings will be used to create your application:
@@ -399,6 +390,7 @@ Git:                {% if git %}Yes{% else %}{{ disabled }}No{% endif %}
 Bower:              {% if bower %}Enabled{% else %}Disabled{% endif %}
 {% if bower %}Bower Dependencies: {% for dependency in bower %}{{ dependency }}{% endfor %}{% endif %}
 ```
+{% endraw %}
 
 Now we just need to catch every user-supplied argument and then render the template. First, add the import - `import platform` - to the import section and then the following code just below the "variables" section in the *flask_skeleton.py* script:
 
@@ -426,7 +418,11 @@ Test this out:
 
 ```sh
 $ python flask_skeleton.py new_project -s skeleton -b 'angular, jquery, bootstrap' -g -v
+```
 
+You should see something like:
+
+```sh
 Welcome! The following settings will be used to create your application:
 
 Python Version:     3.5.1
@@ -443,7 +439,7 @@ Nice!
 
 ### Refactor
 
-Now we need to refactor the script a bit to check for errors first. I suggest grabbing the code from the [refactor](https://github.com/realpython/flask-scaffold/releases/tag/refactor) tag and then comparing the diff between that script and the previous tag's [script](https://github.com/realpython/flask-scaffold/releases/tag/summary) since there are a number of small updates.
+Now we need to refactor the script a bit to check for errors first. I suggest grabbing the code from the [refactor](https://github.com/realpython/flask-scaffold/releases/tag/refactor) tag and then comparing the [diff](https://github.com/realpython/flask-scaffold/commit/f06a5968cba894a3ebac41b60282eb22c96eea99) since there are a number of small updates.
 
 **Make sure you use the updated script from the [refactor](https://github.com/realpython/flask-scaffold/releases/tag/refactor) tag before moving on.**
 
@@ -483,7 +479,7 @@ If you use Linux or Mac you can make this script easier to run. Simply add the f
 alias flaskcli="python /Users/michael/repos/realpython/flask-scaffold/flask_skeleton.py"
 ```
 
-> **NOTE**: If you have both Python 2.7 and Python 3.4 installed you will have to specify the version you want to use - either `python` or `python3`.
+> **NOTE**: If you have both Python 2.7 and Python 3.5 installed you will have to specify the version you want to use - either `python` or `python3`.
 
 Remove the new project (if necessary) - `rm -rf new_project` - and then test out the script one last time to confirm:
 
@@ -491,30 +487,14 @@ Remove the new project (if necessary) - `rm -rf new_project` - and then test out
 $ flaskcli new_project -s skeleton -b 'angular, jquery, bootstrap' -g -v
 ```
 
-## Refactoring Requirements.txt
-
-With our scaffolding tool up and running, we need to refactor the `requirements.txt` file and have only one in the root directory of our project.
-
-```sh
-rm -rf skeleton/requirements.txt
-pip freeze > requirements.txt
-```
-Now with all the python dependencies at one place, we are ready to ship our Flask Scaffolding tool.
-
 ## Conclusion
 
 What do you think? Did we miss anything? What other arguments would you add to `argparse` in order to customize your scaffold script even further? Comment below!
 
 Grab the final code from the [repo](https://github.com/realpython/flask-scaffold).
 
-### Author's Note
-
-I (Depado) would like to thank [Antonin Lenfant](http://antonin-lenfant.com/) for his support toward the project and for the changes made to the article. He is a former coworker and a Python enthusiast. I'd also like to thank [Michael Herman](https://github.com/mjhea0), from Real Python, who spotted my project on Github and asked me to write this article.
-
-Creating this tool has been an interesting challenge. I discovered how pleasant it was to work with a template system for an application that is not a web application.
-
 <br>
 
 <p style="font-size: 14px;">
-  <em>Edits made by <a href="https://twitter.com/diek007">Derrick Kearney</a>. Thanks again, Derrick!</em>
+  <em>This is a collaboration piece between <a href="https://github.com/Depado">Depado</a> and the folks at Real Python. Edits made by <a href="https://twitter.com/diek007">Derrick Kearney</a>.</em>
 </p>
