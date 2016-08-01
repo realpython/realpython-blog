@@ -33,13 +33,13 @@ $ mkdir flask-scaffold
 $ cd flask-scaffold
 $ git clone https://github.com/realpython/flask-skeleton skeleton
 $ rm -rf skeleton/.git
-$ rm skeleton/project/config.py skeleton/.gitignore
+$ rm skeleton/.gitignore
 $ mkdir templates
-$ pyvenv-3.4 env
+$ pyvenv-3.5 env
 $ source env/bin/activate
 ```
 
-> Yes, this article utilizes Python 3.4; however, the final script is compatible with both Python 2 and 3.
+> Yes, this article utilizes Python 3.5; however, the final script is compatible with both Python 2 and 3.
 
 ## 1st Task - The Structure
 
@@ -109,6 +109,8 @@ What if you need an app with a MongoDB database or a payments blueprint? All app
 
 > Need the script up to this point? Grab it from the first [tag](https://github.com/realpython/flask-scaffold/releases/tag/first_tag). Or if you cloned the [repo](https://github.com/realpython/flask-scaffold), you can grab the tag like so - `git checkout tags/first_tag`.
 
+**Note** Need to have an updated branch with code till now(if needed).
+
 We now need to generate a custom *config.py* file for each skeleton. This script is going to do just that for us; let the code do the repetitive work! First, add a file called *config.jinja2* in the *templates* folder:
 
 {% raw %}
@@ -132,7 +134,7 @@ class BaseConfig(object):
 class DevelopmentConfig(BaseConfig):
     """Development configuration."""
     DEBUG = True
-    BCRYPT_LOG_ROUNDS = 1
+    BCRYPT_LOG_ROUNDS = 13
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
     DEBUG_TB_ENABLED = True
@@ -142,7 +144,7 @@ class TestingConfig(BaseConfig):
     """Testing configuration."""
     DEBUG = True
     TESTING = True
-    BCRYPT_LOG_ROUNDS = 1
+    BCRYPT_LOG_ROUNDS = 13
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'
     DEBUG_TB_ENABLED = False
@@ -227,7 +229,7 @@ if args.bower:
     bower = args.bower.split(',')
     bower_exe = which('bower')
     if bower_exe:
-        os.chdir(os.path.join(fullpath, 'project', 'static'))
+        os.chdir(os.path.join(fullpath, 'project', 'client', 'static'))
         for dependency in bower:
             output, error = subprocess.Popen(
                 [bower_exe, 'install', dependency],
@@ -427,7 +429,7 @@ $ python flask_skeleton.py new_project -s skeleton -b 'angular, jquery, bootstra
 
 Welcome! The following settings will be used to create your application:
 
-Python Version:     3.4.2
+Python Version:     3.5.1
 Project Name:       new_project
 Project Path:       /Users/michael/repos/realpython/flask-scaffold/new_project
 Virtualenv:         Enabled
@@ -488,6 +490,16 @@ Remove the new project (if necessary) - `rm -rf new_project` - and then test out
 ```sh
 $ flaskcli new_project -s skeleton -b 'angular, jquery, bootstrap' -g -v
 ```
+
+## Refactoring Requirements.txt
+
+With our scaffolding tool up and running, we need to refactor the `requirements.txt` file and have only one in the root directory of our project.
+
+```sh
+rm -rf skeleton/requirements.txt
+pip freeze > requirements.txt
+```
+Now with all the python dependencies at one place, we are ready to ship our Flask Scaffolding tool.
 
 ## Conclusion
 
