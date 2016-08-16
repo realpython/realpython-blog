@@ -486,29 +486,6 @@ HELLO = """usage: basic.py hello [options] [<name>]
 GOODBYE = """usage: basic.py goodbye [options] [<name>]
 
   -h --help         Show this screen.
-  -"""usage: greet [--help] <command> [<args>...]
-
-options:
-  -h --help         Show this screen.
-
-commands:
-   hello       Say hello
-   goodbye     Say goodbye
-
-"""
-
-from docopt import docopt
-
-HELLO = """usage: basic.py hello [options] [<name>]
-
-  -h --help         Show this screen.
-  --caps            Uppercase the output.
-  --greeting=<str>  Greeting to use [default: Hello].
-"""
-
-GOODBYE = """usage: basic.py goodbye [options] [<name>]
-
-  -h --help         Show this screen.
   --caps            Uppercase the output.
   --greeting=<str>  Greeting to use [default: Goodbye].
 """
