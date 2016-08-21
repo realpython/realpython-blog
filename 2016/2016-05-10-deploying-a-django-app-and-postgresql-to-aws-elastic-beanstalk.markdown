@@ -18,6 +18,10 @@ Tools/technologies used:
 
 > Check out the **Python 2** version of this article [here](/blog/python/deploying-a-django-app-to-aws-elastic-beanstalk/).
 
+<br>
+
+**Updated 08/21/2016:** Updated EB global configuration settings.
+
 ## Elastic Beanstalk vs EC2
 
 Elastic Beanstalk is a Platform As A Service (PaaS) that streamlines the setup, deployment, and maintenance of your app on Amazon AWS. It's a managed service, coupling the server (EC2), database (RDS), and your static files (S3). You can quickly deploy and manage your application, which automatically scales as your site grows. Check out the [official documentation](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html) for more information.
@@ -362,7 +366,7 @@ option_settings:
 *What's happening?*
 
 * `DJANGO_SETTINGS_MODULE: "iotd.settings"` - adds the path to the settings module.
-* `"PYTHONPATH": "/opt/python/current/app/iotd:$PYTHONPATH"` - updates our `PYTHONPATH` so Python can find the modules in our application. (Note that the use of the full path is necessary.)
+* `"PYTHONPATH": "/opt/python/current/app/iotd:$PYTHONPATH"` - updates our `PYTHONPATH` so Python can find the modules in our application. *This path may vary depending on your setup! See [this comment](https://realpython.com/blog/python/deploying-a-django-app-and-postgresql-to-aws-elastic-beanstalk/#comment-2849390172) for more details.* (Note that the use of the full path is necessary.)
 * `WSGIPath: iotd/iotd/wsgi.py` sets our WSGI Path.
 * `NumProcesses: 3` and `NumThreads: 20` - updates the number of processes and threads used to run our WSGI application.
 * `"/static/": "www/static/"` sets our static files path.
