@@ -122,6 +122,8 @@ With the Directive set up, let's turn our attention to the D3 library...
 
 D3 is a powerful library that utilizes HTML, CSS, and SVG to display data on the DOM and JavaScript to make it interactive. We will use it to create a basic bar chart.
 
+### Step 1: Functional Logic
+
 Add the following to the `watch` function within the Angular Directive:
 
 ```javascript
@@ -144,7 +146,7 @@ Try running the code.
 
 What happens? Nothing shows up, right? Check out the DOM in Chrome's Developer Tools, after you submit a new site. You should see a number of nested `divs`. We just need to add styles...
 
-## Styles
+### Step 2: Styling the Bar Chart
 
 Start with some simple CSS:
 
@@ -185,6 +187,8 @@ Make sure to include this at the top of HTML page, after the Bootstrap styleshee
 Fire up the app in our browser. What's happening now?
 
 When you search for a website, you should now see a grey area with some thin blue bars on the left hand side. So you can see that we are generating a bar for each data element we're getting back - 10 in total. However, we need to modify our D3 code in order to increase the width of each bar so they are readable.
+
+### Step 3: Making the Bar Chart more Interactive
 
 We can chain this on to our existing code and use the D3 [style](https://github.com/d3/d3-3.x-api-reference/blob/master/Selections.md#style) function:
 
@@ -230,6 +234,8 @@ Try this out. You should see something like:
 <br>
 
 There's still one thing missing though. What happens when you search for a new website? Try it. The new chart is appended beneath the previous one. We need to clear out our chart div before a new one is created.
+
+### Step 4: Clean Up for the Next URL Search
 
 Update the `link` function in the Directive:
 
