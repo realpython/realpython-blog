@@ -1,19 +1,8 @@
----
-layout: post
-title: "Flask by Example - Charting with D3"
-date: 2016-08-07 19:04:04 -0600
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, flask, front-end]
-
-keywords: "python, web development, flask, angular, angularjs, javascript, d3, d3js, d3.js"
-description: "In the final part of the Flask by Example series, we'll  create a frequency distribution and histogram chart using JavaScript and D3."
----
+# Flask by Example - Custom Angular Directive with D3
 
 {% assign openTag = '{%' %}
 
-**Welcome back. With Angular set up along with a loading spinner and our refactored Angular controller, let's move on to charting with [D3](https://d3js.org/)**
+**Welcome back. With Angular set up along with a loading spinner and our refactored Angular controller, let's move on to the final part and create a custom Angular Directive to display a frequency distribution chart with JavaScript and the  [D3](https://d3js.org/) library.**
 
 <br>
 
@@ -34,11 +23,11 @@ Remember: Here's what we're building - A Flask app that calculates word-frequenc
 1. [Part Five](/blog/python/flask-by-example-integrating-flask-and-angularjs/): Set up Angular on the front-end to continuously poll the back-end to see if the request is done processing.
 1. [Part Six](/blog/python/updating-the-staging-environment/): Push to the staging server on Heroku - setting up Redis and detailing how to run two processes (web and worker) on a single Dyno.
 1. [Part Seven](/blog/python/flask-by-example-updating-the-ui): Update the front-end to make it more user-friendly.
-1. **Part Eight: Add the D3 library into the mix to create a frequency distribution and histogram chart. (_current_)**
+1. **Part Eight: Create a custom Angular Directive to display a frequency distribution chart using JavaScript and D3. (_current_)**
 
 > Need the code? Grab it from the [repo](https://github.com/realpython/flask-by-example/releases).
 
-Let's look at the current user interface...
+Let's look at what we currently have...
 
 ## Current User Interface
 
@@ -48,7 +37,7 @@ Start Redis in a terminal window:
 $ redis-server
 ```
 
-Then get your worker going in another window:
+Then get your process worker going in another window:
 
 ```sh
 $ cd flask-by-example
@@ -69,7 +58,7 @@ You should see your word counter working. Now we can add in a custom Angular Dir
 
 ## Angular Directive
 
-Start by adding the D3 library to your *index.html* file:
+Start by adding the D3 library ([v3](https://github.com/d3/d3-3.x-api-reference/blob/master/API-Reference.md)) to the *index.html* file:
 
 ```html
 <!-- scripts -->
@@ -79,8 +68,6 @@ Start by adding the D3 library to your *index.html* file:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 ```
-
-> This guide uses D3 [v3](https://github.com/d3/d3-3.x-api-reference/blob/master/API-Reference.md).
 
 Now let's set up a new custom Directive.
 
@@ -97,7 +84,7 @@ Now let's set up a new custom Directive.
 }]);
 ```
 
-This creates a Directive that is restricted to an HTML element. `replace: true` simply replaces the HTML Directive with the HTML in the `template`. The `link` function gives us access to variables in the scope defined in the controller.
+`restrict: 'E'` creates a Directive that is restricted to an HTML element. `replace: true` simply replaces the HTML Directive with the HTML in the `template`. The `link` function gives us access to variables in the scope defined in the controller.
 
 Next, add a `watch` function to "watch" for any changes to the variables and respond appropriately. Add this to the `link` function like so:
 
