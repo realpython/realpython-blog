@@ -18,7 +18,9 @@ The process is simple:
 5. Refactor.
 6. Repeat.
 
-![tdd-process](https://raw.github.com/mjhea0/flaskr-tdd/master/static/tdd.png)
+<div class="center-text">
+  <img class="no-border" src="/images/blog_images/django-tdd/tdd.png" style="max-width: 100%;" alt="tdd process - red, green, refactor">
+</div>
 
 ## Why TDD?
 
@@ -39,7 +41,7 @@ Enough talk. Let's get to the code.
 
 For this tutorial, we'll be creating an app to store user contacts.
 
-> Please note: This tutorial assumes you are running a Unix-based environment - e.g, Mac OSX, straight Linux, or Linux VM through Windows. I will also be using Sublime 2 as my text editor. Also, make sure you you've completed the official Django [tutorial](https://docs.djangoproject.com/en/1.6/intro/tutorial01/) and have a basic understanding of the Python language. **Also, in this first post, we will not yet get into some of the new tools available in Django 1.6. This post sets the foundation for subsequent posts that deal with different forms of testing.**
+> Please note: This tutorial assumes you are running a Unix-based environment - e.g, Mac OSX, straight Linux, or Linux VM through Windows. I will also be using Sublime 2 as my text editor. Also, make sure you you've completed the official Django [tutorial](https://docs.djangoproject.com/en/1.7/intro/) and have a basic understanding of the Python language. **Also, in this first post, we will not yet get into some of the new tools available in Django 1.6. This post sets the foundation for subsequent posts that deal with different forms of testing.**
 
 ## First Test
 
@@ -626,7 +628,7 @@ Run it:
 $ python manage.py test user_contacts
 ```
 
-It should fail - `AssertionError: 404 != 200` - because the URL, View, and the Template do not exist. If you're unfamiliar with how Django handles the MVC architecture, please read the short article [here](https://docs.djangoproject.com/en/dev/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names).
+It should fail - `AssertionError: 404 != 200` - because the URL, View, and the Template do not exist. If you're unfamiliar with how Django handles the MVC architecture, please read the short article [here](https://docs.djangoproject.com/en/1.7/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names).
 
 The test is simple. We first GET the url "/" using the Client, which is part of Django’s `TestCase`. The response is stored, then we check to make sure the returned status code is equal to 200.
 
