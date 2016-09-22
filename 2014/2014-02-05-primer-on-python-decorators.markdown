@@ -131,7 +131,7 @@ Printing from the first_child() function.
 Printing from the second_child() function.
 ```
 
-Finally, did you notice that in example three, we executed the sibling functions within the parent functions - e.g, `second_child()`. Meanwhile in this last example, we did not add parenthesis to the sibling functions - `first_child` - uppon returning so that way we can use them in the future. Makes sense?
+Finally, did you notice that in example three, we executed the sibling functions within the parent functions - e.g, `second_child()`. Meanwhile in this last example, we did not add parenthesis to the sibling functions - `first_child` - upon returning so that way we can use them in the future. Make sense?
 
 Now, my friend, you are ready to take on decorators!
 
