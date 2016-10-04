@@ -8,6 +8,12 @@
 
 <br>
 
+**Updates**:
+
+- *10/04/2016*: Updated to the latest versions of cookiecutter (v[1.4.0](https://github.com/audreyr/cookiecutter/releases/tag/1.4.0)), cookiecutter-django, Django (v[1.10.1](https://docs.djangoproject.com/en/1.10/releases/1.10.1/)), Docker (v[1.12.1](https://github.com/docker/docker/releases/tag/v1.12.1)), Docker Compose (v[1.8.1](https://github.com/docker/compose/releases/tag/1.8.1)), and Docker Machine (v[0.8.2](https://github.com/docker/machine/releases/tag/v0.8.2)).
+
+<br>
+
 We'll be using the popular [cookiecutter-django](https://github.com/pydanny/cookiecutter-django) as the bootstrapper for our Django Project along with [Docker](https://www.docker.com/) to manage our application environment.
 
 Let’s begin!
@@ -17,7 +23,7 @@ Let’s begin!
 Start by installing [cookiecutter](https://github.com/audreyr/cookiecutter) globally:
 
 ```sh
-$ pip install cookiecutter==1.3.0
+$ pip install cookiecutter==1.4.0
 ```
 
 Now execute the following command to generate a bootstrapped django project:
@@ -30,30 +36,51 @@ This command runs cookiecutter with the [cookiecutter-django](https://github.com
 
 ```sh
 Cloning into 'cookiecutter-django'...
-remote: Counting objects: 4810, done.
-remote: Compressing objects: 100% (7/7), done.
-remote: Total 4810 (delta 0), reused 0 (delta 0), pack-reused 4803
-Receiving objects: 100% (4810/4810), 844.79 KiB | 582.00 KiB/s, done.
-Resolving deltas: 100% (3039/3039), done.
+remote: Counting objects: 8078, done.
+remote: Compressing objects: 100% (60/60), done.
+remote: Total 8078 (delta 27), reused 0 (delta 0), pack-reused 8018
+Receiving objects: 100% (8078/8078), 2.88 MiB | 1.33 MiB/s, done.
+Resolving deltas: 100% (5214/5214), done.
 Checking connectivity... done.
-project_name [project_name]: django_cookiecutter_docker
-repo_name [django_cookiecutter_docker]: django_cookiecutter_docker
-author_name [Your Name]: Michael Herman
-email [Your email]: michael@realpython.com
+project_name [Project Name]: django_cookiecutter_docker
+project_slug [django_cookiecutter_docker]: django_cookiecutter_docker
+author_name [Daniel Roy Greenfeld]: Michael Herman
+email [you@example.com]: michael@realpython.com
 description [A short description of the project.]: Tutorial on bootstrapping django projects
 domain_name [example.com]: example.com
 version [0.1.0]: 0.1.0
 timezone [UTC]: UTC
-now [2015/11/04]: 2015/11/04
-year [2015]: 2015
 use_whitenoise [y]: y
 use_celery [n]: n
 use_mailhog [n]: n
-use_sentry [n]: n
-use_newrelic [n]: n
+use_sentry_for_error_reporting [y]: y
 use_opbeat [n]: n
+use_pycharm [n]: n
 windows [n]: n
-use_python2 [n]: n
+use_python3 [y]: y
+use_docker [y]: y
+use_heroku [n]: n
+use_elasticbeanstalk_experimental [n]: n
+use_compressor [n]: n
+Select postgresql_version:
+1 - 9.5
+2 - 9.4
+3 - 9.3
+4 - 9.2
+Choose from 1, 2, 3, 4 [1]: 1
+Select js_task_runner:
+1 - Gulp
+2 - Grunt
+3 - None
+Choose from 1, 2, 3 [1]: 1
+use_lets_encrypt [n]: n
+Select open_source_license:
+1 - MIT
+2 - BSD
+3 - GPLv3
+4 - Apache Software License 2.0
+5 - Not open source
+Choose from 1, 2, 3, 4, 5 [1]: 1
 ```
 
 ### Project Structure
@@ -64,21 +91,32 @@ Take a quick look at the generated project structure, taking specific note of th
 1. "requirements" contains all the requirement files - *base.txt*, *local.txt*, *production.txt*, *test.txt* - which you can make changes to and then install via `pip install -r file_name`.
 1. "django_cookiecutter_docker" is the main project directory which consists of the "static", "contrib" and "templates" directories along with the `users` app containing the models and boilerplate code associated with user authentication.
 
+Some of the services may require environment variables. Rename the sample file *env.example* to *.env* and add the required variables.
+
 ## Docker Setup
 
-Start by downloading and then installing the [Docker Toolbox](https://www.docker.com/docker-toolbox) (v[1.9.1f](https://github.com/docker/toolbox/releases/tag/v1.9.1f)) to obtain virtualbox and the required Docker components:
+Follow the instructions to install the [Docker Engine](https://docs.docker.com/engine/installation/) and the required Docker components - Engine, Machine, and Compose.
 
-- docker 1.9.1
-- docker-machine 0.5.4
-- docker-compose 1.5.2
+Check the versions:
+
+```sh
+$ docker --version
+Docker version 1.12.1, build 6f9534c
+
+$ docker-compose --version
+docker-compose version 1.8.0, build f3628c7
+
+$ docker-machine --version
+docker-machine version 0.8.1, build 41b3b25
+```
 
 ### Docker Machine
 
 Once installed, create a new Docker host within the root of the newly created Django Project:
 
 ```sh
-$ docker-machine create -d virtualbox dev
-$ eval "$(docker-machine env dev)"
+$ docker-machine create --driver virtualbox dev
+$ eval $(docker-machine env dev)
 ```
 
 > **NOTE**: `dev` can be named anything you want. For example, if you have more than one development environment, you could name them `djangodev1`, `djangodev2`, and so forth.
@@ -114,7 +152,7 @@ $ docker-compose -f dev.yml up -d
 
 > Running Windows? Hit this error - `Interactive mode is not yet supported on Windows`? See [this comment](https://realpython.com/blog/python/development-and-deployment-of-cookiecutter-django-via-docker/#comment-2442262433).
 
-The first build will take a while. Due to [caching](https://docs.docker.com/engine/articles/dockerfile_best-practices/#build-cache), subsequent builds will run much faster.
+The first build will take a while. Due to [caching](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/build-cache), subsequent builds will run much faster.
 
 ## Sanity Check
 
@@ -128,7 +166,7 @@ $ docker-compose -f dev.yml run django python manage.py createsuperuser
 
 Navigate to the `dev` IP (port 8000) in your browser to view the Project quick start page with debugging mode on and many more development environment oriented features installed and running.
 
-Kill the server, initialize a new git repo, commit, and PUSH to GitHub.
+Stop the containers (`docker-compose stop`), initialize a new git repo, commit, and PUSH to GitHub.
 
 ## Deployment Setup
 
@@ -142,8 +180,8 @@ Along with this, we will be making use of [gunicorn](http://gunicorn.org/) inste
 
 Apart from being a high-performance HTTP server, which almost every good web server out in the market is, Nginx has some really good features that make it stand out from the rest - namely that it:
 
-- Can couple as a [reverse proxy server](https://en.wikipedia.org/wiki/Reverse_proxy),
-- Can host more than one site,
+- Can couple as a [reverse proxy server](https://en.wikipedia.org/wiki/Reverse_proxy).
+- Can host more than one site.
 - Has an asynchronous way of handling web requests, which means that since it doesn’t rely on threads to handle web requests, it has a higher performance while handling multiple requests.
 
 ### Why Gunicorn?
@@ -166,20 +204,20 @@ This should only take few minutes to provision the Digital Ocean droplet and set
 Once done, there should now be two machines running, one locally (`dev`) and one on Digital Ocean (`prod`). Run `docker-machine ls` to confirm:
 
 ```sh
-NAME   ACTIVE   DRIVER         STATE     URL                         SWARM   DOCKER   ERRORS
-dev    *        virtualbox     Running   tcp://192.168.99.100:2376           v1.9.1
-prod   -        digitalocean   Running   tcp://159.203.77.132:2376           v1.9.1
+NAME   ACTIVE   DRIVER         STATE     URL                         SWARM   DOCKER    ERRORS
+dev    *        virtualbox     Running   tcp://192.168.99.100:2376           v1.12.1
+prod   -        digitalocean   Running   tcp://104.131.50.131:2376           v1.12.1
 ```
 
 Set `prod` as the active machine and then load the Docker environment into the shell:
 
 ```sh
-$ eval "$(docker-machine env prod)"
+$ eval $(docker-machine env prod)
 ```
 
 ### Docker Compose (take 2)
 
-Start by renaming *env.example* to *.env*. Update the `DJANGO_ALLOWED_HOSTS` variable to match the Digital Ocean IP address - i.e., `DJANGO_ALLOWED_HOSTS=159.203.77.132`. Keep the remaining defaults for now.
+Within *.env* update the `DJANGO_ALLOWED_HOSTS` variable to match the Digital Ocean IP address - i.e., `DJANGO_ALLOWED_HOSTS=159.203.77.132`.
 
 Now we can create the build and then fire up the services in the cloud:
 
@@ -205,4 +243,4 @@ You should be good to go.
 
 <hr>
 
-For further reference just grab the code from the [repository](https://github.com/realpython/django_cookiecutter_deploy). Thanks a lot for reading! Looking forward to your questions.
+For further reference just grab the code from the [repository](https://github.com/realpython/django_cookiecutter_docker). Thanks a lot for reading! Looking forward to your questions.
