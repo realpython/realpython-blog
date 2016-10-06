@@ -1,17 +1,21 @@
-# Development and Deployment of Cookiecutter-Django on Fedora
+# Development and Deployment of Django on Fedora
 
-Last [time](https://realpython.com/blog/python/development-and-deployment-of-cookiecutter-django-via-docker/) we set up a Django Project using Cookiecutter, managed the application environment via Docker, and then deployed the app to Digital Ocean. **In this tutorial, we'll shift away from Docker and detail a development to deployment workflow of a Cookiecutter-Django Project on Fedora 23.**
+Last [time](https://realpython.com/blog/python/development-and-deployment-of-cookiecutter-django-via-docker/) we set up a Django Project using Cookiecutter, managed the application environment via Docker, and then deployed the app to Digital Ocean. **In this tutorial, we'll shift away from Docker and detail a development to deployment workflow of a Cookiecutter-Django Project on Fedora 24.**
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/cookiecutter-django-fedora.png" style="max-width: 100%;" alt="cookiecutter django fedora">
 </div>
+
+**Updates**:
+
+- *10/06/2016*: Updated to the latest versions of Fedora (v[24](https://fedoraproject.org/wiki/Fedora_24_Final_Release_Criteria)), cookiecutter (v[1.4.0](https://github.com/audreyr/cookiecutter/releases/tag/1.4.0)), cookiecutter-django, and Django (v[1.10.1](https://docs.djangoproject.com/en/1.10/releases/1.10.1/)).
 
 ## Development
 
 Install [cookiecutter](https://github.com/audreyr/cookiecutter) globally and then generate a bootstrapped Django project:
 
 ```sh
-$ pip install cookiecutter==1.3.0
+$ pip install cookiecutter==1.4.0
 $ cookiecutter https://github.com/pydanny/cookiecutter-django.git
 ```
 
@@ -41,9 +45,9 @@ Next, in order to get your Django Project in a state ready for development, navi
 
 ```sh
 $ cd django_cookiecutter_fedora
-$ pyvenv-3.4 .env
-$ source .env/bin/activate
-$ ./install_python_dependencies.sh
+$ pyvenv-3.5 .venv
+$ source .venv/bin/activate
+$ ./utility/install_python_dependencies.sh
 ```
 
 ## Sanity Check
@@ -62,14 +66,14 @@ Ensure all is well by navigating to [http://localhost:8000/](http://localhost:80
 
 With the Project setup and running locally, we can now move on to deployment where we will utilize the following tools:
 
-- [Fedora 23](https://fedoraproject.org/wiki/Fedora_23_Final_Release_Criteria)
+- [Fedora 24](https://fedoraproject.org/wiki/Fedora_24_Final_Release_Criteria)
 - Postgres
 - [Nginx](http://nginx.org/)
 - [gunicorn](http://gunicorn.org/)
 
-### Fedora 23 Setup
+### Fedora 24 Setup
 
-Set up a quick [Digital Ocean](https://www.digitalocean.com/?refcode=d8f211a4b4c2) droplet, making sure to use a Fedora 23 image. For help, follow [this](https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet-virtual-server) tutorial. Make sure you [set up an SSH key](https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets) for secure login.
+Set up a quick [Digital Ocean](https://www.digitalocean.com/?refcode=d8f211a4b4c2) droplet, making sure to use a Fedora 24 image. For help, follow [this](https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet-virtual-server) tutorial. Make sure you [set up an SSH key](https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets) for secure login.
 
 Now let's [update](https://fedoraproject.org/wiki/DNF_system_upgrade) our server. SSH into the server as root, and then fire the update process:
 
@@ -105,11 +109,12 @@ Exit from the server and log back in again as the non-root user. Did you notice 
 
 While logged in as the non-root user, download and install the following packages:
 
-> **Note**: Below we are giving our non-root user root rights (recommended!). If by any chance you wish to not give the non-root user root rights explicitly, you will have to prepend `sudo` keyword with every command you execute in the terminal.
+> **NOTE**: Below we are giving our non-root user root rights (recommended!). If by any chance you wish to not give the non-root user root rights explicitly, you will have to prepend `sudo` keyword with every command you execute in the terminal.
 
 ```sh
 $ sudo su
-# dnf install postgresql-server postgresql-contrib postgresql-devel python3-devel python-devel gcc nginx git
+# dnf install postgresql-server postgresql-contrib postgresql-devel
+# dnf install python3-devel python-devel gcc nginx git
 ```
 
 ### Postgres Setup
@@ -127,7 +132,7 @@ Then log in to the Postgres server by switching (`su`) to the `postgres` user:
 
 ```sh
 # sudo su - postgres
-# psql
+$ psql
 postgres=#
 ```
 
@@ -153,13 +158,13 @@ $ exit
 
 When you exit from the postgres session, you will return back to your non-root user prompt. `[username@django-cookiecutter-deploy ~]#`.
 
-> **Note**: Did you notice the `#` sign at the prompt? This is now appearing because we gave our non-root user the root rights before starting off with setting up our server.
+> **NOTE**: Did you notice the `#` sign at the prompt? This is now appearing because we gave our non-root user the root rights before starting off with setting up our server. If you do not see this, you either need to run `sudo su` again or prefix each command with `sudo`.
 
 Configure Postgres so that it starts when the server boots/reboots:
 
 ```sh
-# systemctl enable postgresql
-# systemctl restart postgresql
+# sudo systemctl enable postgresql
+# sudo systemctl restart postgresql
 ```
 
 ### Project Setup
@@ -167,10 +172,12 @@ Configure Postgres so that it starts when the server boots/reboots:
 Clone the project structure from your GitHub repo to the */opt* directory:
 
 ```sh
-# git clone <github-repo-url> /opt/<name of the repo>
+# sudo git clone <github-repo-url> /opt/<name of the repo>
 ```
 
-> **NOTE**: Want to use the repo associated with this tutorial? Simply run: `sudo git clone https://github.com/realpython/django_cookiecutter_fedora /opt/django_cookiecutter_fedora`
+> **NOTE**: Want to use the repo associated with this tutorial? Simply run:
+>
+    sudo git clone https://github.com/realpython/django_cookiecutter_fedora /opt/django_cookiecutter_fedora
 
 ### Dependency Setup
 
@@ -178,8 +185,8 @@ Next, in order to get your Django Project in a state ready for deployment, creat
 
 ```sh
 # cd /opt/django_cookiecutter_fedora/
-# pip3 install virtualenv
-# pyvenv-3.4 venv
+# sudo pip3 install virtualenv
+# sudo pyvenv-3.5 .venv
 ```
 
 Before activating the virtualenv, give the current, non-root user admin rights (if not given):
@@ -192,11 +199,11 @@ $ sudo su
 Unlike with the set up of the development environment from above, before installing the dependencies we need to install all of [Pillow](https://pillow.readthedocs.org/en/3.0.x/index.html)'s external libraries. Check out this [resource](https://pillow.readthedocs.org/en/3.0.x/installation.html#basic-installation) for more info.
 
 ```sh
-# dnf install libtiff-devel libjpeg-devel libzip-devel freetype-devel \
-    lcms2-devel libwebp-devel tcl-devel tk-devel
+# dnf install libtiff-devel libjpeg-devel libzip-devel freetype-devel
+# dnf install lcms2-devel libwebp-devel tcl-devel tk-devel
 ```
 
-Next, we need to install one more package in order to ensure that we do not get conflicts while installing dependencies in our virtualenv.
+Next, we need to install one more packages in order to ensure that we do not get conflicts while installing dependencies in our virtualenv.
 
 ```sh
 # dnf install redhat-rpm-config
@@ -205,7 +212,7 @@ Next, we need to install one more package in order to ensure that we do not get 
 Then run:
 
 ```sh
-# ./install_python_dependencies.sh
+# ./utility/install_python_dependencies.sh
 ```
 
 Again, this will install all the base, local, and production requirements. This is just for a quick sanity check to ensure all is working. Since this is technically the production environment, we will change the environment shortly.
@@ -304,7 +311,7 @@ $ cd /etc/nginx/conf.d
 $ sudo vi django_cookiecutter_fedora.conf
 ```
 
-Add the following, making sure to update the `server`, `server_name`, and `location` for project root:
+Add the following, making sure to update the `server`, `server_name`, and `location`:
 
 ```sh
 upstream app_server {
@@ -373,10 +380,10 @@ $ sudo chmod +x gunicorn_start
 Start the server:
 
 ```sh
-$ ./gunicorn_start
+$ sudo ./gunicorn_start
 ```
 
-Once again visit the your server's ip address in the browser and you will see your Django web app running!
+Once again visit the your server's IP address in the browser and you will see your Django web app running!
 
 Did you get a 502 Bad gateway error? Just follow these steps and it will probably be enough to make your application work...
 
