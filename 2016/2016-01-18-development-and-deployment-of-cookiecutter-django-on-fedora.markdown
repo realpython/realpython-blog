@@ -193,7 +193,7 @@ Before activating the virtualenv, give the current, non-root user admin rights (
 
 ```sh
 $ sudo su
-# source venv/bin/activate
+# source .venv/bin/activate
 ```
 
 Unlike with the set up of the development environment from above, before installing the dependencies we need to install all of [Pillow](https://pillow.readthedocs.org/en/3.0.x/index.html)'s external libraries. Check out this [resource](https://pillow.readthedocs.org/en/3.0.x/installation.html#basic-installation) for more info.
