@@ -187,7 +187,7 @@ def grep_files(lines, pattern=None):
 
 
 py_files = generate_filenames()
-py_file = cat_file(py_files)
+py_file = cat_files(py_files)
 lines = grep_files(py_file, 'python')
 for line in lines:
     print (line)
