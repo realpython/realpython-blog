@@ -8,6 +8,8 @@
 
 <br>
 
+**Updated 11/06/2016**: Added section on changing Python versions with virtualenv.
+
 ## Why the need for virtual environments?
 
 Python, like most other modern programming languages, has its own unique way of downloading, storing, and resolving packages (or [modules](https://en.wikipedia.org/wiki/Modular_programming)). While this has its advantages, there were some *interesting* decisions made about package storage and resolution, which has lead to some problems - namely how and where packages are stored.
@@ -298,17 +300,17 @@ $ workon web-scraper
 (web-scraper) $
 ```
 
-If you would like to be able to use a single tool and switch between versions `virtualenv` will allow you to do just that. Virtualenv has a paremeter `--p` which allows you to select which version of python to use. Combine that with the `which` command and we can easily select
-our preferred version of python to use in a simple manner. For example let's say that we want python3 as our preferred version, then we can type in
+If you would like to be able to use a single tool and switch between python versions, `virtualenv` will allow you to do just that. Virtualenv has a [parameter](https://virtualenv.pypa.io/en/stable/reference/#cmdoption-p) `-p` which allows you to select which version of python to use. Combine that with the `which` command and we can easily select your preferred version of python to use in a simple manner. For example, let's say that we want python3 as our preferred version:
+
 ```sh
 $ virtualenv -p $(which python3) blog_virtualenv
 ```
-and it will create a new python3 environment with its own site-packages, setuptools, and pip.
 
-So how does this work? the `which` command is used for finding a given command in your `$PATH` variable and returning the full path to that command. The full path to python3 was returned,
-to the `--p` parameter which uses a PYTHON_EXE. This could also be used for python2 as well. Just substitute python3 for python2 or python if you system defaults to python2.
+This will create a new python3 environment.
 
-Now you don't have to remember where you installed your environments, you can easily delete or copy them as you wish, and your project directory is less cluttered!
+So how does this work? The `which` command is used for finding a given command in your `$PATH` variable and returning the full path to that command. So, the full path to python3 was returned, to the `-p` parameter which takes a `PYTHON_EXE`. This could also be used for python2 as well. Just substitute `python3` for `python2` (or `python` if you system defaults to `python2`).
+
+Now you don't have to remember where you installed your environments; you can easily delete or copy them as you wish, and your project directory is less cluttered!
 
 ## Using different versions of python
 
