@@ -315,12 +315,12 @@ Add the following, making sure to update the `server`, `server_name`, and `locat
 
 ```sh
 upstream app_server {
-    server 192.241.166.11:8000 fail_timeout=0;
+    server 127.0.0.1:8001 fail_timeout=0;
 }
 
 server {
     listen 80;
-    server_name 192.241.166.11;
+    server_name <remote-server-ip>;
     access_log /var/log/nginx/django_project-access.log;
     error_log /var/log/nginx/django_project-error.log info;
 
@@ -420,7 +420,7 @@ After=network.target
 
 [Service]
 PIDFile=/var/run/cric.pid
-ExecStart=/opt/django_cookiecutter_fedora/deploy/gunicorn_start
+ExecStart=/bin/sh /opt/django_cookiecutter_fedora/deploy/gunicorn_start
 Restart=on-abort
 
 [Install]
