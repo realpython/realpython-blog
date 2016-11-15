@@ -3,11 +3,12 @@
 Last [time](https://realpython.com/blog/python/development-and-deployment-of-cookiecutter-django-via-docker/) we set up a Django Project using Cookiecutter, managed the application environment via Docker, and then deployed the app to Digital Ocean. **In this tutorial, we'll shift away from Docker and detail a development to deployment workflow of a Cookiecutter-Django Project on Fedora 24.**
 
 <div class="center-text">
-  <img class="no-border" src="/images/blog_images/cookiecutter-django-fedora.png" style="max-width: 100%;" alt="cookiecutter django fedora">
+  <img class="no-border" src="/images/blog_images/cookiecutter-django/cookiecutter-django-fedora.png" style="max-width: 100%;" alt="cookiecutter django fedora">
 </div>
 
 **Updates**:
 
+- *11/15/2016*: Refactored Nginx [config](#nginx-config) and updated to the latest version of Django  (v[1.10.3](https://docs.djangoproject.com/en/1.10/releases/1.10.3/)).
 - *10/06/2016*: Updated to the latest versions of Fedora (v[24](https://fedoraproject.org/wiki/Fedora_24_Final_Release_Criteria)), cookiecutter (v[1.4.0](https://github.com/audreyr/cookiecutter/releases/tag/1.4.0)), cookiecutter-django, and Django (v[1.10.1](https://docs.djangoproject.com/en/1.10/releases/1.10.1/)).
 
 ## Development
@@ -60,7 +61,15 @@ $ python manage.py migrate
 $ python manage.py runserver
 ```
 
-Ensure all is well by navigating to [http://localhost:8000/](http://localhost:8000/) in your browser to view the Project quick start page. Once done, kill the development server, initialize a new Git repo, commit, and PUSH to Github.
+Ensure all is well by navigating to [http://localhost:8000/](http://localhost:8000/) in your browser to view the Project quick start page:
+
+<div class="center-text">
+  <img class="no-border" src="/images/blog_images/cookiecutter-django/cookiecutter-django-fedora-start-page.png" style="max-width: 100%;" alt="cookiecutter django fedora start page">
+</div>
+
+<br>
+
+Once done, kill the development server, initialize a new Git repo, commit, and PUSH to Github.
 
 ## Deployment
 
@@ -203,7 +212,7 @@ Unlike with the set up of the development environment from above, before install
 # dnf install lcms2-devel libwebp-devel tcl-devel tk-devel
 ```
 
-Next, we need to install one more packages in order to ensure that we do not get conflicts while installing dependencies in our virtualenv.
+Next, we need to install one more package in order to ensure that we do not get conflicts while installing dependencies in our virtualenv.
 
 ```sh
 # dnf install redhat-rpm-config
@@ -217,7 +226,7 @@ Then run:
 
 Again, this will install all the base, local, and production requirements. This is just for a quick sanity check to ensure all is working. Since this is technically the production environment, we will change the environment shortly.
 
-> **NOTE**: Deactivate the virtualenv. Now if you issue an exit command - e.g., `exit` - the non-root user will no longer have root rights. Notice the change in prompt. That said, the user can still activate the virtualenv. Try it!
+> **NOTE**: Deactivate the virtualenv. Now if you issue an exit command - e.g., `exit` - the non-root user will no longer have root rights. Notice the change in prompt (from `#` to `$`). That said, the user can still activate the virtualenv. Try it!
 
 ## Sanity Check (take 2)
 
@@ -234,13 +243,11 @@ Now run the server:
 $ python manage.py runserver 0.0.0.0:8000
 ```
 
-To ensure things are working fine, just visit the server's IP address in your browser - e.g., <ip-address or hostname>:8000.
+To ensure things are working fine, just visit the server's IP address in your browser - e.g., <ip-address or hostname>:8000. Kill the server when done.
 
 ## Gunicorn Setup
 
-Before setting up Gunicorn, we need to make some changes to the production settings, in the */config/settings/production.py* module.
-
-Take a look at the production settings [here](https://github.com/realpython/django_cookiecutter_fedora/blob/master/config/settings/production.py), which are the minimal settings needed for deploying our Django Project to a production server.
+Before setting up Gunicorn, we need to make some changes to the production settings, in the */config/settings/production.py* module. Take a look at the production settings [here](https://github.com/realpython/django_cookiecutter_fedora/blob/master/config/settings/production.py), which are the minimal settings needed for deploying our Django Project to a production server.
 
 To update these, open the file in VI:
 
