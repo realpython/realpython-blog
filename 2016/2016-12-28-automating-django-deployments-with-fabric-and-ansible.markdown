@@ -1,15 +1,4 @@
----
-layout: post
-title: "Automating Django Deployments with Fabric and Ansible"
-date: 2016-12-28 07:18:21 -0700
-toc: true
-comments: true
-category_side_bar: true
-categories: [python, devops, django]
-
-keywords: "python, fedora, ansible, fabric, web development, deployment, django, digital ocean, cookiecutter, provision"
-description: "In this tutorial we'll detail how to provision a server for a Django project with Ansible."
----
+# Automating Django Deployments with Fabric and Ansible
 
 <div class="center-text">
   <img class="no-border" src="/images/blog_images/django-fabric-ansible/django-ansible.png" style="max-width: 100%;" alt="Django + Ansible">
