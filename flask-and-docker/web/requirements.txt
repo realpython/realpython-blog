@@ -1,0 +1,10 @@
+Flask==0.12
+Flask-SQLAlchemy==2.1
+Flask-Script==2.0.5
+Jinja2==2.9
+MarkupSafe==0.23
+SQLAlchemy==1.1.4
+Werkzeug==0.11.15
+gunicorn==19.6.0
+itsdangerous==0.24
+psycopg2==2.6.2
