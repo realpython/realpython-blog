@@ -175,6 +175,18 @@ Install [psycopg2](http://initd.org/psycopg/) to connect to Postgres:
 (env)$ pip freeze > requirements.txt
 ```
 
+Within *manage.py* change-
+
+```python
+from project.server import app, db
+```
+
+To-
+
+```python
+from project.server import app, db, models
+```
+
 Apply the migration:
 
 ```sh
@@ -1219,7 +1231,7 @@ Finally, add the `check_blacklist()` function to *project/server/models.py* in t
 @staticmethod
 def check_blacklist(auth_token):
     # check whether auth token has been blacklisted
-    res = BlacklistToken.query.filter_by(token=auth_token).first()
+    res = BlacklistToken.query.filter_by(token=str(auth_token)).first()
     if res:
         return True  
     else:
