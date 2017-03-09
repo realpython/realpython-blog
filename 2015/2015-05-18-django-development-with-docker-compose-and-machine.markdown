@@ -169,7 +169,7 @@ postgres:
   restart: always
   image: postgres:latest
   ports:
-    - "5432:5432"
+    - "127.0.0.1:5432:5432"
   volumes:
     - pgdata:/var/lib/postgresql/data/
 
@@ -188,6 +188,8 @@ Here, we're defining four services - *web*, *nginx*, *postgres*, and *redis*.
 1. The *nginx* service is used for reverse proxy to forward requests either to Django or the static file directory.
 1. Next, the *postgres* service is built from the the official [PostgreSQL image](https://registry.hub.docker.com/_/postgres/) from [Docker Hub](https://hub.docker.com/), which installs Postgres and runs the server on the default port 5432. Did you notice the [data volume](https://docs.docker.com/engine/userguide/containers/dockervolumes/)? This helps ensure that the data persists even if the Postgres container is deleted.
 1. Likewise, the *redis* service uses the official [Redis image](https://registry.hub.docker.com/u/library/redis/) to install, well, Redis and then the service is ran on port 6379.
+
+Obs: At postgres ports, The address "127.0.0.1:" is for specify from where can comunicate. Without 127.0.0.1, postgres receive comunication from anywhere..
 
 Now, to get the containers running, build the images and then start the services:
 
