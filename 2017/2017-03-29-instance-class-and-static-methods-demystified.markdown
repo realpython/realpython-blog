@@ -138,7 +138,6 @@ I will base my examples around this bare-bones `Pizza` class:
 class Pizza:
     def __init__(self, radius, ingredients):
         self.ingredients = ingredients
-        self.radius = radius
 
     def __repr__(self):
         return f'Pizza({self.ingredients!r})'
@@ -165,7 +164,6 @@ A nice and clean way to do that is by using class methods as *[factory functions
 class Pizza:
     def __init__(self, radius, ingredients):
         self.ingredients = ingredients
-        self.radius = radius
 
     def __repr__(self):
         return f'Pizza({self.ingredients!r})'
