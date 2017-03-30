@@ -159,7 +159,7 @@ Pizza(['mozzarella'] * 4)
 
 The Italians figured out their pizza taxonomy centuries ago, and so these delicious types of pizzas all have their own names. We'd do well to take advantage of that and give the users of our `Pizza` class a better interface for creating the pizza objects they crave.
 
-A nice and clean way to do that is by using class methods as *[factory functions](https://en.wikipedia.org/wiki/Factory_(object-oriented_programming))* for the different kinds of pizzas we can create:
+A nice and clean way to do that is by using class methods as *[factory functions](https://en.wikipedia.org/wiki/Factory_(object-oriented_programming%29)* for the different kinds of pizzas we can create:
 
 ```python
 class Pizza:
