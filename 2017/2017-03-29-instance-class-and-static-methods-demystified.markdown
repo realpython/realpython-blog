@@ -136,7 +136,7 @@ I will base my examples around this bare-bones `Pizza` class:
 
 ```python
 class Pizza:
-    def __init__(self, radius, ingredients):
+    def __init__(self, ingredients):
         self.ingredients = ingredients
 
     def __repr__(self):
@@ -162,7 +162,7 @@ A nice and clean way to do that is by using class methods as *[factory functions
 
 ```python
 class Pizza:
-    def __init__(self, radius, ingredients):
+    def __init__(self, ingredients):
         self.ingredients = ingredients
 
     def __repr__(self):
