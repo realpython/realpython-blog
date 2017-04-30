@@ -1,6 +1,6 @@
 # API Integration in Python - part 1
 
-The following is a guest post by Aaron Maxwell, author of <a href="http://migrateup.com/python-newsletter/realpython0b/">the Advanced Python Newsletter</a>.
+The following is a guest post by Aaron Maxwell, author of [Powerful Python](https://powerfulpython.com).
 
 <hr><br>
 

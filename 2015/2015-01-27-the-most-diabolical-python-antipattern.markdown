@@ -1,6 +1,6 @@
 # The Most Diabolical Python Antipattern
 
-The following is a guest post by Aaron Maxwell, author of the [Advanced Python Newsletter](http://migrateup.com/python-newsletter/realpython0a/).
+The following is a guest post by Aaron Maxwell, author of [Powerful Python](https://powerfulpython.com).
 
 <hr>
 
