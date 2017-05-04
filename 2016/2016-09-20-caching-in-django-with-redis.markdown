@@ -45,6 +45,7 @@ Install all of the required Python dependencies with `pip`, and then checkout th
 Finish setting up the example app by building the database and populating it with sample data. Make sure to create a superuser too, so that you can log into the admin site. Follow the code examples below and then try running the app to make sure it is working correctly. Visit the admin page in the browser to confirm that the data has been properly loaded.
 
 ```sh
+(django-redis)$ python manage.py makemigrations cookbook
 (django-redis)$ python manage.py migrate
 (django-redis)$ python manage.py createsuperuser
 (django-redis)$ python manage.py loaddata cookbook/fixtures/cookbook.json
