@@ -190,7 +190,7 @@ For those familiar with South this should feel pretty familiar and probably a li
 <tr>
 <td>non-first migration </td>
 <td> <code>./manage.py schemamigration &lt;appname&gt; --auto</code> </td>
-<td> <code>./manage.py makemigration &lt;appname&gt;</code></td>
+<td> <code>./manage.py makemigrations &lt;appname&gt;</code></td>
 </tr>
 </tbody>
 </table>
