@@ -69,7 +69,7 @@ $ pip install virtualenv
 
 If you are using Python 3 then you should already have `pyvenv` installed. This is a file that uses the [venv](https://docs.python.org/3/library/venv.html) library underneath.
 
-> From here on out we'll assume you're using the newer `pyvenv` tool, since there are few differences between it and `virtualenv` with regard to the actual commands. In reality, though, they are [very different](http://stackoverflow.com/questions/29950300/what-is-the-relationship-between-virtualenv-and-pyenv) tools.
+> From here on out we'll assume you're using the newer `pyvenv` tool, since there are few differences between it and `virtualenv` with regard to the actual commands. In reality, though, they are [very different](https://www.reddit.com/r/learnpython/comments/4hsudz/pyvenv_vs_virtualenv/) tools.
 
 Start by making a new directory to work with:
 
