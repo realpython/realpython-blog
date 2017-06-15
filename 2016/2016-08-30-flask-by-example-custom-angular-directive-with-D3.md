@@ -258,7 +258,7 @@ Test it out!
 That's it. Push your changes to the staging and production servers. Let's review what we tackled:
 
 1. We started with the configuration and workflow, setting up staging and production servers
-1. From there, we added the basic functionality - web scraping, data analsyis - and set up a task queue with Redis
+1. From there, we added the basic functionality - web scraping, data analysis - and set up a task queue with Redis
 1. With the back-end functionality set up, attention turned to the front-end where we added Angular, built a custom Directive, and added D3 into the mix
 
 We have an MVP, but there's still much to be done:
