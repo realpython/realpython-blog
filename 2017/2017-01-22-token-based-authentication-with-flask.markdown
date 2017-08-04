@@ -6,6 +6,12 @@
   <img class="no-border" src="/images/blog_images/flask-jwt-auth/flask-jwt.png" style="max-width: 100%;" alt="Flask Token Based Authentication">
 </div>
 
+<br><br>
+
+**Updates:**
+
+- *08/04/2017*: Refactored code for the [PyBites Challenge](https://pybit.es/codechallenge30.html).
+
 ## Objectives
 
 By the end of this tutorial, you will be able to...
@@ -1341,6 +1347,79 @@ register_user(self, 'joe@gmail.com', '123456')
 ```
 
 How about logging in a user? Refactor it on your own. What else can you refactor? Comment below.
+
+## Refactor
+
+For the [PyBites Challenge](https://pybit.es/codechallenge30.html), let's refactor some code to correct an [issue](https://github.com/realpython/flask-jwt-auth/issues/9) added to the GitHub repo. Start by adding the following test to *test_auth.py*:
+
+```python
+def test_user_status_malformed_bearer_token(self):
+    """ Test for user status with malformed bearer token"""
+    with self.client:
+        resp_register = register_user(self, 'joe@gmail.com', '123456')
+        response = self.client.get(
+            '/auth/status',
+            headers=dict(
+                Authorization='Bearer' + json.loads(
+                    resp_register.data.decode()
+                )['auth_token']
+            )
+        )
+        data = json.loads(response.data.decode())
+        self.assertTrue(data['status'] == 'fail')
+        self.assertTrue(data['message'] == 'Bearer token malformed.')
+        self.assertEqual(response.status_code, 401)
+```
+
+Essentially, an error is thrown if the `Authorization` header is formatted incorrectly - e.g., no space between `Bearer` and the token value. Run the tests to ensure they fail, and then update the `UserAPI` class in *project/server/auth/views.py*:
+
+```python
+class UserAPI(MethodView):
+    """
+    User Resource
+    """
+    def get(self):
+        # get the auth token
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            try:
+                auth_token = auth_header.split(" ")[1]
+            except IndexError:
+                responseObject = {
+                    'status': 'fail',
+                    'message': 'Bearer token malformed.'
+                }
+                return make_response(jsonify(responseObject)), 401
+        else:
+            auth_token = ''
+        if auth_token:
+            resp = User.decode_auth_token(auth_token)
+            if not isinstance(resp, str):
+                user = User.query.filter_by(id=resp).first()
+                responseObject = {
+                    'status': 'success',
+                    'data': {
+                        'user_id': user.id,
+                        'email': user.email,
+                        'admin': user.admin,
+                        'registered_on': user.registered_on
+                    }
+                }
+                return make_response(jsonify(responseObject)), 200
+            responseObject = {
+                'status': 'fail',
+                'message': resp
+            }
+            return make_response(jsonify(responseObject)), 401
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': 'Provide a valid auth token.'
+            }
+            return make_response(jsonify(responseObject)), 401
+```
+
+Run the tests one final time.
 
 ## Conclusion
 
