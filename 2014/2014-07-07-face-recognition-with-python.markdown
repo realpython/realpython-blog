@@ -35,7 +35,7 @@ Since face detection is such a common case, OpenCV comes with a number of built-
 
 ## Installing OpenCV
 
-First, you need to find the correct setup file for [your operating system](http://opencv.org/downloads.html).
+First, you need to find the correct setup file for [your operating system](http://opencv.org/releases.html)
 
 I found that installing OpenCV was the hardest part of the task. If you get strange unexplainable errors, it could be due to library clashes, 32/64 bit differences, etc. I found it easiest to just use a Linux virtual machine and install OpenCV from scratch.
 
