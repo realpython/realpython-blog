@@ -14,6 +14,16 @@ Check out the live demo of what you'll be building in action [here](https://real
 
 This tutorial assumes that you already have an account set up with [AWS](https://aws.amazon.com/). Also, we will use the `US East (N. Virginia)` / `us-east-1` region. Feel free to use the region of your choice. For more info, review the [Regions and Availability Zones](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) guide.
 
+## Objectives
+
+By the end of this tutorial you will be able to...
+
+1. Explain what AWS Lambda and API Gateway are and why would would want to use them
+1. Discuss the benefits of using AWS Lambda functions
+1. Create an AWS Lambda function with Python
+1. Develop a RESTful API endpoint with API Gateway
+1. Trigger an AWS Lambda function from API Gateway
+
 ## What is AWS Lambda?
 
 Amazon Web Services (AWS) Lambda is an on-demand compute service that lets you run code in response to events or HTTP requests.
