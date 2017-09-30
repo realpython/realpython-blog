@@ -188,7 +188,7 @@ current_user = has_permission('Admin Area')
 print(current_user('Admin'))
 
 random_user = has_permission('Admin Area')
-print(current_user('Not Admin'))
+print(random_user('Not Admin'))
 ```
 
 This is a simplified function to check if a certain user has the correct permissions to access a certain page. You could easily modify this to grab the user in session to check if they have the correct credentials to access a certain route. Instead of checking if the user is just equal to 'Admin', you could query the database to check the permission then return the correct view depending on whether the credentials are correct or not.
