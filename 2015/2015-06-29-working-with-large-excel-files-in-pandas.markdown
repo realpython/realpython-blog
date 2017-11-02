@@ -18,7 +18,7 @@ The first file we'll work with is a compilation of all the car accidents in Engl
 
 ### Excel
 
-Start by downloading the source ZIP file from [data.gov.uk](http://data.gov.uk/dataset/road-accidents-safety-data/resource/80b76aec-a0a1-4e14-8235-09cc6b92574a), and extract the contents. Then *try* to open *Accidents7904.csv* in Excel. *Be careful. If you don't have enough memory, this could very well crash your computer.*
+Start by downloading the source ZIP file from [data.gov.uk](http://data.dft.gov.uk/road-accidents-safety-data/Stats19-Data1979-2004.zip), and extract the contents. Then *try* to open *Accidents7904.csv* in Excel. *Be careful. If you don't have enough memory, this could very well crash your computer.*
 
 What happens?
 
