@@ -352,10 +352,10 @@ This determines if you are running inside a virtualenv, and then switches to tha
 
 ### Syntax Checking/Highlighting
 
-You can have VIM check your syntax on each save with the [syntastic](https://github.com/scrooloose/syntastic) extension:
+You can have VIM check your syntax on each save with the [syntastic](https://github.com/vim-syntastic/syntastic) extension:
 
 ```sh
-Plugin 'scrooloose/syntastic'
+Plugin 'vim-syntastic/syntastic'
 ```
 
 Also add PEP8 checking with this nifty little plugin:
