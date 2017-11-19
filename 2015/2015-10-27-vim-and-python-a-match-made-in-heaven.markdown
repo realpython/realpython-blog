@@ -12,6 +12,8 @@ On the down side though, VIM can be a pain to configure, but fear not - **This a
 
 > To get the most out of this article you should have at least a basic understanding on how to use VIM and its command modes. If you're just getting started, check out [this resource](http://vim-adventures.com) or [this one](http://www.openvim.com). Spend some time with it before moving on.
 
+**Updated 11/19/2017!**
+
 ## Installing
 
 Since VIM comes pre-installed on a number of [*nix](https://en.wikipedia.org/wiki/Unix-like) systems, let's first and foremost check to see if it's installed:
