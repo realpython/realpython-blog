@@ -12,7 +12,7 @@ On the down side though, VIM can be a pain to configure, but fear not - **This a
 
 > To get the most out of this article you should have at least a basic understanding on how to use VIM and its command modes. If you're just getting started, check out [this resource](http://vim-adventures.com) or [this one](http://www.openvim.com). Spend some time with it before moving on.
 
-**Updated 11/19/2017!**
+**Updated 10/24/2018!**
 
 ## Installing
 
@@ -55,7 +55,7 @@ Linking: gcc -arch i386 -arch x86_64 -o vim -lncurses
 At this point, you want to look for two things-
 
 1. *The VIM version.* This should be > 7.3.
-1. *Python Support.* Under the list of features, make sure you see `+python`.
+1. *Python Support.* Under the list of features, make sure you see `+python`. Don't worry if you see `-python3` on the list. Also the entry might be listed as `+python/dyn` rather than the plain `+python` entry.
 
 If you have both of these, then move right along to [VIM Extensions](#vim-extensions). If not, it's time to [install/upgrade](http://www.vim.org/download.php).
 
