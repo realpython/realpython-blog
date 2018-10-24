@@ -12,7 +12,7 @@ On the down side though, VIM can be a pain to configure, but fear not - **This a
 
 > To get the most out of this article you should have at least a basic understanding on how to use VIM and its command modes. If you're just getting started, check out [this resource](http://vim-adventures.com) or [this one](http://www.openvim.com). Spend some time with it before moving on.
 
-**Updated 11/19/2017!**
+**Updated 10/24/2018!**
 
 ## Installing
 
@@ -473,7 +473,7 @@ Take a look at the [official docs](http://powerline.readthedocs.org/en/latest/) 
 
 ### System clipboard
 
-Vim usually has its own clipboard and ignores the system keyboards, but sometimes you might want to cut, copy, and/or paste to/from other applications outside of VIM. On OSX, you can access your system clipboard with this line:
+Vim usually has its own clipboard and ignores the system clipboard, but sometimes you might want to cut, copy, and/or paste to/from other applications outside of VIM. On OSX, you can access your system clipboard with this line:
 
 ```sh
 set clipboard=unnamed
