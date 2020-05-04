@@ -231,8 +231,8 @@ $ docker-compose up -d
 Apply all the migrations:
 
 ```sh
-$ docker-compose run django python manage.py makemigrations
-$ docker-compose run django python manage.py migrate
+$ docker-compose -f production.yml run --rm django python manage.py makemigrations
+$ docker-compose -f production.yml run --rm django python manage.py migrate
 ```
 
 That's it!
